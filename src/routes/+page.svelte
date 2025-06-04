@@ -1,6 +1,5 @@
 <script lang="ts">
     let total = 5;
 </script>
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<h1>Mornin' Nigga</h1>
 <p>{total}</p>
