@@ -4,13 +4,13 @@
 	let { children } = $props();
 </script>
 
-<nav class="flex flex-row justify-between items-center h-15 p-4 shadow-xs">
+<nav class="flex flex-row justify-between items-center h-15 p-4 shadow-xs gap-5">
     <div>
         <img src="/logo.png" class="w-24 h-24 hidden lg:block">
         <h1 class="block lg:hidden">Side</h1>
     </div>
-    <div class="flex flex-row gap-5 justify-between">
-        <form class="flex flex-row justify-between shadow-sm rounded-xl overflow-clip w-140 md:w-160">
+    <div>
+        <form class="flex flex-row justify-between shadow-sm rounded-xl overflow-clip w-120 md:w-160">
             <input type="text" name="s" id="searchbar" placeholder="Search your 3D assets..." class="border-0 flex-6">
             <button class="bg-[#FFA808] active:bg-[#F75B00] w-10 flex flex-col items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 mr-1.5">
