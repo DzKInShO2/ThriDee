@@ -1,19 +1,59 @@
 <script lang="ts">
 	import '../app.css';
+
+    import { auth } from "$lib/firebase";
+    import { user } from "$lib/stores/authStore";
+    import { signOut } from "firebase/auth";
+	
 	import '$lib/styles/theme.css';
 
 	let { children } = $props();
+
+    let sidebarPosition = $state("-left-60");
+    function toggleSidebar()
+    {
+        if (sidebarPosition === "-left-60") {
+            sidebarPosition = "-left-0";
+        } else {
+            sidebarPosition = "-left-60";
+        }
+    }
+
+    let search = "";
+    function searchAssets() 
+    {
+    }
 </script>
 
-<nav class="flex flex-row justify-between items-center h-15 p-4 shadow-xs gap-5 border-b border-[#FFA808]">
+{#snippet loginButton(visibility)}
+    <a href="/account/login"><button class="transition-all cursor-pointer bg-[#ffa808] p-2 rounded-xl hover:shadow-lg hover:p-3 active:bg-[#f75b00] {visibility}">
+        Log-In
+    </button></a>
+{/snippet}
+
+{#snippet logoutButton(visibility)}
+    <button class="transition-all cursor-pointer bg-[#ffa808] p-2 rounded-xl hover:shadow-lg hover:p-3 active:bg-[#f75b00] {visibility}" on:click={() => signOut(auth)}>
+        Log-Out
+    </button>
+{/snippet}
+
+<nav class="flex flex-row justify-between items-center h-15 p-4 shadow-xs gap-5 sticky z-40">
     <div>
-        <img src="/logo.png" class="w-24 h-24 hidden lg:block" alt="ThriDee Logo">
-        <h1 class="block lg:hidden">Side</h1>
+        <a href="/">
+            <img src="/logo.png" class="w-24 h-24 hidden lg:block">
+        </a>
+        <h1 class="transition-all block lg:hidden active:text-[#FFA808]" on:click={toggleSidebar}>
+            {#if sidebarPosition === "-left-60"}
+                <i class="fa-solid fa-bars"></i>
+            {:else}
+                <i class="fa-solid fa-x"></i>
+            {/if}
+        </h1>
     </div>
     <div>
-        <form action="/search" class="flex flex-row justify-between shadow-sm rounded-xl overflow-clip w-120 md:w-160 border-1 border-[#FFA808]">
-            <input type="text" name="s" id="searchbar" placeholder="Search your 3D assets..." class="border-0 flex-6">
-            <button class="bg-[#FFA808] active:bg-[#F75B00] w-10 flex flex-col items-center justify-center" aria-label="Search">
+        <form on:submit|preventDefault={searchAssets} action="/search" class="flex flex-row justify-between shadow-sm rounded-xl overflow-clip w-80 md:w-160 border-1 border-[#FFA808]">
+            <input type="text" name="s" id="searchbar" placeholder="Search your 3D assets..." class="border-0 w-120 md:w-160 flex-9">
+            <button class="bg-[#FFA808] cursor-pointer  active:bg-[#F75B00] w-10 flex flex-col items-center justify-center" aria-label="Search">
                 <i class="fa fa-search text-black"></i>
             </button>
         </form>
@@ -25,6 +65,12 @@
         <a href="/register" class="bg-[#FFA808] active:bg-[#F75B00] p-2 rounded-xl hidden lg:block text-black text-center">
             Register
         </a>
+    <div>
+        {#if $user}
+            {@render logoutButton("hidden lg:block")}
+        {:else}
+            {@render loginButton("hidden lg:block")}
+        {/if}
     </div>
 </nav>
 
