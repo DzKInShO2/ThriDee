@@ -1,0 +1,341 @@
+:root {
+  /* Warna Utama */
+  --color-primary: #FFA808;
+  --color-primary-light: #ffc74a;
+  --color-primary-dark: #d98a00;
+
+  /* Warna Sekunder */
+  --color-secondary: #F59E0B;
+  --color-secondary-light: #fcd34d;
+  --color-secondary-dark: #d97706;
+  
+  /* Warna Netral */
+  --color-bg: #FFFBF2;
+  --color-card: #FFF6E5;
+  --color-text: #1F1B14;
+  --color-text-light: #9e9483;
+  --color-border: #f0e6d4;
+  
+  /* Warna Status */
+  --color-danger: #EF4444;
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-info: #3B82F6;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-full: 9999px;
+  
+  /* Shadow */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  /* Transition */
+  --transition: all 0.2s ease-in-out;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: sans-serif;
+    overflow: auto; 
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+}
+
+.marketplace {
+    position: relative;
+    background: url('/banner.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 100px 2px;
+    text-align: center;
+    color: var(--color-primary  );
+
+}
+
+.Home {
+    position: relative;
+    background: url('/banner.jpg') no-repeat center center;
+    background-size: cover;
+    color: var(--color-primary  );
+    padding: 300px 0;
+    text-align: center;
+}
+
+.Home-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Home-content h1 {
+    font-size: 5rem; 
+    font-weight: bold; 
+}
+h1 {
+    font-size: 1.5rem; 
+    font-weight: bold; 
+}
+
+.Home-content a {
+    font-size: 0.9rem; 
+    color: white;
+    text-decoration: underline;
+}
+
+.Home-content p {
+    color: var(--color-text-light);
+    font-size: 0.9rem; 
+    margin-bottom: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height: 90vh;
+    padding: 50px;
+}
+
+.text-section {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.content h1 {
+    font-size: 4rem; /* Saiz fon besar */
+    font-weight: bold; /* Teks tebal */
+    font-style: italic; /* Teks condong */
+}
+
+.image-section {
+    width: 50%;
+    height: auto;
+}
+
+.image-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+/* Card styles */
+.card {
+    background-color: var(--color-primary-light);
+    border-radius: 10px;
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+    margin-top: 10px ;
+    margin-bottom: 10px ;
+}
+
+.card-header {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-body {
+  padding: 2rem 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.25rem;
+  text-align: left;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.form-group input {
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  font-size: 1rem;
+}
+
+.form-group small {
+  color: wheat;
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.profile-full {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 2.5rem;
+
+    background: var(--color-primary-light);
+    border-radius: 12px;
+    padding: 2.5rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    max-width: 900px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--color-info);
+  }
+  
+  .profile-info {
+    color: black;
+    text-align: left;
+  }
+
+  .profile-info h2 {
+    font-size: 1.75rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .profile-info p {
+    margin: 0.25rem 0;
+    font-size: 0.95rem;
+    opacity: 0.9;
+  }
+  
+  .btn-outline-primary {
+    background: transparent;
+    color: black;
+    border: 1px solid black;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .btn-outline-primary:hover {
+    background: black; 
+    color: var(--color-primary);
+  }
+
+  .grid-posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    padding: 0 2rem;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .asset-card {
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 1rem;
+    background: var(--color-card);
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .asset-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .asset-card img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+  }
+
+
+
+
+
+
+
+
+/* Footer Styles */
+.footer {
+  background: var(--color-bg);
+  margin-top: auto;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-section {
+  flex: 1 1 200px;
+}
+
+.footer-section h5 {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li a {
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 1rem;
+  font-size: 0.9rem;
+  background-color: rgba(0, 0, 0, 0.05);
+}
