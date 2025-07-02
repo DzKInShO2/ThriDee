@@ -4,12 +4,6 @@
     import { auth, getFirebaseAuthMessage } from "$lib/firebase";
     import { user } from "$lib/stores/authStore";
 
-    user.subscribe((value) => {
-        if (value) {
-            goto("/");
-        }
-    });
-
     import {
         GoogleAuthProvider,
         signInWithPopup,
@@ -17,23 +11,32 @@
         createUserWithEmailAndPassword,
     } from "firebase/auth";
 
+    user.subscribe((value) => {
+        if (value) {
+            goto("/user");
+        }
+    });
+
     let passwordNewVisible = $state(false)
     let passwordVerifyVisible = $state(false)
 
     let authError = $state("")
 
-    let email = "";
-    let passwordNew = "";
-    let passwordVerify = "";
+    let email = $state("");
+    let passwordNew = $state("");
+    let passwordVerify = $state("");
     async function handleRegister() {
         if (passwordNew != passwordVerify) {
-            authError = "Passwords must match!"
+            authError = "Passwords must match!";
+            return
+        }
+
+        if (passwordNew.length < 8) {
+            authError = "Password must at least be 8 characters long.";
             return
         }
 
         createUserWithEmailAndPassword(auth, email, passwordNew)
-            .then((result) => {
-            })
             .catch((error) => {
                 authError = getFirebaseAuthMessage(error.code);
             });
@@ -43,14 +46,6 @@
         const provider = new GoogleAuthProvider();
 
         signInWithPopup(auth, provider)
-            .then((result) => {
-                const additionalUserInfo = getAdditionalUserInfo(result)!!;
-                if (additionalUserInfo.isNewUser) {
-                    console.log("User is new");
-                } else {
-                    goto("/");
-                }
-            })
             .catch((error) => {
                 authError = getFirebaseAuthMessage(error.code);
             });

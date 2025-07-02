@@ -1,31 +1,28 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
+
     import { user } from "$lib/stores/authStore";
-
-    user.subscribe((value) => {
-        if (value) {
-            goto("/");
-        }
-    });
-
     import { auth, getFirebaseAuthMessage } from "$lib/firebase";
+
     import {
         signInWithEmailAndPassword,
         GoogleAuthProvider,
         signInWithPopup,
-        getAdditionalUserInfo,
     } from "firebase/auth";
 
-    let passwordVisible = $state(false)
+    user.subscribe((value) => {
+        if (value) {
+            goto("/user");
+        }
+    });
 
+    let passwordVisible = $state(false)
     let authError = $state("")
 
-    let email = "";
-    let password = "";
+    let email = $state("");
+    let password = $state("");
     async function handleLogin() {
         signInWithEmailAndPassword(auth, email, password)
-            .then((result) => {
-            })
             .catch((error) => {
                 authError = getFirebaseAuthMessage(error.code);
             });
@@ -35,14 +32,6 @@
         const provider = new GoogleAuthProvider();
 
         signInWithPopup(auth, provider)
-            .then((result) => {
-                const additionalUserInfo = getAdditionalUserInfo(result)!!;
-                if (additionalUserInfo.isNewUser) {
-                    console.log("User is new");
-                } else {
-                    console.log("User is old");
-                }
-            })
             .catch((error) => {
                 authError = getFirebaseAuthMessage(error.code);
             });

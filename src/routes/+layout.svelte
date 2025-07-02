@@ -6,6 +6,7 @@
     import { signOut } from "firebase/auth";
 
     import "$lib/styles/theme.css";
+    import { goto } from "$app/navigation";
 
     let { children } = $props();
 
@@ -65,6 +66,7 @@
     <a href="/user" style="margin-right: 1rem; color: white;">Profile</a>
     <a href="/user/login" style="margin-right: 1rem; color: white;">Login</a>
     <a href="/user/register" style="margin-left: auto; color: white;">Register</a>
+    <a style="margin-left: auto; color: white;" class="cursor-pointer" on:click={() => { signOut(auth).then(() => goto("/")) }}>Log Out</a>
 </nav>
 
 <div class="h-full">
