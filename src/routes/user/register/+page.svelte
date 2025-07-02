@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
 
-    import { auth, getFirebaseAuthMessage } from "$lib/firebase";
+    import { auth, db, getFirebaseAuthMessage } from "$lib/firebase";
     import { user } from "$lib/stores/authStore";
 
     import {
@@ -10,6 +10,7 @@
         getAdditionalUserInfo,
         createUserWithEmailAndPassword,
     } from "firebase/auth";
+    import { doc, setDoc } from "firebase/firestore";
 
     user.subscribe((value) => {
         if (value) {
@@ -37,6 +38,11 @@
         }
 
         createUserWithEmailAndPassword(auth, email, passwordNew)
+            .then(cred => {
+                setDoc(doc(db, "user", cred.user.uid), {
+                    bio: "",
+                });
+            })
             .catch((error) => {
                 authError = getFirebaseAuthMessage(error.code);
             });

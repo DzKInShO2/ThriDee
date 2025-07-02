@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp, type FirebaseApp } from "firebase/app";
+import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
@@ -27,7 +27,7 @@ export const storage = getStorage(app);
 export function getFirebaseAuthMessage(code: string): string {
 	return {
 		"auth/user-not-found": "No account with that email.",
-        "auth/invalid-credential": "No account with that email.",
+        "auth/invalid-credential": "Wrong email or password.",
         "auth/credential-already-in-use": "Email already registered.",
 		"auth/wrong-password": "Wrong password.",
 		"auth/email-already-in-use": "Email already registered.",
