@@ -23,3 +23,15 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const storage = getStorage(app);
+
+export function getFirebaseAuthMessage(code: string): string {
+	return {
+		"auth/user-not-found": "No account with that email.",
+        "auth/invalid-credential": "No account with that email.",
+        "auth/credential-already-in-use": "Email already registered.",
+		"auth/wrong-password": "Wrong password.",
+		"auth/email-already-in-use": "Email already registered.",
+		"auth/invalid-email": "Invalid email address.",
+		"auth/weak-password": "Password is too weak.",
+	}[code] ?? "Unknown error. Please try again.";
+}
