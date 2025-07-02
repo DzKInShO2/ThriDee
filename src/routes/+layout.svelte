@@ -20,18 +20,6 @@
     }
 </script>
 
-{#snippet loginButton(visibility)}
-    <a href="/account/login"><button class="transition-all cursor-pointer bg-[#ffa808] p-2 rounded-xl hover:shadow-lg hover:p-3 active:bg-[#f75b00] {visibility}">
-        Log-In
-    </button></a>
-{/snippet}
-
-{#snippet logoutButton(visibility)}
-    <button class="transition-all cursor-pointer bg-[#ffa808] p-2 rounded-xl hover:shadow-lg hover:p-3 active:bg-[#f75b00] {visibility}" on:click={() => signOut(auth)}>
-        Log-Out
-    </button>
-{/snippet}
-
 <nav class="flex flex-row justify-between items-center h-15 p-4 shadow-xs gap-5 sticky z-40">
     <div>
         <a href="/">
@@ -53,19 +41,7 @@
             </button>
         </form>
     </div>
-    <div class="flex flex-row items-center gap-2">
-        <a href="/login" class="bg-[#FFA808] active:bg-[#F75B00] p-2 rounded-xl hidden lg:block text-black text-center">
-            Log-In
-        </a>
-        <a href="/register" class="bg-[#FFA808] active:bg-[#F75B00] p-2 rounded-xl hidden lg:block text-black text-center">
-            Register
-        </a>
     <div>
-        {#if $user}
-            {@render logoutButton("hidden lg:block")}
-        {:else}
-            {@render loginButton("hidden lg:block")}
-        {/if}
     </div>
 </nav>
 
@@ -76,17 +52,17 @@
   <a href="/search" style="margin-right: 1rem; color: white;">Search</a>
   <a href="/model" style="margin-right: 1rem; color: white;">View Model</a>
   <a href="/about" style="margin-right: 1rem; color: white;">About Us</a>
-  <a href="/profile" style="margin-right: 1rem; color: white;">Profile</a>
-  <a href="/login" style="margin-right: 1rem; color: white;">Login</a>
-  <a href="/register" style="margin-left: auto; color: white;">Register</a>
+  <a href="/user" style="margin-right: 1rem; color: white;">Profile</a>
+  <a href="/user/login" style="margin-right: 1rem; color: white;">Login</a>
+  <a href="/user/register" style="margin-left: auto; color: white;">Register</a>
 </nav>
 
-
+<div class="h-full">
 {@render children()}
-
+</div>
 
 <!-- Footer -->
-<footer class="footer bg-[#22223b] text-black mt-16">
+<footer class="footer">
     <div class="border-t border-[#FFA808]">
     </div>
 
@@ -101,9 +77,9 @@
             <ul class="space-y-1">
                 <li><a href="/" class="hover:text-[#FFA808] transition">Home</a></li>
                 <li><a href="/marketplace" class="hover:text-[#FFA808] transition">Marketplace</a></li>
-                <li><a href="/profile" class="hover:text-[#FFA808] transition">Profile</a></li>
-                <li><a href="/login" class="hover:text-[#FFA808] transition">Login</a></li>
-                <li><a href="/register" class="hover:text-[#FFA808] transition">Register</a></li>
+                <li><a href="/user" class="hover:text-[#FFA808] transition">Profile</a></li>
+                <li><a href="/user/login" class="hover:text-[#FFA808] transition">Login</a></li>
+                <li><a href="/user/register" class="hover:text-[#FFA808] transition">Register</a></li>
             </ul>
         </div>
         

@@ -1,13 +1,5 @@
 <script lang="ts">
-
 export let data;
-
-const dummyAssets = Array.from({ length: 8 }, (_, i) => ({
-    title: `Aset Contoh ${i + 1}`,
-    price: `$${(i + 1) * 5}`,
-    category: ['Character', 'Vehicle', 'Environment', 'Weapon', 'Building', 'Accessory'][i % 6],
-    img: '/banner1.png'
-}));
 </script>
 
 {#snippet modelItem(model: any)}

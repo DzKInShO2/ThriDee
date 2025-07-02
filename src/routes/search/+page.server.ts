@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ({ url }) => {
 
     let data: Array<any> = Array<any>()
     querySnapshots.forEach(async (doc: DocumentSnapshot) => {
-        if (doc.data().title.includes(search)) {
+        if (doc.data().title.toLowerCase().includes(search.toLowerCase())) {
             data.push({ id: doc.id, ...doc.data()});
         }
     });
