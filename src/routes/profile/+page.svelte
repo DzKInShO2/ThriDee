@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   let user = {
     username: "Rakasya Yoga",
     created_at: "2024-01-15",
