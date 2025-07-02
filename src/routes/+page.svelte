@@ -12,37 +12,36 @@
               </div>
         </div>
     </section>
-
     <div class="flex flex-col items-center justify-between py-8">
-      <div class="w-full md:w-2/3 px-4">
-        <h1 class="text-3xl font-bold mb-4">ABOUT US</h1>
-        <h2 class="text-lg text-gray-600">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consectetur in dui id maximus. Pellentesque vitae consequat orci. Nulla hendrerit aliquam diam ac pellentesque. Ut erat odio, tempor nec tortor scelerisque, laoreet dapibus nulla. Phasellus fermentum, est in tempus porta, arcu magna facilisis sem, sit amet tempus eros lorem ut augue. Quisque tempus facilisis malesuada. Nam porttitor justo non eros pretium tincidunt.
-        </h2>
-      </div>
-    </div>
+        <div class="w-full md:w-2/3 px-4">
+            <h1 class="text-3xl font-bold mb-4">ABOUT US</h1>
+            <h2 class="text-lg text-gray-600">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consectetur in dui id maximus. Pellentesque vitae consequat orci. Nulla hendrerit aliquam diam ac pellentesque. Ut erat odio, tempor nec tortor scelerisque, laoreet dapibus nulla. Phasellus fermentum, est in tempus porta, arcu magna facilisis sem, sit amet tempus eros lorem ut augue. Quisque tempus facilisis malesuada. Nam porttitor justo non eros pretium tincidunt.
+            </h2>
 
-    <div class="container">
-      <div class="image-section">
-          <img src="/banner3.jpg" alt="awalan">
-      </div>
-      <div class="text-section">
-          <div class="content">
-              <h1>Temukan Desain 3D Anda</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consectetur in dui id maximus. Pellentesque vitae consequat orci. Nulla hendrerit aliquam diam ac pellentesque. Ut erat odio, tempor nec tortor scelerisque, laoreet dapibus nulla. Phasellus fermentum, est in tempus porta, arcu magna facilisis sem, sit amet tempus eros lorem ut augue. Quisque tempus facilisis malesuada. Nam porttitor justo non eros pretium tincidunt.</p>
-          </div>
-      </div>
-    </div>
-
-    <div class="container">
-        <div class="text-section">
-            <div class="content">
-                <h1>Eksplorasi Aset 3D</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consectetur in dui id maximus. Pellentesque vitae consequat orci. Nulla hendrerit aliquam diam ac pellentesque. Ut erat odio, tempor nec tortor scelerisque, laoreet dapibus nulla. Phasellus fermentum, est in tempus porta, arcu magna facilisis sem, sit amet tempus eros lorem ut augue. Quisque tempus facilisis malesuada. Nam porttitor justo non eros pretium tincidunt.</p>
+            <div class="flex gap-2 my-32">
+                <div class="image-section">
+                    <img src="/banner3.jpg" alt="awalan">
+                </div>
+                    <div class="text-section">
+                        <div class="content">
+                            <h1>Temukan Desain 3D Anda</h1>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consectetur in dui id maximus. Pellentesque vitae consequat orci. Nulla hendrerit aliquam diam ac pellentesque. Ut erat odio, tempor nec tortor scelerisque, laoreet dapibus nulla. Phasellus fermentum, est in tempus porta, arcu magna facilisis sem, sit amet tempus eros lorem ut augue. Quisque tempus facilisis malesuada. Nam porttitor justo non eros pretium tincidunt.</p>
+                      </div>
+                </div>
             </div>
-        </div>
-        <div class="image-section">
-            <img src="/banner2.png" alt="awalan">
+
+            <div class="flex gap-2 my-32">
+                <div class="text-section">
+                    <div class="content">
+                        <h1>Eksplorasi Aset 3D</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consectetur in dui id maximus. Pellentesque vitae consequat orci. Nulla hendrerit aliquam diam ac pellentesque. Ut erat odio, tempor nec tortor scelerisque, laoreet dapibus nulla. Phasellus fermentum, est in tempus porta, arcu magna facilisis sem, sit amet tempus eros lorem ut augue. Quisque tempus facilisis malesuada. Nam porttitor justo non eros pretium tincidunt.</p>
+                    </div>
+                </div>
+                <div class="image-section">
+                    <img src="/banner2.png" alt="awalan">
+                </div>
+            </div>
         </div>
     </div>
 </body>
