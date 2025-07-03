@@ -1,7 +1,6 @@
 import type { QuerySnapshot, DocumentSnapshot } from "firebase/firestore/lite";
 
 import { collection, getDocs } from "firebase/firestore";
-import { ref, getDownloadURL } from "firebase/storage";
 
 import type { PageServerLoad } from "./$types";
 import { db, storage } from "$lib/firebase";
@@ -11,24 +10,14 @@ export const load: PageServerLoad = async ({ url }) => {
 
     const querySnapshots: QuerySnapshot = await getDocs(collection(db, "model"));
 
-    let data: Array<any> = Array<any>()
+    let data: Array<String> = Array<String>()
     querySnapshots.forEach(async (doc: DocumentSnapshot) => {
         if (doc.data()!.title.toLowerCase().includes(search.toLowerCase())) {
-            data.push({ id: doc.id, ...doc.data(), author: doc.data()!.author.path});
+            data.push(doc.id);
         }
     });
 
-    for (let i = 0; i < data.length; ++i) {
-        const currencyFormatter = new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR'
-        });
-
-        data[i].price = currencyFormatter.format(data[i].price);
-        data[i] = { ...data[i], preview: await getDownloadURL(ref(storage, `model/preview/${data[i].id}.png`))};
-    }
-
     return {
-        models: data
+        ids: data
     };
 };

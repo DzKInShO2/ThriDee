@@ -1,5 +1,7 @@
 <script lang="ts">
-export let data;
+import { ModelCard } from "../../components/design";
+
+const { data } = $props();
 </script>
 
 {#snippet modelItem(model: any)}
@@ -13,19 +15,15 @@ export let data;
         </div>
 {/snippet}
 
-<div class="min-h-[60vh]">
-<section class="p-5 flex gap-5">
-    {#if data.models.length > 0}
-        <div style="display: grid; grid-template-columns: repeat(6, minmax(200px, 1fr)); gap: 1rem; width: 100%;">
-            {#each data.models as model}
-                {@render modelItem(model)}
-            {/each}
-        </div>
+<section class="p-5 flex gap-5 ">
+    {#if data.ids.length > 0}
+        {#each data.ids as id }
+            <ModelCard {id} />
+        {/each}
     {:else}
         <div class="flex flex-col items-center w-full">
-            <img class="rounded-full" src="/nomodel.webp" alt="No model found">
+            <img class="rounded-full" alt="Adit" src="/nomodel.webp">
             <h1>Oops! Model yang anda cari tidak ditemukan! Mungkin sudah ditelan Adit!</h1>
         </div>
     {/if}
 </section>
-</div>
