@@ -9,9 +9,11 @@
         GoogleAuthProvider,
         signInWithPopup,
         createUserWithEmailAndPassword,
+        getAdditionalUserInfo,
     } from "firebase/auth";
 
     import { 
+        ClickableButton,
         GoogleAuthButton,
         InputField,
         PasswordField
@@ -42,7 +44,10 @@
         createUserWithEmailAndPassword(auth, email, passwordNew)
             .then(cred => {
                 setDoc(doc(db, "user", cred.user.uid), {
+                    name: cred.user.displayName,
                     bio: "",
+                    photoURL: "",
+                    joined: cred.user.metadata.creationTime
                 });
             })
             .catch((error) => {
@@ -54,6 +59,18 @@
         const provider = new GoogleAuthProvider();
 
         signInWithPopup(auth, provider)
+            .then((cred) => {
+                const additionalInfo = getAdditionalUserInfo(cred)!;
+                
+                if (additionalInfo.isNewUser) {
+                    setDoc(doc(db, "user", cred.user.uid), {
+                        name: cred.user.displayName,
+                        bio: "",
+                        photoURL: cred.user.photoURL,
+                        joined: cred.user.metadata.creationTime
+                    });
+                }
+            })
             .catch((error) => {
                 authError = getFirebaseAuthMessage(error.code);
             });
@@ -69,6 +86,7 @@
     lg:mt-50 
     h-screen">
     <h1 class="text-3xl font-medium">Register</h1>
+    <!-- svelte-ignore event_directive_deprecated -->
     <form
         autocomplete="off"
         on:submit|preventDefault={handleRegister}
@@ -95,21 +113,7 @@
         <InputField title="Email" bind:value={email} />
         <PasswordField title="New Password" bind:value={passwordNew} />
         <PasswordField title="Verify Password" bind:value={passwordVerify} />
-
-        <button
-            class="
-            transition-all
-            bg-[#FFA808]
-            p-2
-            rounded-xl
-            cursor-pointer
-            hover:shadow-lg
-            hover:p-3
-            active:bg-[#F75B00]
-            active:scale-[1.1]
-            mt-5">
-            Register
-        </button>
+        <ClickableButton label="Register" />
 
         <p class="
             block 

@@ -5,6 +5,7 @@
     import { auth, getFirebaseAuthMessage } from "$lib/firebase";
 
     import { 
+        ClickableButton,
         GoogleAuthButton, 
         InputField, 
         PasswordField 
@@ -52,6 +53,7 @@
     lg:mt-50
     h-screen">
     <h1 class="text-3xl font-medium">Login</h1>
+    <!-- svelte-ignore event_directive_deprecated -->
     <form
         on:submit|preventDefault={handleLogin}
         method="POST"
@@ -62,23 +64,8 @@
         {/if}
 
         <InputField title="Email" bind:value={email} />
-
         <PasswordField title="Password" bind:value={password} />
-
-        <button
-            class="
-            transition-all
-            bg-[#FFA808]
-            p-2
-            rounded-xl
-            cursor-pointer
-            hover:shadow-lg
-            hover:p-3
-            active:bg-[#F75B00]
-            active:scale-[1.1]
-            mt-5">
-            Log-In
-        </button>
+        <ClickableButton label="Log-In" />
 
         <p class="block m-auto">
             Don't have an account? <a

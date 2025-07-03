@@ -49,6 +49,10 @@ onMount(() => {
             e.stopPropagation();
         });
 
+        window.addEventListener("resize", () => {
+            engine.resize();
+        });
+
         let camera = new BABYLON.ArcRotateCamera(
             'camera1',
             Math.PI / 2,
@@ -84,7 +88,8 @@ onMount(() => {
 <canvas
     bind:this={canvas}
     class="
-    w-[512px]
-    h-[512px]
+    rounded-md
+    w-full
+    h-full
     ">
 </canvas>

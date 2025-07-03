@@ -24,11 +24,11 @@
     class="flex flex-row justify-between items-center h-15 p-4 shadow-xs gap-5 sticky z-40">
     <div>
         <a href="/">
-            <img src="/logo.png" class="w-24 h-24 hidden lg:block" />
+            <img src="/logo.png" class="w-24 h-24 hidden md:block" />
         </a>
         <h1
-            class="transition-all block lg:hidden active:text-[#FFA808]"
-            on:click={toggleSidebar}>
+            class="transition-all block md:hidden active:text-[#FFA808]"
+            onclick={() => toggleSidebar()}>
             {#if sidebarPosition === "-left-60"}
                 <i class="fa-solid fa-bars"></i>
             {:else}
@@ -66,7 +66,7 @@
     <a href="/user" style="margin-right: 1rem; color: white;">Profile</a>
     <a href="/user/login" style="margin-right: 1rem; color: white;">Login</a>
     <a href="/user/register" style="margin-left: auto; color: white;">Register</a>
-    <a style="margin-left: auto; color: white;" class="cursor-pointer" on:click={() => { signOut(auth).then(() => goto("/")) }}>Log Out</a>
+    <a style="margin-left: auto; color: white;" class="cursor-pointer" onclick={() => { signOut(auth).then(() => goto("/")) }}>Log Out</a>
 </nav>
 
 <div class="h-full">
