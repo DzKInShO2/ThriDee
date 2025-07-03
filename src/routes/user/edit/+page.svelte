@@ -59,7 +59,7 @@
 
     async function changeBio() {
         setDoc(doc(db, "user", $user!.uid), {
-            bio: userData.bio
+            bio: bioValue
         }, {merge: true}).then(() => {
             userData.bio = bioValue;
             bioVisibility = false;
