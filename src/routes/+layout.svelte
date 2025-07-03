@@ -19,11 +19,12 @@ function toggleSidebar() {
     }
 }
 
-  let showMenu = true;
-
-let login;
-    login = true;
-    // login = false;
+let menuShown = $state(false);
+let isLoggedIn = $state(false);
+$effect(() => {
+    isLoggedIn = $user !== null;
+    menuShown = false;
+});
 </script>
 
 <nav
@@ -68,20 +69,23 @@ let login;
     </div>
 
     <div class="user-nav">
-    {#if login}
+    {#if isLoggedIn}
         <div class="auth-links">
                 <a href="/model/new" class="btn-upload hidden lg:block">
                     <i class="fa-solid fa-upload"></i> Upload
                 </a>
-            <a class="btn-icon hidden md:block" href="#">
+            <!-- svelte-ignore a11y_consider_explicit_label -->
+            <button 
+                onclick={() => menuShown = !menuShown }
+                class="btn-icon hidden md:block">
                 <i class="fa-solid fa-user"></i>
-            </a>
-            {#if showMenu}
+            </button>
+            {#if menuShown}
                 <div class="profile-dropdown">
                     <a href="/model/new" class="mobile">
                         <i class="fa-solid fa-upload"></i> Upload
                     </a>
-                    <a href="/user?" style="display: block;"><i class="fa-solid fa-user"></i> Profil Saya</a>
+                    <a href={`/user?id=${$user!.uid}`} class="block"><i class="fa-solid fa-user"></i> Profil Saya</a>
                     <a style="display: block" onclick={() => signOut(auth).then(() => goto("/"))}><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
                 </div>
             {/if}
