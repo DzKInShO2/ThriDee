@@ -81,8 +81,8 @@
         });
     }
 
-    async function changePassword(password) {
-        updatePassword($user!, password);
+    async function changePassword(password: String) {
+        updatePassword($user!, password.toString());
     }
 </script>
 

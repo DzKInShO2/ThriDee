@@ -13,6 +13,12 @@ let { photoUrl = null } = $props();
     "
     src={photoUrl} />
 {:else}
-    <div class="w-full h-full bg-gray-500">
-    </div>
+<img 
+    class="
+    w-full
+    h-full
+    object-cover
+    object-center
+    "
+    src="/noprofile.jpg" />
 {/if}
