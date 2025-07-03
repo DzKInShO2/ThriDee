@@ -17,8 +17,7 @@
         signInWithPopup,
         getAdditionalUserInfo,
     } from "firebase/auth";
-    import { doc, setDoc } from "firebase/firestore";
-    import { Timestamp } from "firebase-admin/firestore";
+    import { doc, setDoc, Timestamp } from "firebase/firestore";
 
     $effect(() => {
         if ($user) {

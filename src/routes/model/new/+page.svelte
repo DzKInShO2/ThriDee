@@ -19,7 +19,7 @@ $effect(() => {
 let nameValue = $state("");
 let descriptionValue = $state("");
 
-let modelFile = $state<File>();
+let modelFile = $state<File>(null);
 async function changeModel() {
 }
 </script>
