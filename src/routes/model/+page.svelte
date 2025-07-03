@@ -7,7 +7,7 @@ import {
     ProfilePhoto
 }from "../../components/design"
 
-import { fly } from "svelte/transition";
+import { fade } from "svelte/transition";
 
 import { onMount } from 'svelte';
 import { goto } from '$app/navigation';
@@ -77,9 +77,9 @@ let modelsPromise = $state(getRelatedModels());
         <div class="flex-none flex flex-col gap-4">
             <p class="font-semibold text-lg w-[256px]">Model Terkait</p>
             {#await modelsPromise}
-                <p>Memuat model<span>...</span></p>
+                <p out:fade>Memuat model<span>...</span></p>
             {:then models}
-                <div in:fly class="flex flex-col gap-2">
+                <div in:fade class="flex flex-col gap-2">
                     {#each models as model}
                         <ModelCard id={model} />
                     {/each}

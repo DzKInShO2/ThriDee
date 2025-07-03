@@ -6,6 +6,8 @@ import { doc, getDoc } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import { onMount } from "svelte";
 
+import { fly } from "svelte/transition";
+
 let {id} = $props();
 
 let data: any = $state(null);
@@ -34,6 +36,7 @@ onMount(async () => {
 <!-- svelte-ignore event_directive_deprecated -->
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <a
+    transition:fly={{ y: 200 }}
     href={`/model?id=${id}`}
     class="
     basis-[256px]
