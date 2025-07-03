@@ -14,6 +14,41 @@ onMount(() => {
     function createScene() : BABYLON.Scene {
         let scene = new BABYLON.Scene(engine);
 
+        canvas.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        canvas.addEventListener('mouseup', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        canvas.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
         let camera = new BABYLON.ArcRotateCamera(
             'camera1',
             Math.PI / 2,

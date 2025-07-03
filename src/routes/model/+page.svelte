@@ -17,4 +17,6 @@ onMount(() => {
 
 </script>
 
-<ModelViewport model={data.modelData} />
+<section class="h-screen">
+    <ModelViewport model={data.modelData} />
+</section>
