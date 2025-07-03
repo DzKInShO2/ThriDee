@@ -31,6 +31,7 @@ export const load: PageServerLoad = async ({url}) => {
                 ...docSnap.data(),
                 author: authorData,
                 binary: url,
+                published: docSnap.data()!.published.toDate().toLocaleString(),
                 price: currencyFormatter.format(docSnap.data()!.price!)
             };
         }

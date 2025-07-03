@@ -1,23 +1,23 @@
 <script lang="ts">
-  import "../app.css";
+import "../app.css";
 
-  import { auth } from "$lib/firebase";
-  import { user } from "$lib/stores/authStore";
-  import { signOut } from "firebase/auth";
+import { auth } from "$lib/firebase";
+import { user } from "$lib/stores/authStore";
+import { signOut } from "firebase/auth";
 
-  import "$lib/styles/theme.css";
-  import { goto } from "$app/navigation";
+import "$lib/styles/theme.css";
+import { goto } from "$app/navigation";
 
-  let { children } = $props();
+let { children } = $props();
 
-  let sidebarPosition = $state("-left-60");
-  function toggleSidebar() {
+let sidebarPosition = $state("-left-60");
+function toggleSidebar() {
     if (sidebarPosition === "-left-60") {
-      sidebarPosition = "-left-0";
+        sidebarPosition = "-left-0";
     } else {
-      sidebarPosition = "-left-60";
+        sidebarPosition = "-left-60";
     }
-  }
+}
 </script>
 
 <nav
@@ -59,7 +59,7 @@
 <nav style="background: var(--color-primary); padding: 1rem; color: white">
     <a href="/" style="margin-right: 1rem; color: white;">Home</a>
     <a href="/marketplace" style="margin-right: 1rem; color: white;">Marketplace</a>
-    <a href="/upload" style="margin-right: 1rem; color: white;">Upload</a>
+    <a href="/model/new" style="margin-right: 1rem; color: white;">Upload</a>
     <a href="/search" style="margin-right: 1rem; color: white;">Search</a>
     <a href="/model" style="margin-right: 1rem; color: white;">View Model</a>
     <a href="/about" style="margin-right: 1rem; color: white;">About Us</a>
