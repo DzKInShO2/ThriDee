@@ -72,17 +72,19 @@ $effect(() => {
     <div class="user-nav">
     {#if isLoggedIn}
         <div class="auth-links">
+            <div class="flex gap-3 items-center">
                 <a href="/model/new" class="btn-upload hidden lg:block">
                     <i class="fa-solid fa-upload"></i> Upload
                 </a>
-            <!-- svelte-ignore a11y_consider_explicit_label -->
-            <button 
-                onclick={() => menuShown = !menuShown }
-                class="hidden md:block">
-                <div class="cursor-pointer border-2 border-[#FFA808] overflow-clip w-[48px] h-[48px] rounded-full">
-                    <ProfilePhoto photoUrl={$user!.photoURL} />
-                </div>
-            </button>
+                <!-- svelte-ignore a11y_consider_explicit_label -->
+                <button 
+                    onclick={() => menuShown = !menuShown }
+                    class="hidden md:block">
+                    <div class="cursor-pointer border-2 border-[#FFA808] overflow-clip w-[48px] h-[48px] rounded-full">
+                        <ProfilePhoto photoUrl={$user!.photoURL} />
+                    </div>
+                </button>
+            </div>
             {#if menuShown}
                 <div class="profile-dropdown">
                     <a href="/model/new" class="mobile">

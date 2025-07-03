@@ -6,7 +6,7 @@ import { user } from "$lib/stores/authStore"
 import { addDoc, collection, doc, Timestamp } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
 
-const categories = ['Character', 'Vehicle', 'Environment', 'Weapon', 'Building', 'Accessory']
+import * as BABYLON from "@babylonjs/core";
 
 import {
     ClickableButton,
@@ -20,6 +20,8 @@ $effect(() => {
     }
 });
 
+const categories = ['Character', 'Vehicle', 'Environment', 'Weapon', 'Building', 'Accessory']
+
 let nameValue = $state("");
 let descriptionValue = $state("");
 let priceValue = $state("");
@@ -28,6 +30,13 @@ let errorValue: any = $state(null);
 
 let modelFile = $state<File>();
 let model: any = $state(null);
+
+let babylonData = $state<{
+    engine: BABYLON.Engine,
+    camera: BABYLON.ArcRotateCamera,
+    scene: BABYLON.Scene
+}>();
+
 async function changeModel() {
     if (modelFile === undefined) return;
     
@@ -71,7 +80,7 @@ async function uploadModel() {
         <p class="text-red-500 font-semibold">{errorValue}</p>
     {/if}
     <div class="shadow-xl w-full h-2/5">
-        <ModelViewport bind:model={model} />
+        <ModelViewport bind:model={model} bind:external={babylonData} />
     </div>
     <div class="flex flex-col border border-gray-100 bg-gray-50 shadow-2xl w-full rounded-xl overflow-clip">
         <p class="p-3 text-xl font-medium">Info Dasar</p>

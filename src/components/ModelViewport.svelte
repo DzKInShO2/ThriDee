@@ -1,14 +1,16 @@
 <script lang="ts">
+
 import { onMount } from 'svelte';
 
 import * as BABYLON from '@babylonjs/core';
 import "@babylonjs/loaders";
 
-let { model = $bindable() } = $props();
+let { model = $bindable(), external = $bindable() } = $props();
 
 let canvas: HTMLCanvasElement;
 onMount(() => {
     let engine = new BABYLON.Engine(canvas, true);
+    let camera: BABYLON.ArcRotateCamera|null = null;
     function createScene() : BABYLON.Scene {
         let scene = new BABYLON.Scene(engine);
 
@@ -51,7 +53,7 @@ onMount(() => {
             engine.resize();
         });
 
-        let camera = new BABYLON.ArcRotateCamera(
+        camera = new BABYLON.ArcRotateCamera(
             'camera1',
             Math.PI / 2,
             Math.PI / 2,
@@ -78,16 +80,27 @@ onMount(() => {
         return scene
     }
 
+    let scene = $state(createScene());
+    engine.runRenderLoop(() => scene.render());
+
+    external = {
+        engine: engine,
+        camera: camera,
+        scene: scene
+    };
+
     $effect(() => {
         if (model) {
-            const scene = createScene();
+            let scene = createScene();
             engine.runRenderLoop(() => scene.render());
+
+            external = {
+                engine: engine,
+                camera: camera,
+                scene: scene
+            };
         }
     });
-
-    const scene = createScene();
-
-    engine.runRenderLoop(() => scene.render());
 })
 
 </script>
