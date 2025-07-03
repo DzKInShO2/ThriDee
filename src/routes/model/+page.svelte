@@ -2,6 +2,7 @@
 
 import {
     ClickableButton,
+    ModelCard,
     ModelViewport,
     ProfilePhoto
 }from "../../components/design"
@@ -42,7 +43,7 @@ onMount(() => {
             </div>
         </div>
         <div class="flex-none">
-            <p>Hello</p>
+            <ModelCard id={data.modelId} />
         </div>
     </div>
 </section>

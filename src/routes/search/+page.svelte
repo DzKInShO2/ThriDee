@@ -5,9 +5,9 @@ const { data } = $props();
 </script>
 
 <section class="p-5 flex gap-5 ">
-    {#if data.models.length > 0}
-        {#each data.models as model }
-            <ModelCard {...model} />
+    {#if data.ids.length > 0}
+        {#each data.ids as id }
+            <ModelCard {id} />
         {/each}
     {:else}
         <div class="flex flex-col items-center w-full">

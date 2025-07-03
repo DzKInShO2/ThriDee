@@ -9,9 +9,14 @@ let { photoUrl, size = 24 } = $props();
     rounded-full
 `}>
 <!-- svelte-ignore a11y_missing_attribute -->
-<img 
-    class={`
-    object-contain
-    `}
-    src={photoUrl} />
+    {#if (photoUrl)}
+    <img 
+        class={`
+        object-contain
+        `}
+        src={photoUrl} />
+    {:else}
+        <div class="w-full h-full bg-purple-500">
+        </div>
+    {/if}
 </div>
