@@ -51,19 +51,20 @@
                 <img src="/environment.png" alt="awalan" />
             </div>
         </div>
+
+        <section style="padding: 2rem">
+        </section>
+        <h1>Start Exploring NOW</h1>
+        <div class="grid-assets">
+            {#each dummyAssets.slice(0, 6) as asset}
+                <a href="/search?s={asset.category}" class="card-hover">
+                    <img src={asset.img} alt={asset.category} class="object-cover w-full h-full" />
+                    <div class="absolute bg-[#FFFFFF10] text-white w-full bottom-0 p-2">
+                        <p style="font-weight: bold; text-align: center;">{asset.category}</p>
+                    </div>
+                </a>
+            {/each}
+        </div>
     </div>
 </div>  
 
-<section style="padding: 2rem">
-<h1>Start Exploring NOW</h1>
-<div class="grid-assets">
-    {#each dummyAssets.slice(0, 6) as asset}
-        <a href="/search?s={asset.category}" class="card-hover">
-            <img src={asset.img} alt={asset.category} class="object-cover w-full h-full" />
-            <div class="absolute bg-[#FFFFFF10] text-white w-full bottom-0 p-2">
-                <p style="font-weight: bold; text-align: center;">{asset.category}</p>
-            </div>
-        </a>
-    {/each}
-</div>
-</section>

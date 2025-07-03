@@ -42,7 +42,9 @@ onMount(() => {
                     p-2 
                     flex gap-5 items-center 
                     select-none">
-                    <ProfilePhoto photoUrl={data.modelData.author.photoURL} />
+                    <div class="w-[96px] h-[96px] overflow-clip rounded-full">
+                        <ProfilePhoto photoUrl={data.modelData.author.photoURL} />
+                    </div>
                     <div class="flex flex-col gap-2">
                         <p class="font-medium text-lg">{data.modelData.author.name}</p>
                         <p class="text-sm">Bio: <br>{data.modelData.author.bio}</p>

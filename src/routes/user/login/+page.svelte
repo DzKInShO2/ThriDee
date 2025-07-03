@@ -50,8 +50,7 @@
     items-center
     gap-10
     mt-20
-    lg:mt-50
-    h-screen">
+    lg:mt-50">
     <h1 class="text-3xl font-medium">Login</h1>
     <!-- svelte-ignore event_directive_deprecated -->
     <form

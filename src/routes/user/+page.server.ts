@@ -1,10 +1,9 @@
 import type { PageServerLoad } from "./$types";
-import { user } from "$lib/stores/authStore";
 
-export const load: PageServerLoad = async ({url}) => {
-    if (!user) {
-        return {
-            user: null
-        };
-    }
+export const load: PageServerLoad = ({url}) => {
+    const id = url.searchParams.get("id") ?? "";
+
+    return {
+        user: id,
+    };
 };

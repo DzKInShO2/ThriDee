@@ -53,6 +53,14 @@ let login;
                 placeholder="Search your 3D assets..."
             />
             <button
+                class="
+                bg-[#FFA808] 
+                cursor-pointer 
+                active:bg-[#F75B00] 
+                w-10 
+                flex flex-col 
+                items-center justify-center
+                active:scale-[1.1]"
                 aria-label="Search">
                 <i class="fa fa-search text-black"></i>
             </button>
