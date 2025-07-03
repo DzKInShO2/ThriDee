@@ -1,19 +1,16 @@
 <script lang="ts">
-	let user = {
-		username: "Rakasya Yoga",
-		created_at: "2024-01-15",
-		profile_image: "/profile.jpg",
-		bio: "Mahasiswa Informatika dan kreator 3D enthusiast."
-	};
+import { goto } from "$app/navigation";
+import { user } from "$lib/stores/authStore"
+import { onMount } from "svelte";
 
-	let isOwnProfile = true;
-	const dummyAssets = Array.from({ length: 8 }, (_, i) => ({
-		title: `Aset Contoh ${i + 1}`,
-		price: `$${(i + 1) * 5}`,
-		category: ['Character', 'Vehicle', 'Environment', 'Weapon', 'Building', 'Accessory'][i % 6],
-		img: ['/char.jpg', '/vehicle.jpg', '/environment.png', '/weapon.jpg', '/building.png', '/accessory.jpg'][i % 6]
+let { data } = $props();
 
-	}));
+onMount(() => {
+    if (!data.user) {
+        goto("/");
+    }
+})
+
 </script>
 
 <div class="profile-full">
