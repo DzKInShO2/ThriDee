@@ -39,7 +39,7 @@
     <div>
         <form
             action="/search"
-            class="flex flex-row justify-between shadow-sm rounded-xl overflow-clip w-80 md:w-160 border-1 border-[#FFA808]">
+            class="flex flex-row justify-between shadow-sm rounded-xl overflow-clip w-full md:w-160 border-1 border-[#FFA808]">
             <input
                 type="text"
                 name="s"

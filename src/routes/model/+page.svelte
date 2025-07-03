@@ -30,20 +30,31 @@ onMount(() => {
                         <h1>{data.modelData.title}</h1>
                         <p>{data.modelData.price}</p>
                     </div>
-                    <ClickableButton label="<i class='fa-solid fa-cart-shopping'></i> Pesan" render={true} />
+                    <ClickableButton label="<i class='fa-solid fa-download'></i> Unduh" render={true} />
                 </div>
                 <p>{data.modelData.description}</p>
-                <div class="bg-gray-100 rounded-md shadow-md p-2 flex gap-5 items-center select-none">
+                <a 
+                    href={`user?id=${data.modelData.author.id}`}
+                    class="
+                    cursor-pointer 
+                    bg-gray-100 
+                    rounded-md shadow-md 
+                    p-2 
+                    flex gap-5 items-center 
+                    select-none">
                     <ProfilePhoto photoUrl={data.modelData.author.photoURL} />
                     <div class="flex flex-col gap-2">
                         <p class="font-medium text-lg">{data.modelData.author.name}</p>
                         <p class="text-sm">Bio: <br>{data.modelData.author.bio}</p>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
-        <div class="flex-none">
-            <ModelCard id={data.modelId} />
+        <div class="flex-none flex flex-col gap-4">
+            <p class="font-semibold text-lg w-[256px]">Model Terkait</p>
+            <div class="flex flex-col gap-2">
+                <ModelCard id={data.modelId} />
+            </div>
         </div>
     </div>
 </section>
