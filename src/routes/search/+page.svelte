@@ -17,7 +17,7 @@ const { data } = $props();
 
 <section class="p-5">
     {#if data.ids.length > 0}
-        <div class="grid auto-cols-max gap-5">
+        <div class="flex flex-wrap gap-5">
             {#each data.ids as id }
                 <ModelCard {id} />
             {/each}

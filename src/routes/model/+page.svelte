@@ -25,7 +25,7 @@ onMount(() => {
         <div class="flex flex-1 flex-col gap-5">
             <ModelViewport model={data.modelData} />
             <div class="bg-gray-50 flex flex-col p-3 rounded-xl shadow-2xl w-full gap-5">
-                <div class="flex flex-row justify-between">
+                <div class="flex flex-row items-center justify-between">
                     <div class="flex flex-col">
                         <h1>{data.modelData.title}</h1>
                         <p>{data.modelData.price}</p>

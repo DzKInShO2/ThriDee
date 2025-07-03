@@ -4,7 +4,7 @@ import { goto } from "$app/navigation";
 import { db, storage } from "$lib/firebase"
 import { user } from "$lib/stores/authStore"
 import { addDoc, collection, doc, Timestamp } from "firebase/firestore";
-import { ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes, uploadString } from "firebase/storage";
 
 import * as BABYLON from "@babylonjs/core";
 
@@ -34,7 +34,6 @@ let model: any = $state(null);
 let babylonData = $state<{
     engine: BABYLON.Engine,
     camera: BABYLON.ArcRotateCamera,
-    scene: BABYLON.Scene
 }>();
 
 async function changeModel() {
@@ -50,7 +49,8 @@ async function uploadModel() {
     if (nameValue.length === 0 
         && (priceValue.length === 0 || Number(priceValue) === Number.NaN)
         && descriptionValue.length === 0 
-        && modelFile === undefined) {
+        && modelFile === undefined
+        && babylonData === undefined) {
         errorValue = "Please make sure you fill up all the field correctly before submitting."
         return
     }
@@ -67,6 +67,13 @@ async function uploadModel() {
         title: nameValue,
         type: ext
     }).then((docRef) => {
+        BABYLON.Tools.CreateScreenshotUsingRenderTarget(babylonData!.engine, babylonData!.camera, 
+        { width: 512, height: 512 }, (data) => {
+            uploadString(ref(storage, `model/preview/${docRef.id}.png`), data, "data_url", {
+                contentType: "image/png"
+            });
+        });
+        
         uploadBytes(ref(storage, `model/binary/${docRef!.id}.${ext!}`), modelFile!).then(() => {
             goto(`/model?id=${docRef!.id}`);
         });
@@ -104,8 +111,8 @@ async function uploadModel() {
             <input type="text" class="flex-1 shadow-md border-none ring-0 rounded-md group-hover:bg-gray-200" bind:value={nameValue} />
         </div>
         <div 
-            class="group flex items-center justify-between p-5 gap-13 border-t-1 border-gray-200 cursor-pointer">
-            <p class="text-md font-normal">Price</p>
+            class="group flex items-center justify-between p-5 gap-11 border-t-1 border-gray-200 cursor-pointer">
+            <p class="text-md font-normal">Harga</p>
             <input type="number" pattern="[0-9]" min="0" class="flex-1 shadow-md border-none ring-0 rounded-md group-hover:bg-gray-200" bind:value={priceValue} />
         </div>
         <!-- svelte-ignore a11y_click_events_have_key_events -->

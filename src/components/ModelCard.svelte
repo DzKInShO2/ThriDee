@@ -36,6 +36,7 @@ onMount(async () => {
 <a
     href={`/model?id=${id}`}
     class="
+    basis-[256px]
     transition-transform 
     rounded-md 
     w-[256px] h-[256px] 

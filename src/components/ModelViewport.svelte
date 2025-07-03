@@ -86,7 +86,6 @@ onMount(() => {
     external = {
         engine: engine,
         camera: camera,
-        scene: scene
     };
 
     $effect(() => {
@@ -97,7 +96,6 @@ onMount(() => {
             external = {
                 engine: engine,
                 camera: camera,
-                scene: scene
             };
         }
     });
