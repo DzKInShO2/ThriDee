@@ -110,7 +110,7 @@ $effect(() => {
 </div>
 
 <!-- Footer -->
-<footer class="footer">
+<footer class="footer hidden md:block">
     <div class="footer-divider"></div>
 
     <div class="footer-content">
@@ -143,5 +143,5 @@ $effect(() => {
             </ul>
         </div>
     </div>
-    <div class="footer-bottom">© 2025 ThriDee</div>
 </footer>
+<div class="footer-bottom">© 2025 ThriDee</div>
