@@ -40,9 +40,9 @@
 
         signInWithPopup(auth, provider)
             .then((cred) => {
-                const additionalInfo = getAdditionalUserInfo(cred)!;
-                
-                if (additionalInfo.isNewUser) {
+                const additionalInfo = getAdditionalUserInfo(cred);
+                const isUserNew = additionalInfo?.isNewUser ?? (cred.user.metadata.creationTime === cred.user.metadata.lastSignInTime);
+                if (isUserNew) {
                     setDoc(doc(db, "user", cred.user.uid), {
                         name: cred.user.displayName ?? "",
                         bio: "",
