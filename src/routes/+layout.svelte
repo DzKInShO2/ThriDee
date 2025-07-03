@@ -7,6 +7,7 @@ import { signOut } from "firebase/auth";
 
 import "$lib/styles/theme.css";
 import { goto } from "$app/navigation";
+    import { ProfilePhoto } from "../components/design";
 
 let { children } = $props();
 
@@ -77,8 +78,10 @@ $effect(() => {
             <!-- svelte-ignore a11y_consider_explicit_label -->
             <button 
                 onclick={() => menuShown = !menuShown }
-                class="btn-icon hidden md:block">
-                <i class="fa-solid fa-user"></i>
+                class="hidden md:block">
+                <div class="cursor-pointer border-gray-400 border-2 overflow-clip w-[48px] h-[48px] rounded-full">
+                    <ProfilePhoto photoUrl={$user!.photoURL} />
+                </div>
             </button>
             {#if menuShown}
                 <div class="profile-dropdown">

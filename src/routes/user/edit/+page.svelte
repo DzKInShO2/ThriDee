@@ -1,17 +1,20 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import { db } from "$lib/firebase.js";
+    import { db, storage } from "$lib/firebase.js";
     import { doc, getDoc, setDoc } from "firebase/firestore";
 
     import { user } from "$lib/stores/authStore";
 
     import { 
+        ActionChangeDialog,
         BioChangeDialog,
+        ClickableFileDialog,
         InfoChangeDialog,
         PasswordChangeDialog,
         ProfilePhoto
     } from "../../../components/design";
     import { updateEmail, updatePassword, updateProfile } from "firebase/auth";
+    import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
     let { data } = $props();
 
@@ -24,6 +27,9 @@
             goto("/");
         }
     });
+
+    let profileValue = $state<File>();
+    let profileVisibility = $state(false);
 
     let nameVisibility = $state(false);
     let nameValue = $state("");
@@ -46,6 +52,32 @@
             ...snap.data(),
         };
     });
+
+    async function profileFileFilter() {
+        if (profileValue === undefined) return;
+
+        profileVisibility = true;
+    }
+
+    async function changeProfile() {
+        if (profileValue === undefined) return;
+        
+        const ext = profileValue.name.split(".").pop();
+        uploadBytes(ref(storage, `/user/profile/${$user!.uid}.${ext}`), profileValue!).then((result) => {
+            getDownloadURL(result.ref).then((url) => {
+                setDoc(doc(db, "user", $user!.uid), {
+                    photoURL: url
+                }, {merge: true}).then(() => {
+                    userData.photoURL = profileValue;
+                    profileVisibility = false;
+
+                    updateProfile($user!, {
+                        photoURL: url
+                    });
+                });
+            });
+        });
+    }
 
     async function changeName() {
         updateProfile($user!, {
@@ -89,6 +121,8 @@
     }
 </script>
 
+<ActionChangeDialog label="Ganti gambar profil" text="Apakah anda yakin ingin mengganti gambar profil?" bind:visibility={profileVisibility} onaccept={changeProfile} />
+
 <InfoChangeDialog label="Ganti Nama" hint="Your name..." bind:visibility={nameVisibility} bind:value={nameValue} onaccept={changeName} />
 
 <BioChangeDialog label="Ganti Bio" hint="Your bio..." bind:visibility={bioVisibility} bind:value={bioValue} onaccept={changeBio} />
@@ -104,7 +138,8 @@
     {#if userData}
         <div class="flex flex-col border border-gray-100 bg-gray-50 shadow-2xl w-full rounded-xl overflow-clip">
             <p class="p-3 text-xl font-medium">Info Dasar</p>
-            <div class="group flex items-center justify-between p-5 hover:bg-gray-200 cursor-pointer">
+            <ClickableFileDialog bind:file={profileValue} extensions="image/*" onchange={profileFileFilter}
+                classNames="group flex items-center justify-between p-5 hover:bg-gray-200 cursor-pointer">
                 <p class="text-md font-normal">Gambar profil</p>
                 <div>
                     <div class="flex gap-5 items-center">
@@ -116,7 +151,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </ClickableFileDialog>
             <!-- svelte-ignore a11y_click_events_have_key_events -->
             <!-- svelte-ignore a11y_no_static_element_interactions -->
             <div 
