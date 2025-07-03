@@ -18,7 +18,7 @@
 
 <section style="padding: 2rem">
   <h1>Shop by category</h1>
-    <div class="grid-assets">
+  <div class="grid-assets">
     {#each dummyAssets.slice(0, 6) as asset}
     <div class="card-hover market-item">
         <img src={asset.img} alt={asset.title}/>

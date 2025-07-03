@@ -419,8 +419,15 @@ h1 {
 }
 
 /* Auth section */
+.auth-container {
+box-shadow: 0 -8px 16px rgba(0, 0, 0, 0.1), 0 12px 24px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-lg, 1rem);
+  background-color: #fafafa;
+  padding: 2.5rem;
+}
+
 .auth-links {
-  display: flex;
+  display: 1;
   gap: 0.5rem;
   align-items: center;
 }
@@ -428,17 +435,17 @@ h1 {
 /* Login/Register/Logout Button */
 .btn-auth {
   color: var(--color-text);
+  background-color: var(--color-primary-light);
   font-weight: 600;
   padding: 0.4rem 0.8rem;
   border-radius: var(--radius-sm);
   text-decoration: none;
-  border: 1px solid var(--color-primary-light);
   transition: background 0.2s ease, color 0.2s ease;
   font-size: 0.9rem;
 }
 
 .btn-auth:hover {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-active);
   color: white;
 }
 

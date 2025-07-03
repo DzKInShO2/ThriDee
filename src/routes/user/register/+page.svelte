@@ -84,8 +84,8 @@
     flex-col 
     items-center 
     gap-10 
-    mt-20 
-    lg:mt-50">
+    mt-10 
+    lg:mt-20">
     <h1 class="text-3xl font-medium">Register</h1>
     <!-- svelte-ignore event_directive_deprecated -->
     <form
@@ -93,6 +93,7 @@
         on:submit|preventDefault={handleRegister}
         method="POST"
         class="
+        auth-container
         flex 
         flex-col 
         gap-5 
@@ -104,6 +105,8 @@
         lg:w-120">
 
         <input type="email" class="hidden" autocomplete="email"/>
+        <input type="username" class="hidden" autocomplete="username"/>
+        <input type="username" class="hidden" autocomplete="username"/>
         <input type="password" class="hidden" autocomplete="current-password"/>
         <input type="password" class="hidden" autocomplete="new-password"/>
 
@@ -111,6 +114,7 @@
             <p class="block m-auto text-red-500">{authError}</p>
         {/if}
 
+        <InputField title="Username"  />
         <InputField title="Email" bind:value={email} />
         <PasswordField title="New Password" bind:value={passwordNew} />
         <PasswordField title="Verify Password" bind:value={passwordVerify} />
@@ -131,3 +135,9 @@
 
     <GoogleAuthButton label="Register with Google" onclick={handleGoogleLogin} />
 </div>
+
+<style>
+    .footer {
+        display: none;
+    }
+</style>

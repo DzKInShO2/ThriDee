@@ -65,13 +65,13 @@
     items-center
     gap-10
     mt-20
-    lg:mt-50">
+    lg:mt-20">
     <h1 class="text-3xl font-medium">Login</h1>
     <!-- svelte-ignore event_directive_deprecated -->
     <form
         on:submit|preventDefault={handleLogin}
         method="POST"
-        class="flex flex-col gap-5 shadow-2xl rounded-4xl bg-[#FAFAFA] p-10 w-90 lg:w-120">
+        class="auth-container flex flex-col gap-5">
 
         {#if (authError != "")}
             <p class="block m-auto text-red-500">{authError}</p>
@@ -89,5 +89,5 @@
         </p>
     </form>
 
-    <GoogleAuthButton label="Log-In with Google" onclick={handleGoogleLogin} />
+    <GoogleAuthButton class="google-btn" label="Log-In with Google" onclick={handleGoogleLogin} />
 </div>
