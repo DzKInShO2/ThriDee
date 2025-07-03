@@ -58,7 +58,7 @@ if (data.user !== "") {
             <div class="
                 w-[256px] h-[256px] 
                 overflow-clip rounded-full
-                border">
+                border-[#FFA808]">
                 <ProfilePhoto photoUrl={currentUser.photoURL} />
             </div>
 
