@@ -7,8 +7,13 @@ import {
     ProfilePhoto
 }from "../../components/design"
 
+import { fly } from "svelte/transition";
+
 import { onMount } from 'svelte';
 import { goto } from '$app/navigation';
+
+import { db } from "$lib/firebase";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 const { data } = $props();
 
@@ -16,7 +21,24 @@ onMount(() => {
     if (data.modelData === null) {
         goto("/")
     }
-})
+});
+
+async function getRelatedModels() {
+    return new Promise((fulfil, _) => {
+        const q = query(collection(db, "model"), where("category", "==", data.modelData.category));
+        let ids = Array<String>();
+
+        getDocs(q).then((docSnaps) => {
+            docSnaps.forEach((docRef) => {
+                ids.push(docRef.id);
+            });
+
+            fulfil(ids);
+        });
+    });
+}
+
+let modelsPromise = $state(getRelatedModels());
 
 </script>
 
@@ -30,7 +52,7 @@ onMount(() => {
                         <h1>{data.modelData.title}</h1>
                         <p>{data.modelData.price}</p>
                     </div>
-                    <ClickableButton label="<i class='fa-solid fa-download'></i> Unduh" render={true} />
+                    <ClickableButton label="<i class='fa-solid fa-download'></i> Unduh" render={true} onclick={() => {}}/>
                 </div>
                 <p>{data.modelData.description}</p>
                 <a 
@@ -54,9 +76,15 @@ onMount(() => {
         </div>
         <div class="flex-none flex flex-col gap-4">
             <p class="font-semibold text-lg w-[256px]">Model Terkait</p>
-            <div class="flex flex-col gap-2">
-                <ModelCard id={data.modelId} />
-            </div>
+            {#await modelsPromise}
+                <p>Memuat model<span>...</span></p>
+            {:then models}
+                <div in:fly class="flex flex-col gap-2">
+                    {#each models as model}
+                        <ModelCard id={model} />
+                    {/each}
+                </div>
+            {/await}
         </div>
     </div>
 </section>
