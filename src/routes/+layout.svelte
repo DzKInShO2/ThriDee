@@ -18,6 +18,12 @@ function toggleSidebar() {
         sidebarPosition = "-left-60";
     }
 }
+
+  let showMenu = true;
+
+let login;
+    login = true;
+    // login = false;
 </script>
 
 <nav
@@ -52,20 +58,39 @@ function toggleSidebar() {
             </button>
         </form>
     </div>
-    <div></div>
+
+    <div class="user-nav">
+    {#if login}
+        <div class="auth-links">
+                <a href="/model/new" class="btn-upload hidden lg:block">
+                    <i class="fa-solid fa-upload"></i> Upload
+                </a>
+            <a class="btn-icon" href="#">
+                <i class="fa-solid fa-user"></i>
+            </a>
+            {#if showMenu}
+                <div class="profile-dropdown">
+                    <a href="/model/new" class="upload-mobile">
+                        <i class="fa-solid fa-upload"></i> Upload
+                    </a>
+                    <a href="/user" style="display: block;"><i class="fa-solid fa-user"></i> Profil Saya</a>
+                    <a style="display: block" onclick={() => signOut(auth).then(() => goto("/"))}><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
+                </div>
+            {/if}
+        </div>
+    {:else}
+        <div class="auth-links">
+        <a href="/user/login" class="btn-auth">Login</a>
+        <a href="/user/register" class="btn-auth">Register +</a>
+        </div>
+    {/if}
+    </div>
 </nav>
 
 <nav style="background: var(--color-primary); padding: 1rem; color: white">
     <a href="/" style="margin-right: 1rem; color: white;">Home</a>
     <a href="/marketplace" style="margin-right: 1rem; color: white;">Marketplace</a>
-    <a href="/model/new" style="margin-right: 1rem; color: white;">Upload</a>
     <a href="/search" style="margin-right: 1rem; color: white;">Search</a>
-    <a href="/model" style="margin-right: 1rem; color: white;">View Model</a>
-    <a href="/about" style="margin-right: 1rem; color: white;">About Us</a>
-    <a href="/user" style="margin-right: 1rem; color: white;">Profile</a>
-    <a href="/user/login" style="margin-right: 1rem; color: white;">Login</a>
-    <a href="/user/register" style="margin-right: auto; color: white;">Register</a>
-    <a style="margin-left: auto; color: white;" class="cursor-pointer" onclick={() => { signOut(auth).then(() => goto("/")) }}>Log Out</a>
 </nav>
 
 <div class="h-full">
@@ -80,6 +105,9 @@ function toggleSidebar() {
         <div class="footer-section">
             <h5>TriDee</h5>
             <p>Temukan aset 3D berkualitas tinggi untuk proyek kreatif Anda.</p>
+            <h5>
+                <a href="/about">About Us</a>
+            </h5>
         </div>
 
         <div class="footer-section">
