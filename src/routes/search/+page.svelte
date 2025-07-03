@@ -15,7 +15,7 @@ const { data } = $props();
         </div>
 {/snippet}
 
-<section class="p-5">
+<section class="p-5 h-screen">
     {#if data.ids.length > 0}
         <div class="flex flex-wrap gap-5">
             {#each data.ids as id }
