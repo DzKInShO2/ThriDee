@@ -70,7 +70,9 @@ onMount(() => {
         light.intensity = 0.7;
 
         if (model) {
-            BABYLON.AppendSceneAsync(model.binary, scene);
+            BABYLON.AppendSceneAsync(model.binary, scene, {
+                pluginExtension: `.${model.type}`
+            });
         }
 
         return scene

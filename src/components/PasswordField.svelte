@@ -1,6 +1,6 @@
 <script lang="ts">
 
-let { title, value = $bindable(), hint } = $props();
+let { title, value = $bindable(), hint="Your password..." } = $props();
 
 let visibility = $state(false);
 

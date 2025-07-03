@@ -1,4 +1,5 @@
 export { default as ActionChangeDialog } from "./ActionChangeDialog.svelte";
+export { default as ActionConfirmDialog } from "./ActionConfirmDialog.svelte";
 export { default as BioChangeDialog } from "./BioChangeDialog.svelte";
 export { default as ClickableButton } from "./ClickableButton.svelte";
 export { default as ClickableFileDialog } from "./ClickableFileDialog.svelte";

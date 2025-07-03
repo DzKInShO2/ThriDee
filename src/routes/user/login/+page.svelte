@@ -2,7 +2,7 @@
     import { goto } from "$app/navigation";
 
     import { user } from "$lib/stores/authStore";
-    import { auth, getFirebaseAuthMessage } from "$lib/firebase";
+    import { auth, db, getFirebaseAuthMessage } from "$lib/firebase";
 
     import { 
         ClickableButton,
@@ -15,7 +15,10 @@
         signInWithEmailAndPassword,
         GoogleAuthProvider,
         signInWithPopup,
+        getAdditionalUserInfo,
     } from "firebase/auth";
+    import { doc, setDoc } from "firebase/firestore";
+    import { Timestamp } from "firebase-admin/firestore";
 
     $effect(() => {
         if ($user) {
@@ -37,6 +40,18 @@
         const provider = new GoogleAuthProvider();
 
         signInWithPopup(auth, provider)
+            .then((cred) => {
+                const additionalInfo = getAdditionalUserInfo(cred)!;
+                
+                if (additionalInfo.isNewUser) {
+                    setDoc(doc(db, "user", cred.user.uid), {
+                        name: cred.user.displayName ?? "",
+                        bio: "",
+                        photoURL: cred.user.photoURL ?? "",
+                        joined: Timestamp.fromDate(new Date(cred.user.metadata.creationTime!))
+                    });
+                }
+            })
             .catch((error) => {
                 authError = getFirebaseAuthMessage(error.code);
             });
@@ -45,6 +60,7 @@
 
 <div
     class="
+    h-screen
     flex
     flex-col
     items-center

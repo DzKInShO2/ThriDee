@@ -45,7 +45,7 @@
         createUserWithEmailAndPassword(auth, email, passwordNew)
             .then(cred => {
                 setDoc(doc(db, "user", cred.user.uid), {
-                    name: cred.user.displayName,
+                    name: cred.user.displayName ?? "",
                     bio: "",
                     photoURL: "",
                     joined: Timestamp.fromDate(new Date(cred.user.metadata.creationTime!))
@@ -65,9 +65,9 @@
                 
                 if (additionalInfo.isNewUser) {
                     setDoc(doc(db, "user", cred.user.uid), {
-                        name: cred.user.displayName,
+                        name: cred.user.displayName ?? "",
                         bio: "",
-                        photoURL: cred.user.photoURL,
+                        photoURL: cred.user.photoURL ?? "",
                         joined: Timestamp.fromDate(new Date(cred.user.metadata.creationTime!))
                     });
                 }
@@ -79,6 +79,7 @@
 </script>
 
 <div class="
+    h-screen
     flex 
     flex-col 
     items-center 
