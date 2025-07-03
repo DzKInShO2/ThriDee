@@ -4,7 +4,7 @@ import { onMount } from 'svelte';
 import * as BABYLON from '@babylonjs/core';
 import "@babylonjs/loaders";
 
-let { model } = $props();
+let { model = $bindable() } = $props();
 
 let canvas: HTMLCanvasElement;
 onMount(() => {
@@ -77,6 +77,13 @@ onMount(() => {
 
         return scene
     }
+
+    $effect(() => {
+        if (model) {
+            const scene = createScene();
+            engine.runRenderLoop(() => scene.render());
+        }
+    });
 
     const scene = createScene();
 
