@@ -79,7 +79,7 @@ $effect(() => {
             <button 
                 onclick={() => menuShown = !menuShown }
                 class="hidden md:block">
-                <div class="border-gray-400 border-2 overflow-clip w-[48px] h-[48px] rounded-full">
+                <div class="cursor-pointer border-gray-400 border-2 overflow-clip w-[48px] h-[48px] rounded-full">
                     <ProfilePhoto photoUrl={$user!.photoURL} />
                 </div>
             </button>
