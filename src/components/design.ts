@@ -5,5 +5,6 @@ export { default as InfoChangeDialog } from "./InfoChangeDialog.svelte";
 export { default as InputField } from "./InputField.svelte";
 export { default as ModelCard } from "./ModelCard.svelte";
 export { default as ModelViewport } from "./ModelViewport.svelte";
+export { default as PasswordChangeDialog } from "./PasswordChangeDialog.svelte";
 export { default as PasswordField } from "./PasswordField.svelte";
 export { default as ProfilePhoto } from "./ProfilePhoto.svelte";

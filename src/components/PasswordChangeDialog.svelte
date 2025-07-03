@@ -29,7 +29,8 @@
         rounded-xl
         shadow-xl
         bg-gray-100
-        w-110 h-60
+        w-80 h-60
+        md:w-110
         block 
         relative 
         top-[-128px]">

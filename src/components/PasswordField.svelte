@@ -1,6 +1,6 @@
 <script lang="ts">
 
-let { title, value = $bindable() } = $props();
+let { title, value = $bindable(), hint } = $props();
 
 let visibility = $state(false);
 
@@ -18,7 +18,7 @@ function onclick() {
             bind:value={value}
             type={visibility ? "text" : "password"}
             name="new_password"
-            placeholder="Your password..."
+            placeholder={hint}
             class="
             border-none 
             outline-none 

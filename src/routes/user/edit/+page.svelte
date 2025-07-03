@@ -8,6 +8,7 @@
     import { 
         BioChangeDialog,
         InfoChangeDialog,
+        PasswordChangeDialog,
         ProfilePhoto
     } from "../../../components/design";
     import { updateEmail, updatePassword, updateProfile } from "firebase/auth";
@@ -35,6 +36,8 @@
 
     let phoneVisibility = $state(false);
     let phoneValue = $state("");
+
+    let passwordVisibility = $state(false);
 
     let userData = $state<any>();
     getDoc(doc(db, "user", data.user!)).then((snap) => {
@@ -93,6 +96,8 @@
 <InfoChangeDialog label="Ganti Email" hint="Your email..." bind:visibility={emailVisibility} bind:value={emailValue} onaccept={changeEmail} />
 
 <InfoChangeDialog label="Ganti Telepon" hint="Your phone number..." bind:visibility={phoneVisibility} bind:value={phoneValue} onaccept={changePhone} />
+
+<PasswordChangeDialog label="Ganti Password" hint="Your new password..." bind:visibility={passwordVisibility}  onaccept={changePassword} />
 
 <div class="flex flex-col gap-5 items-center p-10 w-180 md:w-250 m-auto h-screen">
     <p class="text-4xl mt-10 mb-32">Edit Profil</p>
@@ -182,7 +187,13 @@
         </div>
         <div class="flex flex-col border border-gray-100 bg-gray-50 shadow-2xl w-full rounded-xl overflow-clip">
             <p class="p-3 text-xl font-medium">Sandi</p>
-            <div class="group flex items-center justify-between p-5 hover:bg-gray-200 cursor-pointer">
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
+            <div 
+                onclick={() => { 
+                    passwordVisibility = true;
+                }}
+                class="group flex items-center justify-between p-5 hover:bg-gray-200 cursor-pointer">
                 <p class="text-md font-normal">Kata Sandi</p>
                 <div class="flex gap-5">
                     <p class="font-thin">...............</p>
