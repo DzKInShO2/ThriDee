@@ -69,7 +69,7 @@ if (data.user !== "") {
             <p class="max-w-8/10">{currentUser.bio}</p>
 
             {#if (isItMe)}
-                <ClickableButton label="<i class='fa-solid fa-edit'></i> Edit Profil" render={true}/>
+                <ClickableButton onclick={() => goto(`/user/edit?id=${currentUser.id}`) } label="<i class='fa-solid fa-edit'></i> Edit Profil" render={true}/>
             {/if}
         </div>
 

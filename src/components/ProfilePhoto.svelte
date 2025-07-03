@@ -13,6 +13,6 @@ let { photoUrl = null } = $props();
     "
     src={photoUrl} />
 {:else}
-    <div class="w-full h-full bg-purple-500">
+    <div class="w-full h-full bg-gray-500">
     </div>
 {/if}
