@@ -3,6 +3,7 @@
   --color-primary: #FFA808;
   --color-primary-light: #ffc74a;
   --color-primary-dark: #d98a00;
+  --color-primary-active: #F75B00;
 
   /* Warna Sekunder */
   --color-secondary: #F59E0B;
@@ -58,6 +59,47 @@ h1 {
     font-size: 1.5rem; 
     font-weight: bold; 
 }
+
+.Searchbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  width: 100%;
+  max-width: 40rem;
+  border: 1px solid var(--color-primary);
+}
+
+.Searchbar button {
+  background-color: var(--color-primary);
+  cursor: pointer;
+  width: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.Searchbar button:active {
+  background-color: var(--color-primary-dark);
+}
+
+.Searchbar input {
+  border: none;
+  padding: 0.5rem 1rem;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+}
+
+@media (min-width: 1200px) {
+  .Searchbar input {
+    width: 1200px;
+  }
+}
+
 
 .marketplace {
   position: relative;

@@ -39,15 +39,14 @@ function toggleSidebar() {
     <div>
         <form
             action="/search"
-            class="flex flex-row justify-between shadow-sm rounded-xl overflow-clip w-full md:w-160 border-1 border-[#FFA808]">
+            class="Searchbar">
             <input
                 type="text"
                 name="s"
                 id="searchbar"
                 placeholder="Search your 3D assets..."
-                class="border-0 w-120 md:w-160 flex-9"/>
+            />
             <button
-                class="bg-[#FFA808] cursor-pointer active:bg-[#F75B00] w-10 flex flex-col items-center justify-center"
                 aria-label="Search">
                 <i class="fa fa-search text-black"></i>
             </button>
