@@ -10,7 +10,7 @@
         InfoChangeDialog,
         ProfilePhoto
     } from "../../../components/design";
-    import { updateEmail, updateProfile } from "firebase/auth";
+    import { updateEmail, updatePassword, updateProfile } from "firebase/auth";
 
     let { data } = $props();
 
@@ -79,6 +79,10 @@
             userData.phone = phoneValue;
             phoneVisibility = false;
         });
+    }
+
+    async function changePassword(password) {
+        updatePassword($user!, password);
     }
 </script>
 

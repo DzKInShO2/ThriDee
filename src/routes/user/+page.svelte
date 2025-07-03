@@ -73,10 +73,6 @@ if (data.user !== "") {
             {/if}
         </div>
 
-        {#if (isItMe)}
-            <ClickableButton label="<i class='fa-solid fa-upload'></i> Unggah Model" render={true} />
-        {/if}
-
         <div class="flex flex-col gap-5 w-full overflow-clip rounded-xl shadow-2xl h-full">
             <p class="font-semibold text-xl shadow-md
                 text-center bg-[#FFA808] p-3
