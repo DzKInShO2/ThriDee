@@ -2,7 +2,7 @@
 	let user = {
 		username: "Rakasya Yoga",
 		created_at: "2024-01-15",
-		profile_image: "/asset.jpg",
+		profile_image: "/profile.jpg",
 		bio: "Mahasiswa Informatika dan kreator 3D enthusiast."
 	};
 
@@ -11,7 +11,8 @@
 		title: `Aset Contoh ${i + 1}`,
 		price: `$${(i + 1) * 5}`,
 		category: ['Character', 'Vehicle', 'Environment', 'Weapon', 'Building', 'Accessory'][i % 6],
-		img: '/banner1.png'
+		img: ['/char.jpg', '/vehicle.jpg', '/environment.png', '/weapon.jpg', '/building.png', '/accessory.jpg'][i % 6]
+
 	}));
 </script>
 
@@ -30,14 +31,16 @@
 
 <section style="padding: 2rem">
 	<h1 style="margin-bottom: 1rem">Aset oleh {user.username}</h1>
-	<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem">
-		{#each dummyAssets as asset}
-			<div style="border: 1px solid var(--color-border); padding: 1rem; border-radius: 8px;">
-				<img src={asset.img} alt={asset.title} style="width: 100%; height: auto" />
-				<h3>{asset.title}</h3>
-				<p>Kategori: {asset.category}</p>
-				<p>Harga: {asset.price}</p>
-			</div>
-		{/each}
-		</div>
+    <div class="grid-assets">
+    {#each dummyAssets as asset}
+    <div class="card-hover market-item">
+        <img src={asset.img} alt={asset.title}/>
+        <div class="card-text">
+            <h3>{asset.title}</h3>
+            <p>Kategori: {asset.category}</p>
+            <p>Harga: {asset.price}</p>
+        </div>
+    </div>
+    {/each}
+  </div>
 </section>
