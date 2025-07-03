@@ -91,7 +91,7 @@ $effect(() => {
                         <i class="fa-solid fa-upload"></i> Upload
                     </a>
                     <a href={`/user?id=${$user!.uid}`} class="block"><i class="fa-solid fa-user"></i> Profil Saya</a>
-                    <a class="block" href="/" onclick={() => signOut(auth)}><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
+                    <a class="block" onclick={() => signOut(auth).then(() => goto("/"))}><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
                 </div>
             {/if}
         </div>
