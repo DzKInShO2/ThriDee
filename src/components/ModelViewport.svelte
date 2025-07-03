@@ -2,14 +2,12 @@
 import { onMount } from 'svelte';
 
 import * as BABYLON from '@babylonjs/core';
-import { registerBuiltInLoaders } from "@babylonjs/loaders/dynamic";
+import "@babylonjs/loaders";
 
 let { model } = $props();
 
 let canvas: HTMLCanvasElement;
 onMount(() => {
-    registerBuiltInLoaders();
-
     let engine = new BABYLON.Engine(canvas, true);
     function createScene() : BABYLON.Scene {
         let scene = new BABYLON.Scene(engine);

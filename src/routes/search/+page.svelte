@@ -15,11 +15,13 @@ const { data } = $props();
         </div>
 {/snippet}
 
-<section class="p-5 flex gap-5 ">
+<section class="p-5">
     {#if data.ids.length > 0}
-        {#each data.ids as id }
-            <ModelCard {id} />
-        {/each}
+        <div class="grid auto-cols-max gap-5">
+            {#each data.ids as id }
+                <ModelCard {id} />
+            {/each}
+        </div>
     {:else}
         <div class="flex flex-col items-center w-full">
             <img class="rounded-full" alt="Adit" src="/nomodel.webp">

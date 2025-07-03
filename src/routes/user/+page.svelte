@@ -1,43 +1,95 @@
 <script lang="ts">
 import { goto } from "$app/navigation";
-import { user } from "$lib/stores/authStore"
 import { onMount } from "svelte";
+
+import { db } from "$lib/firebase";
+import { user } from "$lib/stores/authStore"
+
+import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+
+import { 
+    ClickableButton,
+    ProfilePhoto,
+    ModelCard
+} from "../../components/design";
 
 let { data } = $props();
 
 onMount(() => {
-    if (!data.user) {
+    if (data.user === "") {
         goto("/");
     }
 })
 
+let isItMe = $state(false);
+$effect(() => {
+    if ($user) {
+        isItMe = ($user.uid === data.user)
+    }
+});
+
+let currentUser: any = $state(null);
+let modelsCreated: Array<String> = $state(Array<String>());
+if (data.user !== "") {
+    const docRef = doc(db, "user", data.user);
+    getDoc(docRef).then(async (snap) => {
+        currentUser = {
+            id: snap.id,
+            ...snap.data(),
+        };
+    });
+
+    const modelsQuery = query(collection(db, "model"), where("author", "==", docRef));
+
+    getDocs(modelsQuery).then((querySnap) => {
+        let models = Array<String>();
+        querySnap.forEach((doc) => {
+            models.push(doc.id);
+        });
+        modelsCreated = models;
+    });
+}
+
 </script>
 
-<div class="profile-full">
-	<img src={user.profile_image} class="profile-avatar" alt="Avatar">
-	
-	<div class="profile-info">
-		<h2>{user.username}</h2>
-		<p>Member since {new Date(user.created_at).toLocaleDateString('id-ID', { month: 'short', year: 'numeric' })}</p>
-		<p>{user.bio || 'Tiada bio tersedia.'}</p>
-		{#if isOwnProfile}
-			<button class="btn-outline-primary" on:click={() => alert('Modal edit belum dilaksanakan')}>Edit Profil</button>
-		{/if}
-	</div>
-</div>
+<div class="h-screen p-5 flex flex-col items-center gap-5">
+    {#if (currentUser)}
+        <div class="flex flex-col items-center gap-5 w-8/10 p-5 shadow-2xl bg-gray-100 rounded-xl mb-10">
+            <div class="
+                w-[256px] h-[256px] 
+                overflow-clip rounded-full
+                border">
+                <ProfilePhoto photoUrl={currentUser.photoURL} />
+            </div>
 
-<section style="padding: 2rem">
-	<h1 style="margin-bottom: 1rem">Aset oleh {user.username}</h1>
-    <div class="grid-assets">
-    {#each dummyAssets as asset}
-    <div class="card-hover market-item">
-        <img src={asset.img} alt={asset.title}/>
-        <div class="card-text">
-            <h3>{asset.title}</h3>
-            <p>Kategori: {asset.category}</p>
-            <p>Harga: {asset.price}</p>
+            <div class="flex flex-col items-center">
+                <p class="text-4xl">{currentUser.name}</p>
+                <p class="font-light">Bergabung Sejak: {currentUser.joined.toDate().toLocaleString()}</p>
+            </div>
+            <p class="max-w-8/10">{currentUser.bio}</p>
+
+            {#if (isItMe)}
+                <ClickableButton label="<i class='fa-solid fa-edit'></i> Edit Profil" render={true}/>
+            {/if}
         </div>
-    </div>
-    {/each}
-  </div>
-</section>
+
+        {#if (isItMe)}
+            <ClickableButton label="<i class='fa-solid fa-upload'></i> Unggah Model" render={true} />
+        {/if}
+
+        <div class="flex flex-col gap-5 w-full overflow-clip rounded-xl shadow-2xl h-full">
+            <p class="font-semibold text-xl shadow-md
+                text-center bg-[#FFA808] p-3
+                text-white">Model Yang Telah Diunggah</p>
+            {#if (modelsCreated.length > 0)}
+                <div class="grid auto-cols-max gap-5 p-5">
+                    {#each modelsCreated as model}
+                        <ModelCard id={model} />
+                    {/each}
+                </div>
+            {:else}
+                <p class="text-center">Pengguna belum pernah mengunggah model</p>
+            {/if}
+        </div>
+    {/if}
+</div>

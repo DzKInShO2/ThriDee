@@ -18,6 +18,7 @@
         InputField,
         PasswordField
     } from "../../../components/design";
+    import { Timestamp } from "firebase/firestore";
 
     $effect(() => {
         if ($user) {
@@ -47,7 +48,7 @@
                     name: cred.user.displayName,
                     bio: "",
                     photoURL: "",
-                    joined: cred.user.metadata.creationTime
+                    joined: Timestamp.fromDate(new Date(cred.user.metadata.creationTime!))
                 });
             })
             .catch((error) => {
@@ -67,7 +68,7 @@
                         name: cred.user.displayName,
                         bio: "",
                         photoURL: cred.user.photoURL,
-                        joined: cred.user.metadata.creationTime
+                        joined: Timestamp.fromDate(new Date(cred.user.metadata.creationTime!))
                     });
                 }
             })

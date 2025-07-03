@@ -47,6 +47,14 @@ function toggleSidebar() {
                 placeholder="Search your 3D assets..."
             />
             <button
+                class="
+                bg-[#FFA808] 
+                cursor-pointer 
+                active:bg-[#F75B00] 
+                w-10 
+                flex flex-col 
+                items-center justify-center
+                active:scale-[1.1]"
                 aria-label="Search">
                 <i class="fa fa-search text-black"></i>
             </button>
@@ -62,7 +70,11 @@ function toggleSidebar() {
     <a href="/search" style="margin-right: 1rem; color: white;">Search</a>
     <a href="/model" style="margin-right: 1rem; color: white;">View Model</a>
     <a href="/about" style="margin-right: 1rem; color: white;">About Us</a>
-    <a href="/user" style="margin-right: 1rem; color: white;">Profile</a>
+    {#if ($user)}
+        <a href={`/user?id=${$user.uid}`} style="margin-right: 1rem; color: white;" rel="external">Profile</a>
+    {:else}
+        <a href="/user" style="margin-right: 1rem; color: white;">Profile</a>
+    {/if}
     <a href="/user/login" style="margin-right: 1rem; color: white;">Login</a>
     <a href="/user/register" style="margin-right: auto; color: white;">Register</a>
     <a style="margin-left: auto; color: white;" class="cursor-pointer" onclick={() => { signOut(auth).then(() => goto("/")) }}>Log Out</a>

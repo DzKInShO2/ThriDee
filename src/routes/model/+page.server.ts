@@ -19,7 +19,7 @@ export const load: PageServerLoad = async ({url}) => {
             const authorData = {
                 id: author.id,
                 ...author.data()!,
-                photoURL: await getDownloadURL(ref(storage, `user/profile/${author.id}.${author.data()!.photoURL!}`))
+                joined: author.data()!.joined.toDate().toLocaleString(),
             }
 
             const currencyFormatter = new Intl.NumberFormat('id-ID', {
