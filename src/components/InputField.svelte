@@ -1,5 +1,5 @@
 <script lang="ts">
-let {title, value = $bindable()} = $props();
+let {title, value = $bindable(), hint="Your email..." } = $props();
 </script>
 
 <div class="flex flex-col gap-2">
@@ -8,7 +8,7 @@ let {title, value = $bindable()} = $props();
         bind:value={value}
         type="email"
         name="email"
-        placeholder="Your email..."
+        placeholder={hint}
         class="
         border-none 
         outline-none 
