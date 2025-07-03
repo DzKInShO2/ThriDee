@@ -35,7 +35,7 @@ $effect(() => {
         </a>
         <button
             class="transition-all block md:hidden active:text-[#FFA808]"
-            onclick={() => toggleSidebar()}>
+            onclick={() => {toggleSidebar(); menuShown = !menuShown }}>
             {#if sidebarPosition === "-left-60"}
                 <i class="fa-solid fa-bars"></i>
             {:else}
@@ -91,9 +91,16 @@ $effect(() => {
             {/if}
         </div>
     {:else}
-        <div class="auth-links">
-        <a href="/user/login" class="btn-auth">Login</a>
-        <a href="/user/register" class="btn-auth">Register +</a>
+        {#if menuShown}
+        <div class="profile-dropdown">
+            <a href="/user/login" style="display: block" class="">Login</a>
+            <a href="/user/register" style="display: block" class="">Register +</a>
+        </div>
+        {/if}
+
+        <div class="auth-links hidden md:block">
+            <a href="/user/login" class="btn-auth">Login</a>
+            <a href="/user/register" class="btn-auth">Register +</a>
         </div>
     {/if}
     </div>
