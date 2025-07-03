@@ -113,7 +113,7 @@
         <InputField title="Email" bind:value={email} />
         <PasswordField title="New Password" bind:value={passwordNew} />
         <PasswordField title="Verify Password" bind:value={passwordVerify} />
-        <ClickableButton label="Register" />
+        <ClickableButton label="Register" onclick={handleRegister} />
 
         <p class="
             block 

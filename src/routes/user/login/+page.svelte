@@ -65,7 +65,7 @@
 
         <InputField title="Email" bind:value={email} />
         <PasswordField title="Password" bind:value={password} />
-        <ClickableButton label="Log-In" />
+        <ClickableButton label="Log-In" onclick={handleLogin} />
 
         <p class="block m-auto">
             Don't have an account? <a

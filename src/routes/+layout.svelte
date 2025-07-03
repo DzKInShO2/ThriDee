@@ -23,10 +23,10 @@
 <nav
     class="flex flex-row justify-between items-center h-15 p-4 shadow-xs gap-5 sticky z-40">
     <div>
-        <a href="/">
-            <img src="/logo.png" class="w-24 h-24 hidden md:block" />
+        <a href="/" aria-label="TriDee Home">
+            <img src="/logo.png" class="w-24 h-24 hidden md:block" alt="TriDee Logo" />
         </a>
-        <h1
+        <button
             class="transition-all block md:hidden active:text-[#FFA808]"
             onclick={() => toggleSidebar()}>
             {#if sidebarPosition === "-left-60"}
@@ -34,7 +34,7 @@
             {:else}
                 <i class="fa-solid fa-x"></i>
             {/if}
-        </h1>
+        </button>
     </div>
     <div>
         <form
@@ -65,7 +65,7 @@
     <a href="/about" style="margin-right: 1rem; color: white;">About Us</a>
     <a href="/user" style="margin-right: 1rem; color: white;">Profile</a>
     <a href="/user/login" style="margin-right: 1rem; color: white;">Login</a>
-    <a href="/user/register" style="margin-left: auto; color: white;">Register</a>
+    <a href="/user/register" style="margin-right: auto; color: white;">Register</a>
     <a style="margin-left: auto; color: white;" class="cursor-pointer" onclick={() => { signOut(auth).then(() => goto("/")) }}>Log Out</a>
 </nav>
 
@@ -104,5 +104,5 @@
             </ul>
         </div>
     </div>
-    <div class="footer-bottom">© 2025 TriDee</div>
+    <div class="footer-bottom">© 2025 ThriDee</div>
 </footer>
