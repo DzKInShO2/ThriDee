@@ -73,15 +73,15 @@ let login;
                 <a href="/model/new" class="btn-upload hidden lg:block">
                     <i class="fa-solid fa-upload"></i> Upload
                 </a>
-            <a class="btn-icon" href="#">
+            <a class="btn-icon hidden md:block" href="#">
                 <i class="fa-solid fa-user"></i>
             </a>
             {#if showMenu}
                 <div class="profile-dropdown">
-                    <a href="/model/new" class="upload-mobile">
+                    <a href="/model/new" class="mobile">
                         <i class="fa-solid fa-upload"></i> Upload
                     </a>
-                    <a href="/user" style="display: block;"><i class="fa-solid fa-user"></i> Profil Saya</a>
+                    <a href="/user?" style="display: block;"><i class="fa-solid fa-user"></i> Profil Saya</a>
                     <a style="display: block" onclick={() => signOut(auth).then(() => goto("/"))}><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
                 </div>
             {/if}
