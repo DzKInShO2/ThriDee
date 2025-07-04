@@ -148,10 +148,10 @@ $effect(() => {
         <div class="footer-section">
             <h5>Kategori Populer</h5>
             <ul>
-                <li><a href="/search?s=character">Character</a></li>
-                <li><a href="/search?s=vehicle">Vehicle</a></li>
-                <li><a href="/search?s=environment">Environment</a></li>
-                <li><a href="/search?s=tools">Tools</a></li>
+                <li><a href="/search?c=Character">Character</a></li>
+                <li><a href="/search?c=Vehicle">Vehicle</a></li>
+                <li><a href="/search?c=Environment">Environment</a></li>
+                <li><a href="/search?c=Tools">Tools</a></li>
             </ul>
         </div>
     </div>

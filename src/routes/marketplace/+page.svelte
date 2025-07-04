@@ -1,5 +1,5 @@
 <script>
-  const dummyAssets = Array.from({ length: 12 }, (_, i) => ({
+  const katagori = Array.from({ length: 6 }, (_, i) => ({
     title: `Aset Contoh ${i + 1}`,
     price: `$${(i + 1) * 5}`,
     category: ['Character', 'Vehicle', 'Environment', 'Weapon', 'Building', 'Accessory'][i % 6],
@@ -19,15 +19,13 @@
 <section style="padding: 2rem">
   <h1>Shop by category</h1>
   <div class="grid-assets">
-    {#each dummyAssets.slice(0, 6) as asset}
-    <div class="card-hover market-item">
+    {#each katagori as asset}
+    <a href="/search?c={asset.category}"class="card-hover market-item">
         <img src={asset.img} alt={asset.title}/>
         <div class="card-text">
-            <h3>{asset.title}</h3>
-            <p>Kategori: {asset.category}</p>
-            <p>Harga: {asset.price}</p>
+            <p style="font-weight: bold; text-align: center;">{asset.category}</p>
         </div>
-    </div>
+      </a>
     {/each}
   </div>
 </section>
@@ -35,7 +33,7 @@
 <section style="padding: 2rem">
   <h1>On sale 3D assets</h1>
     <div class="grid-assets">
-    {#each dummyAssets as asset}
+    {#each katagori as asset}
     <div class="card-hover">
         <img src={asset.img} alt={asset.title} class="w-full h-auto rounded-md block m-auto" />
         <div class="card-text">
@@ -51,7 +49,7 @@
 <section style="padding: 2rem">
   <h1>Best 3D assets</h1>
     <div class="grid-assets">
-    {#each dummyAssets as asset}
+    {#each katagori as asset}
     <div class="card-hover">
         <img src={asset.img} alt={asset.title} class="w-full h-auto rounded-md block m-auto" />
         <div class="card-text">
@@ -67,7 +65,7 @@
 <section style="padding: 2rem">
   <h1>New release discounts</h1>
     <div class="grid-assets">
-    {#each dummyAssets as asset}
+    {#each katagori as asset}
     <div class="card-hover">
         <img src={asset.img} alt={asset.title} class="w-full h-auto rounded-md block m-auto" />
         <div class="card-text">
