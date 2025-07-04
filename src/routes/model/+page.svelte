@@ -15,7 +15,7 @@ import { onMount } from 'svelte';
 import { fade } from "svelte/transition";
 import { goto } from '$app/navigation';
 
-import { db, storage } from "$lib/firebase";
+import { categories, db, storage } from "$lib/firebase";
 import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 import { ref, deleteObject } from "firebase/storage";
 
@@ -85,7 +85,7 @@ async function deleteModel() {
     <div class="flex flex-col md:flex-row p-5 gap-5">
         <div class="flex flex-1 flex-col gap-5">
             <ModelViewport model={data.modelData} />
-            <div class="bg-gray-50 flex flex-col p-3 rounded-xl shadow-2xl w-full gap-10">
+            <div class="bg-gray-50 flex flex-col p-3 rounded-xl shadow-2xl w-full gap-3">
                 <div class="flex flex-row items-center justify-between">
                     <div class="flex flex-col">
                         <h1>{data.modelData.title}</h1>
@@ -99,7 +99,11 @@ async function deleteModel() {
                         <ClickableButton label="<i class='fa-solid fa-download'></i> Unduh" render={true} onclick={downloadModel}/>
                     </div>
                 </div>
+
+                <p class="mb-4">Kategori: <a href="/search?c={data.modelData.category}">{categories.find(a => a.id === data.modelData.category).title}</a></p>
+
                 <p>{data.modelData.description}</p>
+
                 <a 
                     href={`user?id=${data.modelData.author.id}`}
                     class="

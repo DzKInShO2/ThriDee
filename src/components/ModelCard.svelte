@@ -41,6 +41,7 @@ let data: any = $state(loadModel());
     transition:fly={{ y: 200, duration: 1400 }}
     href={`/model?id=${id}`}
     class="
+    group
     basis-[256px]
     transition-transform 
     rounded-md 
@@ -54,11 +55,13 @@ let data: any = $state(loadModel());
     {#await data}
         <LoadingOverlayLocal />
     {:then model}
-        <img src={model.preview} alt={model.title} class="w-full h-auto rounded-md block m-auto" />
-        <div class="absolute bg-[#FFFFFF10] text-white w-full bottom-0 p-2">
-            <h3>{model.title}</h3>
-            <p>Kategori: {model.category}</p>
-            <p>Harga: {model.price}</p>
+        <img src={model.preview} alt={model.title} 
+            class="w-full h-auto rounded-md block m-auto" />
+        <div class="transition-colors
+            absolute bg-[#FFFFFF10] group-hover:bg-[#FFFFFF66] text-white w-full bottom-0 p-2">
+            <h3 class="font-medium">{model.title}</h3>
+            <p class="text-sm">{model.price} <i class="fa-solid fa-tag"></i></p>
+            <p class="transition-all font-semibold text-sm hidden group-hover:block">{model.category}</p>
         </div>
     {/await}
 </a>
