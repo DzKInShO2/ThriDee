@@ -11,6 +11,7 @@
         signInWithPopup,
         createUserWithEmailAndPassword,
         getAdditionalUserInfo,
+        updateProfile,
     } from "firebase/auth";
 
     import { 
@@ -27,8 +28,9 @@
         }
     });
 
-    let authError = $state("")
+    let authError = $state("");
 
+    let username = $state("");
     let email = $state("");
     let passwordNew = $state("");
     let passwordVerify = $state("");
@@ -46,8 +48,12 @@
         $isLoading = true;
         createUserWithEmailAndPassword(auth, email, passwordNew)
             .then(cred => {
+                updateProfile($user!, {
+                    displayName: username
+                });
+
                 setDoc(doc(db, "user", cred.user.uid), {
-                    name: cred.user.displayName ?? "",
+                    name: username,
                     bio: "",
                     photoURL: "",
                     joined: Timestamp.fromDate(new Date(cred.user.metadata.creationTime!))
@@ -118,7 +124,7 @@
             <p class="block m-auto text-red-500">{authError}</p>
         {/if}
 
-        <InputField title="Username"  />
+        <InputField title="Username" hint="Your username..." bind:value={username} />
         <InputField title="Email" bind:value={email} />
         <PasswordField title="New Password" bind:value={passwordNew} />
         <PasswordField title="Verify Password" bind:value={passwordVerify} />
