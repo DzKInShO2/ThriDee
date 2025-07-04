@@ -20,11 +20,12 @@ async function loadModel(){
             });
 
             getDownloadURL(ref(storage, `model/preview/${id}.png`)).then((url) => {
+                const price = (docSnap.data()!.price! === 0) ? "Gratis" : currencyFormatter.format(docSnap.data()!.price!);
                 const data = {
                     id: id,
                     ...docSnap.data(),
                     preview: url,
-                    price: currencyFormatter.format(docSnap.data()!.price!)
+                    price: price
                 };
 
                 fulfil(data);

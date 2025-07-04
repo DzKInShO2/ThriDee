@@ -17,6 +17,7 @@ import {
 let { data } = $props();
 
 onMount(() => {
+    $isLoading = true
     if (data.user === "") {
         goto("/");
     }
@@ -27,10 +28,6 @@ let currentUser: any = $state(null);
 $effect(() => {
     if ($user) {
         isItMe = ($user.uid === data.user)
-    }
-
-    if (!currentUser) {
-        $isLoading = true;
     }
 });
 

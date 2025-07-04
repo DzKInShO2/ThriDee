@@ -95,7 +95,7 @@ $effect(() => {
                     <a href="/model/new" class="mobile">
                         <i class="fa-solid fa-upload"></i> Upload
                     </a>
-                    <a href={`/user?id=${$user!.uid}`} class="block"><i class="fa-solid fa-user"></i> Profil Saya</a>
+                    <a href={`/user?id=${$user!.uid}`} rel="external" class="block"><i class="fa-solid fa-user"></i> Profil Saya</a>
                     <a class="block" href="/" rel="external" onclick={() => signOut(auth)}><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
                 </div>
             {/if}
