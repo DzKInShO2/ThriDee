@@ -24,6 +24,8 @@ export const load: PageServerLoad = async ({ url }) => {
     });
 
     return {
-        ids: data
+        ids: data,
+        search: search,
+        category: category
     };
 };

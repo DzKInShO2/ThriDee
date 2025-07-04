@@ -29,6 +29,8 @@ $effect(() => {
     isLoggedIn = $user !== null;
     menuShown = false;
 });
+
+let search = $state("");
 </script>
 
 <LoadingOverlay />
@@ -51,9 +53,13 @@ $effect(() => {
     </div>
     <div>
         <form
+            onsubmit={() => { 
+                location.href = `/search?s=${search}`
+            }}
             action="/search"
             class="Searchbar">
             <input
+                bind:value={search}
                 type="text"
                 name="s"
                 id="searchbar"
