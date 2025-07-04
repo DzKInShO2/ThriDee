@@ -51,33 +51,33 @@ export function currencyReverter(formatedNumber: String): number {
 
 export const categories = [
     {
-        title: "Accessory",
+        title: "Dekorasi",
         img: "/accessory.jpg",
         id: "aces"
     },
     {
-        title: "Building",
+        title: "Bangunan",
         img: "/building.png",
         id: "buil"
     },
     {
-        title: "Character",
+        title: "Karakter",
         img: "/char.jpg",
         id: "char"
     },
     {
-        title: "Environment",
+        title: "Lingkungan",
         img: "/environment.png",
         id: "envi"
     },
     {
-        title: "Vehicle",
+        title: "Kendaraan",
         img: "/vehicle.jpg",
         id: "vehi"
     },
     {
-        title: "Weapon",
+        title: "Alat dan Senjata",
         img: "/weapon.jpg",
         id: "towe"
-    }
-];
+    },
+].sort((a, b) => a.title.localeCompare(b.title));

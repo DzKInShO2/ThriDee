@@ -5,7 +5,7 @@ import { page } from "$app/state";
 import { goto } from "$app/navigation";
 
 import "$lib/styles/theme.css";
-import { auth } from "$lib/firebase";
+import { auth, categories } from "$lib/firebase";
 import { user } from "$lib/stores/authStore";
 
 import { signOut } from "firebase/auth";
@@ -166,10 +166,9 @@ let search = $state("");
         <div class="footer-section">
             <h5>Kategori Populer</h5>
             <ul>
-                <li><a href="/search?c=Character" rel="external">Character</a></li>
-                <li><a href="/search?c=Vehicle" rel="external">Vehicle</a></li>
-                <li><a href="/search?c=Environment" rel="external">Environment</a></li>
-                <li><a href="/search?c=Tools" rel="external">Tools</a></li>
+                {#each categories.slice(0, 4) as asset}
+                    <li><a href="/search?c={asset.id}" rel="external">{asset.title}</a></li>
+                {/each}
             </ul>
         </div>
     </div>
