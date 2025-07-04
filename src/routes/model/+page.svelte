@@ -85,15 +85,16 @@ async function deleteModel() {
     <div class="flex flex-col md:flex-row p-5 gap-5">
         <div class="flex flex-1 flex-col gap-5">
             <ModelViewport model={data.modelData} />
-            <div class="bg-gray-50 flex flex-col p-3 rounded-xl shadow-2xl w-full gap-5">
+            <div class="bg-gray-50 flex flex-col p-3 rounded-xl shadow-2xl w-full gap-10">
                 <div class="flex flex-row items-center justify-between">
                     <div class="flex flex-col">
                         <h1>{data.modelData.title}</h1>
-                        <p>{data.modelData.price}</p>
+                        <p class="font-light">{data.modelData.price}  <i class="fa-solid fa-tag"></i></p>
                     </div>
                     <div class="flex gap-8 items-center">
                         {#if ($user && $user!.uid === data.modelData.author.id) }
                             <ClickableButton label="<i class='fa-solid fa-trash'></i> Hapus" render={true} onclick={() => confirmVisibility = true}/>
+                            <ClickableButton label="<i class='fa-solid fa-edit'></i> Edit" render={true} onclick={() => { goto(`/model/edit?id=${data.modelId}`) } }/>
                         {/if}
                         <ClickableButton label="<i class='fa-solid fa-download'></i> Unduh" render={true} onclick={downloadModel}/>
                     </div>
