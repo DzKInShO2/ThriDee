@@ -6,6 +6,7 @@ export { default as ClickableFileDialog } from "./ClickableFileDialog.svelte";
 export { default as GoogleAuthButton } from "./GoogleAuthButton.svelte";
 export { default as InfoChangeDialog } from "./InfoChangeDialog.svelte";
 export { default as InputField } from "./InputField.svelte";
+export { default as LoadingOverlay } from "./LoadingOverlay.svelte"
 export { default as ModelCard } from "./ModelCard.svelte";
 export { default as ModelViewport } from "./ModelViewport.svelte";
 export { default as PasswordChangeDialog } from "./PasswordChangeDialog.svelte";

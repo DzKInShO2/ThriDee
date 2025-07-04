@@ -7,7 +7,10 @@ import { signOut } from "firebase/auth";
 
 import "$lib/styles/theme.css";
 import { goto } from "$app/navigation";
-    import { ProfilePhoto } from "../components/design";
+import { 
+    ProfilePhoto,
+    LoadingOverlay
+} from "../components/design";
 
 let { children } = $props();
 
@@ -27,6 +30,8 @@ $effect(() => {
     menuShown = false;
 });
 </script>
+
+<LoadingOverlay />
 
 <nav
     class="flex flex-row justify-between items-center h-15 p-4 shadow-xs gap-5 sticky z-40">

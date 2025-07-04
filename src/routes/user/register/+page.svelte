@@ -3,6 +3,7 @@
 
     import { auth, db, getFirebaseAuthMessage } from "$lib/firebase";
     import { user } from "$lib/stores/authStore";
+    import { isLoading } from "$lib/stores/stateStore";
 
     import { doc, setDoc } from "firebase/firestore";
     import {
@@ -42,6 +43,7 @@
             return
         }
 
+        $isLoading = true;
         createUserWithEmailAndPassword(auth, email, passwordNew)
             .then(cred => {
                 setDoc(doc(db, "user", cred.user.uid), {
@@ -49,10 +51,11 @@
                     bio: "",
                     photoURL: "",
                     joined: Timestamp.fromDate(new Date(cred.user.metadata.creationTime!))
-                });
+                }).then(() => $isLoading = false);
             })
             .catch((error) => {
                 authError = getFirebaseAuthMessage(error.code);
+                $isLoading = false;
             });
     }
 
@@ -69,11 +72,12 @@
                         bio: "",
                         photoURL: cred.user.photoURL ?? "",
                         joined: Timestamp.fromDate(new Date(cred.user.metadata.creationTime!))
-                    });
+                    }).then(() => $isLoading = false);
                 }
             })
             .catch((error) => {
                 authError = getFirebaseAuthMessage(error.code);
+                $isLoading = false;
             });
     }
 </script>

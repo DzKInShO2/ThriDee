@@ -2,6 +2,7 @@
     import { goto } from "$app/navigation";
 
     import { user } from "$lib/stores/authStore";
+    import { isLoading } from "$lib/stores/stateStore";
     import { auth, db, getFirebaseAuthMessage } from "$lib/firebase";
 
     import { 
@@ -29,15 +30,21 @@
     let email = $state("");
     let password = $state("");
     async function handleLogin() {
+        $isLoading = true;
         signInWithEmailAndPassword(auth, email, password)
+            .then(() => {
+                $isLoading = false;
+            })
             .catch((error) => {
                 authError = getFirebaseAuthMessage(error.code);
+                $isLoading = false;
             });
     }
 
     async function handleGoogleLogin() {
         const provider = new GoogleAuthProvider();
 
+        $isLoading = true;
         signInWithPopup(auth, provider)
             .then((cred) => {
                 const additionalInfo = getAdditionalUserInfo(cred);
@@ -50,9 +57,11 @@
                         joined: Timestamp.fromDate(new Date(cred.user.metadata.creationTime!))
                     });
                 }
+                $isLoading = false;
             })
             .catch((error) => {
                 authError = getFirebaseAuthMessage(error.code);
+                $isLoading = false;
             });
     }
 </script>
