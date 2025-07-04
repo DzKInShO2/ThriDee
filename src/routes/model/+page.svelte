@@ -1,12 +1,14 @@
 <script lang="ts">
 
 import {
+    ActionConfirmDialog,
     ClickableButton,
     ModelCard,
     ModelViewport,
     ProfilePhoto
 }from "../../components/design"
 
+import { user } from "$lib/stores/authStore";
 import { isLoading } from "$lib/stores/stateStore";
 
 import { onMount } from 'svelte';
@@ -14,8 +16,8 @@ import { fade } from "svelte/transition";
 import { goto } from '$app/navigation';
 
 import { db, storage } from "$lib/firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
-    import { ref } from "firebase/storage";
+import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
+import { ref, deleteObject } from "firebase/storage";
 
 const { data } = $props();
 
@@ -43,6 +45,8 @@ async function getRelatedModels() {
 let anchor: HTMLAnchorElement;
 let modelsPromise = $state(getRelatedModels());
 
+let confirmVisibility = $state(false);
+
 async function downloadModel() {
     $isLoading = true;
     fetch(data.modelData.binary).then((response) => {
@@ -59,10 +63,23 @@ async function downloadModel() {
     });
 }
 
+async function deleteModel() {
+    $isLoading = true;
+
+    deleteDoc(doc(db, "model", data.modelId)).then(() => {
+        deleteObject(ref(storage, `model/binary/${data.modelId}.${data.modelData.type}`)).then(() => {
+            deleteObject(ref(storage, `model/preview/${data.modelId}.png`)).then(() => {
+                goto(`/user?id=${$user!.uid}`);
+                $isLoading = false;
+            });
+        });
+    });
+}
 
 </script>
 
 <a class="hidden" bind:this={anchor}></a>
+<ActionConfirmDialog bind:visibility={confirmVisibility} label="Hapus Model" text="Menghapus model, apakah anda yakin?" onaccept={deleteModel} />
 
 <section class="h-120vh w-full">
     <div class="flex flex-col md:flex-row p-5 gap-5">
@@ -74,7 +91,12 @@ async function downloadModel() {
                         <h1>{data.modelData.title}</h1>
                         <p>{data.modelData.price}</p>
                     </div>
-                    <ClickableButton label="<i class='fa-solid fa-download'></i> Unduh" render={true} onclick={downloadModel}/>
+                    <div class="flex gap-8 items-center">
+                        {#if ($user && $user!.uid === data.modelData.author.id) }
+                            <ClickableButton label="<i class='fa-solid fa-trash'></i> Hapus" render={true} onclick={() => confirmVisibility = true}/>
+                        {/if}
+                        <ClickableButton label="<i class='fa-solid fa-download'></i> Unduh" render={true} onclick={downloadModel}/>
+                    </div>
                 </div>
                 <p>{data.modelData.description}</p>
                 <a 

@@ -27,12 +27,13 @@ export const load: PageServerLoad = async ({url}) => {
                 currency: 'IDR'
             });
 
+            const price = (docSnap.data()!.price! === 0) ? "Gratis" : currencyFormatter.format(docSnap.data()!.price!);
             data = {
                 ...docSnap.data(),
                 author: authorData,
                 binary: url,
                 published: docSnap.data()!.published.toDate().toLocaleString(),
-                price: currencyFormatter.format(docSnap.data()!.price!)
+                price: price
             };
         }
     }

@@ -14,7 +14,7 @@
     items-center
     justify-center
     z-10
-    absolute
+    fixed
     w-full h-full
     bg-[#1F1F1F60]
     `}>
