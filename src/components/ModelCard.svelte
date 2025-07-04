@@ -1,6 +1,6 @@
 <script lang="ts">
 
-import { db, storage } from "$lib/firebase";
+import { currencyFormatter, db, storage } from "$lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 
@@ -14,11 +14,6 @@ async function loadModel(){
     return new Promise((fulfil, _) => {
         const docRef = doc(db, "model", id);
         getDoc(docRef).then((docSnap) => {
-            const currencyFormatter = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR'
-            });
-
             getDownloadURL(ref(storage, `model/preview/${id}.png`)).then((url) => {
                 const price = (docSnap.data()!.price! === 0) ? "Gratis" : currencyFormatter.format(docSnap.data()!.price!);
                 const data = {

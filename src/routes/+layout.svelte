@@ -60,7 +60,8 @@ let search = $state("");
                 e.preventDefault();
 
                 const category = page.url.searchParams.get("c") ? `&c=${page.url.searchParams.get("c")}` : "";
-                goto(`/search?s=${search}${category}`);
+                const price = page.url.searchParams.get("p") ? `&p=${page.url.searchParams.get("p")}` : "";
+                goto(`/search?s=${search}${category}${price}`);
             }}
             action="/search"
             class="Searchbar">

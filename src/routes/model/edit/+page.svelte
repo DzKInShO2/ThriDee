@@ -2,10 +2,10 @@
 
 import { onMount } from "svelte";
 import { goto } from "$app/navigation";
-import { db, storage } from "$lib/firebase";
+import { currencyFormatter, currencyReverter, db, storage } from "$lib/firebase";
 import { user } from "$lib/stores/authStore";
 import { isLoading } from "$lib/stores/stateStore";
-import { collection, doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes, uploadString } from "firebase/storage";
 
 import * as BABYLON from "@babylonjs/core";
@@ -20,17 +20,25 @@ const categories = ["Accessory", "Building", "Character", "Environment", "Vehicl
 
 let { data } = $props();
 
+let nameValue = $state("");
+let descriptionValue = $state("");
+
+let priceValue = $state(0);
+let priceDisplay = $state(currencyFormatter.format(priceValue));
+
+let categoryValue = $state(categories[0]);
+let errorValue: any = $state(null);
+
 $effect(() => {
     if (!$user) {
         goto("/");
     }
-});
 
-let nameValue = $state("");
-let descriptionValue = $state("");
-let priceValue = $state("");
-let categoryValue = $state(categories[0]);
-let errorValue: any = $state(null);
+    if (priceDisplay) {
+        priceValue = currencyReverter(priceDisplay)
+        priceDisplay = currencyFormatter.format(priceValue);
+    }
+});
 
 let modelFile = $state<File>();
 let model: any = $state(null);
@@ -49,6 +57,7 @@ onMount(() => {
         nameValue = docRef.data()!.title;
         categoryValue = docRef.data()!.category;
         priceValue = docRef.data()!.price.toString();
+        priceDisplay = currencyFormatter.format(priceValue);
         descriptionValue = docRef.data()!.description;
 
         getDownloadURL(ref(storage, `model/binary/${docRef.id}.${docRef.data()!.type}`)).then((url) => {
@@ -146,7 +155,7 @@ async function uploadModel() {
         <div 
             class="group flex items-center justify-between p-5 gap-11 border-t-1 border-gray-200 cursor-pointer">
             <p class="text-md font-normal">Harga</p>
-            <input type="number" pattern="[0-9]" min="0" class="flex-1 shadow-md border-none ring-0 rounded-md group-hover:bg-gray-200" bind:value={priceValue} />
+            <input pattern="[0-9]" min="0" class="flex-1 shadow-md border-none ring-0 rounded-md group-hover:bg-gray-200" bind:value={priceDisplay} />
         </div>
         <!-- svelte-ignore a11y_click_events_have_key_events -->
         <!-- svelte-ignore a11y_no_static_element_interactions -->

@@ -1,4 +1,4 @@
-import { db, storage } from "$lib/firebase";
+import { currencyFormatter, db, storage } from "$lib/firebase";
 import { doc, DocumentSnapshot, getDoc } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 
@@ -21,11 +21,6 @@ export const load: PageServerLoad = async ({url}) => {
                 ...author.data()!,
                 joined: author.data()!.joined.toDate().toLocaleString(),
             }
-
-            const currencyFormatter = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR'
-            });
 
             const price = (docSnap.data()!.price! === 0) ? "Gratis" : currencyFormatter.format(docSnap.data()!.price!);
             data = {

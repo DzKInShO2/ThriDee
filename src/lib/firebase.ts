@@ -35,3 +35,16 @@ export function getFirebaseAuthMessage(code: string): string {
 		"auth/weak-password": "Password is too weak.",
 	}[code] ?? "Unknown error. Please try again.";
 }
+
+
+export const currencyFormatter = new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2
+});
+
+export function currencyReverter(formatedNumber): int {
+    const n = Number(formatedNumber.replace(/[^\d,]/g, '').replace(/\./g, '').replace(',', '.'));
+    return Number(n) === Number.NaN ? 0 : Number(n);
+}

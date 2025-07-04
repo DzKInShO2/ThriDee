@@ -1,7 +1,7 @@
 <script lang="ts">
 
 import { goto } from "$app/navigation";
-import { db, storage } from "$lib/firebase"
+import { currencyFormatter, currencyReverter, db, storage } from "$lib/firebase"
 import { user } from "$lib/stores/authStore"
 import { isLoading } from "$lib/stores/stateStore"
 import { addDoc, collection, doc, Timestamp } from "firebase/firestore";
@@ -15,19 +15,25 @@ import {
     ModelViewport,
 } from "../../../components/design";
 
-$effect(() => {
-    if (!$user) {
-        goto("/");
-    }
-});
-
 const categories = ['Character', 'Vehicle', 'Environment', 'Weapon', 'Building', 'Accessory']
 
 let nameValue = $state("");
 let descriptionValue = $state("");
-let priceValue = $state("");
+let priceValue = $state(0);
+let priceDisplay = $state(currencyFormatter.format(priceValue));
 let categoryValue = $state(categories[0]);
 let errorValue: any = $state(null);
+
+$effect(() => {
+    if (!$user) {
+        goto("/");
+    }
+
+    if (priceDisplay) {
+        priceValue = currencyReverter(priceDisplay);
+        priceDisplay = currencyFormatter.format(priceValue);
+    }
+});
 
 let modelFile = $state<File>();
 let model: any = $state(null);
@@ -117,7 +123,7 @@ async function uploadModel() {
         <div 
             class="group flex items-center justify-between p-5 gap-11 border-t-1 border-gray-200 cursor-pointer">
             <p class="text-md font-normal">Harga</p>
-            <input type="number" pattern="[0-9]" min="0" class="flex-1 shadow-md border-none ring-0 rounded-md group-hover:bg-gray-200" bind:value={priceValue} />
+            <input min="0" class="flex-1 shadow-md border-none ring-0 rounded-md group-hover:bg-gray-200" bind:value={priceDisplay} />
         </div>
         <!-- svelte-ignore a11y_click_events_have_key_events -->
         <!-- svelte-ignore a11y_no_static_element_interactions -->
