@@ -42,7 +42,7 @@ let modelsPromise = $state(getRelatedModels());
 
 </script>
 
-<section class="h-screen">
+<section class="h-120vh w-full">
     <div class="flex flex-col md:flex-row p-5 gap-5">
         <div class="flex flex-1 flex-col gap-5">
             <ModelViewport model={data.modelData} />

@@ -81,7 +81,7 @@ async function uploadModel() {
 }
 </script>
 
-<div class="flex flex-col gap-5 items-center p-10 w-180 md:w-250 m-auto h-screen">
+<div class="flex flex-col gap-5 items-center p-10 w-100 80 md:w-200 lg:w-250 m-auto">
     <p class="text-4xl mt-10 mb-32">Unggah Model</p>
     {#if errorValue}
         <p class="text-red-500 font-semibold">{errorValue}</p>

@@ -4,7 +4,9 @@ let { label, onclick } = $props();
 
 <button
     class="
-    transition-transform
+    transition-all
+    border-1
+    border-gray-400
     active:scale-[1.1]
     cursor-pointer
     rounded-xl
@@ -18,7 +20,7 @@ let { label, onclick } = $props();
     lg:w-110
     hover:brightness-60
     active:brightness-110
-    bg-[#FFFFFF]"
+    bg-gray-200"
     {onclick}>
     <img
         class="w-6 h-6"
