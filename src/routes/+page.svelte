@@ -1,8 +1,5 @@
 <script lang="ts">
-  const dummyAssets = Array.from({ length: 6 }, (_, i) => ({
-    category: ['Character', 'Vehicle', 'Environment', 'Weapon', 'Building', 'Accessory'][i % 6],
-    img: ['/char.jpg', '/vehicle.jpg', '/environment.png', '/weapon.jpg', '/building.png', '/accessory.jpg'][i % 6]
-  }));
+    import { categories } from "$lib/firebase";
 </script>
 
 
@@ -56,11 +53,11 @@
         </section>
         <h1>Start Exploring NOW</h1>
         <div class="grid-assets">
-            {#each dummyAssets.slice(0, 5) as asset}
-                <a href="/search?c={asset.category}" class="card-hover">
-                    <img src={asset.img} alt={asset.category} class="object-cover w-full h-full" />
+            {#each categories as asset}
+                <a href="/search?c={asset.id}" class="card-hover">
+                    <img src={asset.img} alt={asset.title} class="object-cover w-full h-full" />
                     <div class="absolute bg-[#FFFFFF10] text-white w-full bottom-0 p-2">
-                        <p style="font-weight: bold; text-align: center;">{asset.category}</p>
+                        <p style="font-weight: bold; text-align: center;">{asset.title}</p>
                     </div>
                 </a>
             {/each}

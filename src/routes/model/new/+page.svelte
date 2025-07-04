@@ -1,7 +1,7 @@
 <script lang="ts">
 
 import { goto } from "$app/navigation";
-import { currencyFormatter, currencyReverter, db, storage } from "$lib/firebase"
+import { categories, currencyFormatter, currencyReverter, db, storage } from "$lib/firebase"
 import { user } from "$lib/stores/authStore"
 import { isLoading } from "$lib/stores/stateStore"
 import { addDoc, collection, doc, Timestamp } from "firebase/firestore";
@@ -15,13 +15,11 @@ import {
     ModelViewport,
 } from "../../../components/design";
 
-const categories = ['Character', 'Vehicle', 'Environment', 'Weapon', 'Building', 'Accessory']
-
 let nameValue = $state("");
 let descriptionValue = $state("");
 let priceValue = $state(0);
 let priceDisplay = $state(currencyFormatter.format(priceValue));
-let categoryValue = $state(categories[0]);
+let categoryValue = $state(categories[0].id);
 let errorValue: any = $state(null);
 
 $effect(() => {
@@ -54,7 +52,6 @@ async function changeModel() {
 
 async function uploadModel() {
     if (nameValue.length === 0 
-        && (priceValue.length === 0 || Number(priceValue) === Number.NaN)
         && descriptionValue.length === 0 
         && modelFile === undefined
         && babylonData === undefined) {
@@ -145,7 +142,7 @@ async function uploadModel() {
             <div class="flex-1 flex gap-5 flex-col md:flex-row">
                 {#each categories as category}
                     <label>
-                        <input checked={categoryValue === category } onchange={() => categoryValue = category } type="radio" name="category" value={category}> {category}
+                        <input checked={categoryValue === category.id} onchange={() => categoryValue = category.id } type="radio" name="category" value={category.id}> {category.title}
                     </label>
                 {/each}
             </div>

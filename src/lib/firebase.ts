@@ -44,7 +44,40 @@ export const currencyFormatter = new Intl.NumberFormat('id-ID', {
     maximumFractionDigits: 2
 });
 
-export function currencyReverter(formatedNumber): int {
+export function currencyReverter(formatedNumber: String): number {
     const n = Number(formatedNumber.replace(/[^\d,]/g, '').replace(/\./g, '').replace(',', '.'));
     return Number(n) === Number.NaN ? 0 : Number(n);
 }
+
+export const categories = [
+    {
+        title: "Accessory",
+        img: "/accessory.jpg",
+        id: "aces"
+    },
+    {
+        title: "Building",
+        img: "/building.png",
+        id: "buil"
+    },
+    {
+        title: "Character",
+        img: "/char.jpg",
+        id: "char"
+    },
+    {
+        title: "Environment",
+        img: "/environment.png",
+        id: "envi"
+    },
+    {
+        title: "Vehicle",
+        img: "/vehicle.jpg",
+        id: "vehi"
+    },
+    {
+        title: "Weapon",
+        img: "/weapon.jpg",
+        id: "towe"
+    }
+];

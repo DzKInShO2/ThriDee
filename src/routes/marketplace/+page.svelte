@@ -4,12 +4,10 @@
         ModelCard,  
     } from "../../components/design"
 
-    import { db } from "$lib/firebase";
+    import { categories, db } from "$lib/firebase";
     import { collection, getDocs, limit, orderBy, query} from "firebase/firestore";
 
     const katagori = Array.from({ length: 6 }, (_, i) => ({
-        title: `Aset Contoh ${i + 1}`,
-        price: `$${(i + 1) * 5}`,
         category: ['Accessory', 'Building', 'Character', 'Environment', 'Vehicle', 'Weapon'][i%6],
         img     : ['/accessory.jpg', '/building.png', '/char.jpg', '/environment.png', '/vehicle.jpg', '/weapon.jpg'][i%6]
     }));
@@ -73,11 +71,11 @@
 <section style="padding: 2rem">
   <h1>Model Berdasarkan Kategori</h1>
   <div class="grid-assets">
-    {#each katagori as asset}
-    <a href={`/search?c=${asset.category}`} class="card-hover market-item">
+    {#each categories as asset}
+    <a href={`/search?c=${asset.id}`} class="card-hover market-item">
         <img src={asset.img} alt={asset.title}/>
         <div class="card-text">
-            <p style="font-weight: bold; text-align: center;">{asset.category}</p>
+            <p style="font-weight: bold; text-align: center;">{asset.title}</p>
         </div>
       </a>
     {/each}
