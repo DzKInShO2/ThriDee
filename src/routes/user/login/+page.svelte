@@ -21,7 +21,7 @@
 
     $effect(() => {
         if ($user) {
-            goto(`/user?id=${$user!.uid}`);
+            location.href=`/user?id=${$user!.uid}`;
         }
     });
 
@@ -89,5 +89,5 @@
         </p>
     </form>
 
-    <GoogleAuthButton class="google-btn" label="Log-In with Google" onclick={handleGoogleLogin} />
+    <GoogleAuthButton label="Log-In with Google" onclick={handleGoogleLogin} />
 </div>

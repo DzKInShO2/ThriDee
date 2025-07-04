@@ -91,7 +91,7 @@ $effect(() => {
                         <i class="fa-solid fa-upload"></i> Upload
                     </a>
                     <a href={`/user?id=${$user!.uid}`} class="block"><i class="fa-solid fa-user"></i> Profil Saya</a>
-                    <a class="block" onclick={() => signOut(auth).then(() => goto("/"))}><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
+                    <a class="block" href="/" rel="external" onclick={() => signOut(auth)}><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
                 </div>
             {/if}
         </div>
@@ -148,10 +148,10 @@ $effect(() => {
         <div class="footer-section">
             <h5>Kategori Populer</h5>
             <ul>
-                <li><a href="/search?c=Character">Character</a></li>
-                <li><a href="/search?c=Vehicle">Vehicle</a></li>
-                <li><a href="/search?c=Environment">Environment</a></li>
-                <li><a href="/search?c=Tools">Tools</a></li>
+                <li><a href="/search?c=Character" rel="external">Character</a></li>
+                <li><a href="/search?c=Vehicle" rel="external">Vehicle</a></li>
+                <li><a href="/search?c=Environment" rel="external">Environment</a></li>
+                <li><a href="/search?c=Tools" rel="external">Tools</a></li>
             </ul>
         </div>
     </div>

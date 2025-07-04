@@ -22,7 +22,7 @@
 
     $effect(() => {
         if ($user) {
-            goto(`/user?id=${$user!.uid}`);
+            location.href=`/user?id=${$user!.uid}`;
         }
     });
 
