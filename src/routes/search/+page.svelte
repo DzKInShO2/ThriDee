@@ -91,7 +91,8 @@ function priceChange() {
 <section class="p-5 h-screen flex flex-col gap-10">
     <div class="
         flex
-        flex-row
+        flex-col
+        md:flex-row
         justify-start
         gap-5
         rounded-xl
@@ -101,7 +102,7 @@ function priceChange() {
         p-3
         bg-gray-100
         ">
-        <div class="flex gap-3 items-center">
+        <div class="flex gap-3 items-center justify-start">
             <p>Kategori</p>
             <select bind:value={category}
                 onchange={() => { 
@@ -122,22 +123,22 @@ function priceChange() {
                 {/each}
             </select>
         </div>
-        <div class="flex gap-3 items-center flex-col md:flex-row">
+        <div class="flex gap-2 flex-col md:flex-row">
             <div class="flex gap-2 items-center">
-            <p>Harga</p>
-            <select bind:value={price}
-                onchange={priceChange}
-                class="border
-                border-gray-100
-                rounded-xl
-                ring-0 
-                font-light text-sm">
-                {#each prices as p}
-                    <option value={p}>
-                        {p}
-                    </option>
-                {/each}
-            </select>
+                <p>Harga</p>
+                <select bind:value={price}
+                    onchange={priceChange}
+                    class="border
+                    border-gray-100
+                    rounded-xl
+                    ring-0 
+                    font-light text-sm">
+                    {#each prices as p}
+                        <option value={p}>
+                            {p}
+                        </option>
+                    {/each}
+                </select>
             </div>
             {#if price === prices[2] || price === prices[3]}
                 <input 
