@@ -7,13 +7,15 @@ import {
     ProfilePhoto
 }from "../../components/design"
 
-import { fade } from "svelte/transition";
+import { isLoading } from "$lib/stores/stateStore";
 
 import { onMount } from 'svelte';
+import { fade } from "svelte/transition";
 import { goto } from '$app/navigation';
 
-import { db } from "$lib/firebase";
+import { db, storage } from "$lib/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
+    import { ref } from "firebase/storage";
 
 const { data } = $props();
 
@@ -38,9 +40,29 @@ async function getRelatedModels() {
     });
 }
 
+let anchor: HTMLAnchorElement;
 let modelsPromise = $state(getRelatedModels());
 
+async function downloadModel() {
+    $isLoading = true;
+    fetch(data.modelData.binary).then((response) => {
+        response.blob().then((blob) => {
+            const blobURL = URL.createObjectURL(blob);
+            anchor.download = `${data.modelData.title}.${data.modelData.type}`;
+            anchor.href = blobURL;
+            anchor.click();
+
+            URL.revokeObjectURL(blobURL);
+
+            $isLoading = false;
+        });
+    });
+}
+
+
 </script>
+
+<a class="hidden" bind:this={anchor}></a>
 
 <section class="h-120vh w-full">
     <div class="flex flex-col md:flex-row p-5 gap-5">
@@ -52,7 +74,7 @@ let modelsPromise = $state(getRelatedModels());
                         <h1>{data.modelData.title}</h1>
                         <p>{data.modelData.price}</p>
                     </div>
-                    <ClickableButton label="<i class='fa-solid fa-download'></i> Unduh" render={true} onclick={() => {}}/>
+                    <ClickableButton label="<i class='fa-solid fa-download'></i> Unduh" render={true} onclick={downloadModel}/>
                 </div>
                 <p>{data.modelData.description}</p>
                 <a 
