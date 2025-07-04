@@ -1,13 +1,17 @@
 <script lang="ts">
+
+import { page } from "$app/state";
+import { goto } from "$app/navigation";
+
 import { 
     ModelCard 
 } from "../../components/design";
 
 const { data } = $props();
-const categories = ["", "Accessory", "Building", "Character", "Environment", "Vehicle", "Weapon"];
+const categories = ["All", "Accessory", "Building", "Character", "Environment", "Vehicle", "Weapon"];
 
-let search = data.search;
-let category = $state(data.category);
+let search = page.url.searchParams.get("s") ?? "";
+let category = $state(page.url.searchParams.get("c") ?? "");
 </script>
 
 <section class="p-5 h-screen flex flex-col gap-10">
@@ -26,7 +30,7 @@ let category = $state(data.category);
         <div class="flex gap-3 items-center">
             <p>Kategori</p>
             <select bind:value={category}
-                onchange={() => location.href = `/search?s=${search}&c=${category}` }
+                onchange={() => goto(`/search?s=${page.url.searchParams.get("s") ?? ""}&c=${category.replace("All", "")}`) }
                 class="border
                 border-gray-100
                 rounded-xl
@@ -40,11 +44,20 @@ let category = $state(data.category);
             </select>
         </div>
     </div>
+
+    {#if search.length > 0}
+        <p class="text-2xl p-2">
+            Ditemukan {data.ids.length} model terkait kata kunci "<span class="font-light">{search}</span>"
+        </p>
+    {/if}
+
     {#if data.ids.length > 0}
         <div class="flex flex-wrap gap-5">
-            {#each data.ids as id }
-                <ModelCard {id} />
-            {/each}
+            {#key data.ids}
+                {#each data.ids as id }
+                    <ModelCard {id} />
+                {/each}
+            {/key}
         </div>
     {:else}
         <div class="flex flex-col items-center w-full">

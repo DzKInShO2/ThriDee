@@ -1,12 +1,15 @@
 <script lang="ts">
 import "../app.css";
 
-import { auth } from "$lib/firebase";
-import { user } from "$lib/stores/authStore";
-import { signOut } from "firebase/auth";
+import { page } from "$app/state";
+import { goto } from "$app/navigation";
 
 import "$lib/styles/theme.css";
-import { goto } from "$app/navigation";
+import { auth } from "$lib/firebase";
+import { user } from "$lib/stores/authStore";
+
+import { signOut } from "firebase/auth";
+
 import { 
     ProfilePhoto,
     LoadingOverlay
@@ -53,8 +56,11 @@ let search = $state("");
     </div>
     <div>
         <form
-            onsubmit={() => { 
-                location.href = `/search?s=${search}`
+            onsubmit={(e) => {
+                e.preventDefault();
+
+                const category = page.url.searchParams.get("c") ? `&c=${page.url.searchParams.get("c")}` : "";
+                goto(`/search?s=${search}${category}`);
             }}
             action="/search"
             class="Searchbar">
