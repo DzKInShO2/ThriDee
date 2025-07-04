@@ -2,7 +2,7 @@
 # 🚀 ThriDee - Pasar Aset 3D Terkemuka
 
 <div align="center">
-  <img src="/logo.png" alt="ThriDee Logo" width="200">
+  <img src="static/logo.png" alt="ThriDee Logo" width="200">
 
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
