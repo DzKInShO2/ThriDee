@@ -25,7 +25,7 @@
 - 🧾 **Wishlist & Riwayat Transaksi** – Simpan favorit dan pantau semua pembelian Anda
 - 💬 **Ulasan & Rating** – Berikan feedback dan nilai kualitas aset sebelum dan sesudah pembelian
 - 👤 **Profil Kreator** – Lihat aset yang diunggah, biodata, dan kontribusi kreator
-- ⚙️ **Sistem Pembayaran Dummy** – Simulasi proses transaksi untuk uji coba awal
+- ⚙️ **Sistem Pembayaran** – Simulasi proses transaksi untuk uji coba awal
 - 🔔 **Notifikasi Interaktif** – Sistem notifikasi transaksi dan interaksi pengguna
 - 🔐 **Login/Register + Google Auth** – Keamanan dan kenyamanan autentikasi modern
 
