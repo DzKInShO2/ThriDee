@@ -2,7 +2,7 @@
     import InputField from './InputField.svelte';
     import { fade } from 'svelte/transition';
 
-    let { label, value = $bindable(), visibility = $bindable(), hint, onaccept } = $props();
+    let { label, value = $bindable(), visibility = $bindable(), hint, isEmail = false, onaccept } = $props();
 </script>
 
 {#if visibility}
@@ -12,7 +12,8 @@
     flex
     items-center
     justify-center
-    z-10
+    z-50
+    top-0
     fixed
     w-full h-full
     bg-[#1F1F1F60]
@@ -42,7 +43,7 @@
             {label}
         </p>
 
-        <InputField bind:value={value} title="" hint={hint} />
+        <InputField bind:value={value} title="" hint={hint} isEmail={isEmail} />
 
         <div class="flex justify-end gap-5 items-center">
             <button

@@ -13,7 +13,8 @@
     flex
     items-center
     justify-center
-    z-10
+    z-50
+    top-0
     fixed
     w-full h-full
     bg-[#1F1F1F60]

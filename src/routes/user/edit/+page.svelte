@@ -140,13 +140,13 @@
 
 <ActionChangeDialog label="Ganti gambar profil" text="Apakah anda yakin ingin mengganti gambar profil?" bind:visibility={profileVisibility} onaccept={changeProfile} />
 
-<InfoChangeDialog label="Ganti Nama" hint="Your name..." bind:visibility={nameVisibility} bind:value={nameValue} onaccept={changeName} />
+<InfoChangeDialog label="Ganti Nama" hint="Your name..." bind:visibility={nameVisibility} bind:value={nameValue} onaccept={changeName} isEmail={false} />
 
 <BioChangeDialog label="Ganti Bio" hint="Your bio..." bind:visibility={bioVisibility} bind:value={bioValue} onaccept={changeBio} />
 
 <InfoChangeDialog label="Ganti Email" hint="Your email..." bind:visibility={emailVisibility} bind:value={emailValue} onaccept={changeEmail} />
 
-<InfoChangeDialog label="Ganti Telepon" hint="Your phone number..." bind:visibility={phoneVisibility} bind:value={phoneValue} onaccept={changePhone} />
+<InfoChangeDialog label="Ganti Telepon" hint="Your phone number..." bind:visibility={phoneVisibility} bind:value={phoneValue} onaccept={changePhone} isEmail={false} />
 
 <PasswordChangeDialog label="Ganti Password" hint="Your new password..." bind:visibility={passwordVisibility}  onaccept={changePassword} />
 
