@@ -4,6 +4,7 @@ import { onMount } from "svelte";
 
 import { db } from "$lib/firebase";
 import { user } from "$lib/stores/authStore"
+import { isLoading } from "$lib/stores/stateStore";
 
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 
@@ -22,13 +23,17 @@ onMount(() => {
 })
 
 let isItMe = $state(false);
+let currentUser: any = $state(null);
 $effect(() => {
     if ($user) {
         isItMe = ($user.uid === data.user)
     }
+
+    if (!currentUser) {
+        $isLoading = true;
+    }
 });
 
-let currentUser: any = $state(null);
 let modelsCreated: Array<String> = $state(Array<String>());
 if (data.user !== "") {
     const docRef = doc(db, "user", data.user);
@@ -37,6 +42,8 @@ if (data.user !== "") {
             id: snap.id,
             ...snap.data(),
         };
+
+        $isLoading = false;
     });
 
     const modelsQuery = query(collection(db, "model"), where("author", "==", docRef));

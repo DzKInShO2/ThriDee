@@ -4,17 +4,6 @@ import { ModelCard } from "../../components/design";
 const { data } = $props();
 </script>
 
-{#snippet modelItem(model: any)}
-    <div class="card-hover">
-            <img src={model.preview} alt={model.title} class="w-full h-auto rounded-md block m-auto" />
-            <div class="absolute bg-[#FFFFFF10] text-white w-full bottom-0 p-2">
-                <h3>{model.title}</h3>
-                <p>Kategori: {model.category}</p>
-                <p>Harga: {model.price}</p>
-            </div>
-        </div>
-{/snippet}
-
 <section class="p-5 h-screen">
     {#if data.ids.length > 0}
         <div class="flex flex-wrap gap-5">

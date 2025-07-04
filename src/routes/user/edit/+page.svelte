@@ -4,6 +4,7 @@
     import { doc, getDoc, setDoc } from "firebase/firestore";
 
     import { user } from "$lib/stores/authStore";
+    import { isLoading } from "$lib/stores/stateStore";
 
     import { 
         ActionChangeDialog,
@@ -62,6 +63,8 @@
     async function changeProfile() {
         if (profileValue === undefined) return;
         
+        $isLoading = true;
+
         const ext = profileValue.name.split(".").pop();
         uploadBytes(ref(storage, `/user/profile/${$user!.uid}.${ext}`), profileValue!).then((result) => {
             getDownloadURL(result.ref).then((url) => {
@@ -74,12 +77,16 @@
                     updateProfile($user!, {
                         photoURL: url
                     });
+                    $isLoading = false;
+                    location.href = `/user/edit?id=${$user!.uid}`;
                 });
             });
         });
     }
 
     async function changeName() {
+        $isLoading = true;
+
         updateProfile($user!, {
             displayName: nameValue
         });
@@ -89,35 +96,45 @@
         }, {merge: true}).then(() => {
             userData.name = nameValue;
             nameVisibility = false;
+            $isLoading = false;
         });
     }
 
     async function changeBio() {
+        $isLoading = true;
         setDoc(doc(db, "user", $user!.uid), {
             bio: bioValue
         }, {merge: true}).then(() => {
             userData.bio = bioValue;
             bioVisibility = false;
+            $isLoading = false;
         });
     }
 
     async function changeEmail() {
+        $isLoading = true;
         updateEmail($user!, emailValue).then(() => {
             emailVisibility = false;
+            $isLoading = false;
         });
     }
 
     async function changePhone() {
+        $isLoading = true;
         setDoc(doc(db, "user", $user!.uid), {
             phone: userData.phone
         }, {merge: true}).then(() => {
             userData.phone = phoneValue;
             phoneVisibility = false;
+            $isLoading = false;
         });
     }
 
     async function changePassword(password: String) {
-        updatePassword($user!, password.toString());
+        $isLoading = true;
+        updatePassword($user!, password.toString()).then(() => {
+            $isLoading = false;
+        });
     }
 </script>
 

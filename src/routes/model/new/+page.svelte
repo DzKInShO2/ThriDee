@@ -3,6 +3,7 @@
 import { goto } from "$app/navigation";
 import { db, storage } from "$lib/firebase"
 import { user } from "$lib/stores/authStore"
+import { isLoading } from "$lib/stores/stateStore"
 import { addDoc, collection, doc, Timestamp } from "firebase/firestore";
 import { ref, uploadBytes, uploadString } from "firebase/storage";
 
@@ -55,6 +56,8 @@ async function uploadModel() {
         return
     }
 
+    $isLoading = true;
+
     const authRef = doc(db, "user", $user!.uid);
     const ext = modelFile!.name.split(".").pop();
     addDoc(collection(db, "model"), {
@@ -75,6 +78,7 @@ async function uploadModel() {
         });
         
         uploadBytes(ref(storage, `model/binary/${docRef!.id}.${ext!}`), modelFile!).then(() => {
+            $isLoading = false;
             goto(`/model?id=${docRef!.id}`);
         });
     });
