@@ -1,0 +1,44 @@
+ini eror pas pake akun baru, gak bisa lihat postingan, upload gak bener, gak bisa liat profil, bahkan akun google gak bisa
+
+TypeError: Cannot read properties of undefined (reading 'joined')
+    at load (eval at runInlinedModule (file:///D:/Projek%20Scube/ThriDee/node_modules/vite/dist/node/module-runner.js:1062:11), <anonymous>:18:30)
+    at async load_server_data (eval at runInlinedModule (file:///D:/Projek%20Scube/ThriDee/node_modules/vite/dist/node/module-runner.js:1062:11), <anonymous>:54:18)
+    at async Promise.all (index 1)
+    at async render_data (eval at runInlinedModule (file:///D:/Projek%20Scube/ThriDee/node_modules/vite/dist/node/module-runner.js:1062:11), <anonymous>:104:17)
+    at async resolve (eval at runInlinedModule (file:///D:/Projek%20Scube/ThriDee/node_modules/vite/dist/node/module-runner.js:1062:11), <anonymous>:368:22)
+    at async respond (eval at runInlinedModule (file:///D:/Projek%20Scube/ThriDee/node_modules/vite/dist/node/module-runner.js:1062:11), <anonymous>:263:22)
+    at async file:///D:/Projek%20Scube/ThriDee/node_modules/@sveltejs/kit/src/exports/vite/dev/index.js:540:22
+TypeError: Cannot read properties of undefined (reading 'joined')
+    at load (eval at runInlinedModule (file:///D:/Projek%20Scube/ThriDee/node_modules/vite/dist/node/module-runner.js:1062:11), <anonymous>:18:30)
+    at async load_server_data (eval at runInlinedModule (file:///D:/Projek%20Scube/ThriDee/node_modules/vite/dist/node/module-runner.js:1062:11), <anonymous>:54:18)
+    at async Promise.all (index 1)
+    at async render_data (eval at runInlinedModule (file:///D:/Projek%20Scube/ThriDee/node_modules/vite/dist/node/module-runner.js:1062:11), <anonymous>:104:17)
+    at async resolve (eval at runInlinedModule (file:///D:/Projek%20Scube/ThriDee/node_modules/vite/dist/node/module-runner.js:1062:11), <anonymous>:368:22)
+    at async respond (eval at runInlinedModule (file:///D:/Projek%20Scube/ThriDee/node_modules/vite/dist/node/module-runner.js:1062:11), <anonymous>:263:22)
+    at async file:///D:/Projek%20Scube/ThriDee/node_modules/@sveltejs/kit/src/exports/vite/dev/index.js:540:22
+TypeError: Cannot read properties of undefined (reading 'joined')
+    at load (eval at runInlinedModule (file:///D:/Projek%20Scube/ThriDee/node_modules/vite/dist/node/module-runner.js:1062:11), <anonymous>:18:30)
+    at async load_server_data (eval at runInlinedModule (file:///D:/Projek%20Scube/ThriDee/node_modules/vite/dist/node/module-runner.js:1062:11), <anonymous>:54:18)
+    at async Promise.all (index 1)
+    at async render_data (eval at runInlinedModule (file:///D:/Projek%20Scube/ThriDee/node_modules/vite/dist/node/module-runner.js:1062:11), <anonymous>:104:17)
+    at async resolve (eval at runInlinedModule (file:///D:/Projek%20Scube/ThriDee/node_modules/vite/dist/node/module-runner.js:1062:11), <anonymous>:368:22)
+    at async respond (eval at runInlinedModule (file:///D:/Projek%20Scube/ThriDee/node_modules/vite/dist/node/module-runner.js:1062:11), <anonymous>:263:22)
+    at async file:///D:/Projek%20Scube/ThriDee/node_modules/@sveltejs/kit/src/exports/vite/dev/index.js:540:22
+undefined:31
+
+                const ordered = docSnap.data().ordered;
+                                              ^
+
+TypeError: Cannot read properties of undefined (reading 'ordered')
+    at eval (eval at runInlinedModule (file:///D:/Projek%20Scube/ThriDee/node_modules/vite/dist/node/module-runner.js:1062:11), <anonymous>:31:33)
+
+guest bisa download dan cetak sesuka hati
+akun zaka@gmail.com gak bisa
+menu user kalo gak ada upload aneh
+grid masih gak rata kanan kiri jelek
+backend gak semua user sudah
+backend menu menu baru belum intregasi (yang ada aja)
+footer mentokx
+footer banyak kepotong, menu user, menu caari dan kalo banyak isi pokoknya
+menu view aneh kalo relatet nya banyak, layar nya ikut besar
+admin belum punya akun
