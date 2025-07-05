@@ -87,7 +87,7 @@
     {#await newestModelsPromise}
         <LoadingOverlayLocal />
     {:then models}
-        <div class="flex gap-5 flex-wrap justify-between">
+        <div class="flex flex-wrap gap-5 justify-between">
             {#each models as model}
             <ModelCard id={model} />
             {/each}

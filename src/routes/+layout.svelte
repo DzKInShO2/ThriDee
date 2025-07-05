@@ -109,7 +109,8 @@ let search = $state("");
                         <i class="fa-solid fa-upload"></i> Unggah
                     </a>
                     <a href={`/user?id=${$user!.uid}`} rel="external" class="block"><i class="fa-solid fa-user"></i> Profil Saya</a>
-                    <a href={`/user/own?id=${$user!.uid}`} rel="external" class="block"><i class="fa-solid fa-cube"></i> Pesanan Saya</a>
+                    <a href={`/user/own?id=${$user!.uid}`} rel="external" class="block"><i class="fa-solid fa-cube"></i> Asset Saya</a>
+                    <a href={`/user/history?id=${$user!.uid}`} rel="external" class="block"><i class="fa-solid fa-clipboard"></i> Pesanan Saya</a>
                     <a class="block" href="/" rel="external" onclick={() => signOut(auth)}><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
                 </div>
             {/if}
