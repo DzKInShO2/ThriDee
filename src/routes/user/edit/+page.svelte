@@ -122,7 +122,7 @@
     async function changePhone() {
         $isLoading = true;
         setDoc(doc(db, "user", $user!.uid), {
-            phone: userData.phone
+            phone: phoneValue
         }, {merge: true}).then(() => {
             userData.phone = phoneValue;
             phoneVisibility = false;

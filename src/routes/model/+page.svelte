@@ -16,7 +16,7 @@ import { fade } from "svelte/transition";
 import { goto } from '$app/navigation';
 
 import { categories, db, storage } from "$lib/firebase";
-import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, DocumentReference, getDoc, getDocs, query, setDoc, where } from "firebase/firestore";
 import { ref, deleteObject } from "firebase/storage";
 
 const { data } = $props();
@@ -48,7 +48,7 @@ let modelsPromise = $state(getRelatedModels());
 let confirmVisibility = $state(false);
 let isOwned = $state(data.modelData.price === "Gratis");
 $effect(() => {
-    if ($user) {
+    if ($user && !isOwned) {
         if (data.modelData.author.id === $user!.uid) {
             isOwned = true;
         } else {
@@ -93,9 +93,44 @@ async function deleteModel() {
     });
 }
 
+async function orderModel() {
+    $isLoading = true;
+
+    const userRef = doc(db, "user", $user!.uid);
+    const modelRef = doc(db, "model", data.modelId);
+    getDoc(userRef).then((docSnap) => {
+        const ordered = docSnap.data()!.ordered as Array<DocumentReference>;
+        if (ordered !== undefined) {
+            if (ordered.find((o) => o.path === modelRef.path) === undefined) {
+                setDoc(userRef, {
+                    ordered: [
+                        ...ordered,
+                        modelRef
+                    ]
+                }, { merge: true }).then(() => { 
+                    $isLoading = false 
+                    goto(`/user/own?id=${$user!.uid}`);
+                });
+            } else {
+                $isLoading = false;
+                goto(`/user/own?id=${$user!.uid}`);
+            }
+        } else {
+            setDoc(userRef, {
+                ordered: [
+                    modelRef
+                ]
+            }, { merge: true }).then(() => { 
+                $isLoading = false; 
+                goto(`/user/own?id=${$user!.uid}`);
+            });
+        }
+    });
+}
+
 </script>
 
-<a class="hidden" bind:this={anchor}></a>
+<a class="hidden" href="/" bind:this={anchor}>A</a>
 <ActionConfirmDialog bind:visibility={confirmVisibility} label="Hapus Model" text="Menghapus model, apakah anda yakin?" onaccept={deleteModel} />
 
 <section class="h-120vh w-full">
@@ -129,6 +164,14 @@ async function deleteModel() {
                                 {#key isOwned}
                                     {#if isOwned === true}
                                         <button 
+                                            onclick={() => {}}
+                                            class="transition-all m-0 pr-3 pl-3 cursor-pointer border-b-2 pb-2
+                                                    group-hover:text-gray-400
+                                                    hover:scale-[1.1]
+                                                    hover:text-orange-400 hover:border-orange-400 hover:border-b-3">
+                                            <i class='fa-solid fa-print'></i> Cetak
+                                        </button>
+                                        <button 
                                             onclick={downloadModel}
                                             class="transition-all m-0 pr-3 pl-3 cursor-pointer border-b-2 pb-2
                                                     group-hover:text-gray-400
@@ -138,7 +181,7 @@ async function deleteModel() {
                                         </button>
                                     {:else}
                                         <button 
-                                            onclick={() => {}}
+                                            onclick={orderModel}
                                             class="transition-all m-0 pr-3 pl-3 cursor-pointer border-b-2 pb-2
                                                     group-hover:text-gray-400
                                                     hover:scale-[1.1]
