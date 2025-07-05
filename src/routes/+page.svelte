@@ -48,9 +48,10 @@
                 <img src="/environment.png" alt="awalan" />
             </div>
         </div>
+    </div>
 
-        <section style="padding: 2rem">
-        </section>
+    <div class="w-full px-4 md:px-20">
+        <section style="padding: 2rem"></section>
         <h1>Start Exploring NOW</h1>
         <div class="grid-assets">
             {#each categories as asset}
@@ -63,5 +64,5 @@
             {/each}
         </div>
     </div>
-</div>  
+</div>
 
