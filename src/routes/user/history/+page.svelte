@@ -45,7 +45,7 @@ let historyOrders: OrderHistory[] = [
     {#if historyOrders.length > 0}
         <div class="flex flex-col gap-4">
             {#each historyOrders as order}
-                <div class="bg-white shadow-md rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 border-l-4
+                <a href="../user/pesanan" class="bg-white shadow-md rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 border-l-4
                     {order.status === 'Selesai' ? 'border-green-500' : ''}
                     {order.status === 'Diproses' ? 'border-yellow-400' : ''}
                     {order.status === 'Dibatalkan' ? 'border-red-500' : ''}">
@@ -70,7 +70,7 @@ let historyOrders: OrderHistory[] = [
                             {order.status}
                         </span>
                     </div>
-                </div>
+                </a>
             {/each}
         </div>
     {:else}

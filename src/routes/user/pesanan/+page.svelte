@@ -18,9 +18,12 @@ const currencyFormatter = new Intl.NumberFormat('id-ID', {
 
 <section class="h-screen flex flex-col gap-5 p-6">
     <div class="bg-white rounded-xl shadow-2xl p-6 flex flex-col gap-5 w-full max-w-4xl mx-auto">
-        <h2 class="text-2xl font-bold text-[#FFA808] flex items-center gap-2">
+        <div class="flex items-center justify-between">
+            <h2 class="text-2xl font-bold text-[#FFA808] flex items-center gap-2">
             <i class="fa-solid fa-print"></i> Cetak Fisik Aset 3D
-        </h2>
+            </h2>
+            <a href="../user/history"> <i class="fa-solid fa-clock-rotate-left"></i> Riwayat Pemesanan</a>
+        </div>
 
         <div class="flex flex-col gap-3">
             <p class="text-lg font-semibold text-gray-700">Daftar Pesanan:</p>
