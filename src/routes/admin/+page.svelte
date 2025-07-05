@@ -42,7 +42,7 @@ const totalUsers = users.length;
 const totalSoldAssets = printOrders.length; // bisa beda jika multiple quantity
 
 function goToOrderDetail(id: number) {
-    goto(`/admin/order/${id}`);
+    goto(`/admin/pesanan`);
 }
 </script>
 
@@ -78,6 +78,9 @@ function goToOrderDetail(id: number) {
         <h2 class="text-xl font-semibold mb-4">Antrian Pesanan</h2>
         <div class="flex flex-col gap-4">
             {#each printOrders.slice(0, 3) as order}
+                
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
+                <!-- svelte-ignore a11y_no_static_element_interactions -->
                 <div on:click={() => goToOrderDetail(order.id)}
                     class="cursor-pointer bg-white rounded-xl p-4 shadow-md flex justify-between items-center hover:bg-gray-50 border-l-4
                         {order.status === 'Diproses' ? 'border-yellow-400' : ''}
@@ -102,7 +105,9 @@ function goToOrderDetail(id: number) {
 
     <!-- Pengguna Aktif -->
     <div>
-        <h2 class="text-xl font-semibold mb-4 mt-8">Pengguna Aktif</h2>
+        <h2 class="text-xl font-semibold mb-4 mt-8">
+            <a href="../admin/users">Pengguna Aktif</a>
+        </h2>
         <table class="w-full bg-white rounded-xl overflow-hidden shadow text-left text-sm">
             <thead class="bg-[#FFA808] text-white">
                 <tr>
