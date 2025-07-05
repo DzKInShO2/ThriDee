@@ -136,7 +136,9 @@ async function orderModel() {
 <section class="h-120vh w-full">
     <div class="flex flex-col md:flex-row gap-5 p-5">
         <div class="flex flex-1 flex-col gap-5">
-            <ModelViewport model={data.modelData} />
+            <div class="w-full h-full md:h-auto">
+                <ModelViewport model={data.modelData} />
+            </div>
             <div class="bg-gray-50 flex flex-col rounded-xl shadow-2xl w-full gap-3 overflow-clip">
                 <div class="flex flex-col justify-between border-b-3 border-gray-200 bg-gray-100 p-3">
                     <div class="flex gap-8 justify-between">

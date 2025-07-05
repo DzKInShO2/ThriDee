@@ -20,6 +20,7 @@ export const load: PageServerLoad = async ({url}) => {
                 id: author.id,
                 ...author.data()!,
                 joined: author.data()!.joined.toDate().toLocaleString(),
+                ordered: null,
                 purchased: null
             }
 
