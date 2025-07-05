@@ -28,7 +28,7 @@ onMount(() => {
 });
 
 async function getRelatedModels() {
-    return new Promise((fulfil, _) => {
+    return new Promise<Array<String>>((fulfil, _) => {
         const q = query(collection(db, "model"), where("category", "==", data.modelData.category));
         let ids = Array<String>();
 
@@ -46,6 +46,23 @@ let anchor: HTMLAnchorElement;
 let modelsPromise = $state(getRelatedModels());
 
 let confirmVisibility = $state(false);
+let isOwned = $state(data.modelData.price === "Gratis");
+$effect(() => {
+    if ($user) {
+        if (data.modelData.author.id === $user!.uid) {
+            isOwned = true;
+        } else {
+            const model = doc(db, "model", data.modelId);
+            const q = query(collection(db, "user"),
+                where("__name__", "==", $user!.uid),
+                where("purchased", "array-contains", model));
+
+            getDocs(q).then((qSnap) => {
+                isOwned = !qSnap.empty;
+            });
+        }
+    }
+});
 
 async function downloadModel() {
     $isLoading = true;
@@ -82,46 +99,86 @@ async function deleteModel() {
 <ActionConfirmDialog bind:visibility={confirmVisibility} label="Hapus Model" text="Menghapus model, apakah anda yakin?" onaccept={deleteModel} />
 
 <section class="h-120vh w-full">
-    <div class="flex flex-col md:flex-row p-5 gap-5">
+    <div class="flex flex-col md:flex-row gap-5 p-5">
         <div class="flex flex-1 flex-col gap-5">
             <ModelViewport model={data.modelData} />
-            <div class="bg-gray-50 flex flex-col p-3 rounded-xl shadow-2xl w-full gap-3">
-                <div class="flex flex-row items-center justify-between">
-                    <div class="flex flex-col">
+            <div class="bg-gray-50 flex flex-col rounded-xl shadow-2xl w-full gap-3 overflow-clip">
+                <div class="flex flex-col justify-between border-b-3 border-gray-200 bg-gray-100 p-3">
+                    <div class="flex gap-8 justify-between">
                         <h1>{data.modelData.title}</h1>
+                        <div>
+                            <div class="group flex">
+                                {#if ($user && $user!.uid === data.modelData.author.id) }
+                                    <button 
+                                        onclick={() => confirmVisibility = true}
+                                        class="transition-all m-0 pr-3 pl-3 cursor-pointer border-b-2 pb-2
+                                                group-hover:text-gray-400
+                                                hover:scale-[1.1]
+                                                hover:text-orange-400 hover:border-orange-400 hover:border-b-3">
+                                        <i class='fa-solid fa-trash'></i> Hapus
+                                    </button>
+                                    <button 
+                                        onclick={() => { goto(`/model/edit?id=${data.modelId}`) } }
+                                        class="transition-all m-0 pr-3 pl-3 cursor-pointer border-b-2 pb-2
+                                                group-hover:text-gray-400
+                                                hover:scale-[1.1]
+                                                hover:text-orange-400 hover:border-orange-400 hover:border-b-3">
+                                        <i class='fa-solid fa-edit'></i> Edit
+                                    </button>
+                                {/if}
+                                {#key isOwned}
+                                    {#if isOwned === true}
+                                        <button 
+                                            onclick={downloadModel}
+                                            class="transition-all m-0 pr-3 pl-3 cursor-pointer border-b-2 pb-2
+                                                    group-hover:text-gray-400
+                                                    hover:scale-[1.1]
+                                                    hover:text-orange-400 hover:border-orange-400 hover:border-b-3">
+                                            <i class='fa-solid fa-download'></i> Unduh
+                                        </button>
+                                    {:else}
+                                        <button 
+                                            onclick={() => {}}
+                                            class="transition-all m-0 pr-3 pl-3 cursor-pointer border-b-2 pb-2
+                                                    group-hover:text-gray-400
+                                                    hover:scale-[1.1]
+                                                    hover:text-orange-400 hover:border-orange-400 hover:border-b-3">
+                                            <i class='fa-solid fa-shopping-cart'></i> Pesan
+                                        </button>
+                                    {/if}
+                                {/key}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
                         <p class="font-light">{data.modelData.price}  <i class="fa-solid fa-tag"></i></p>
+                        <p class="mb-4">Kategori: <a href="/search?c={data.modelData.category}">{categories.find(a => a.id === data.modelData.category).title}</a></p>
                     </div>
-                    <div class="flex gap-8 items-center">
-                        {#if ($user && $user!.uid === data.modelData.author.id) }
-                            <ClickableButton label="<i class='fa-solid fa-trash'></i> Hapus" render={true} onclick={() => confirmVisibility = true}/>
-                            <ClickableButton label="<i class='fa-solid fa-edit'></i> Edit" render={true} onclick={() => { goto(`/model/edit?id=${data.modelId}`) } }/>
-                        {/if}
-                        <ClickableButton label="<i class='fa-solid fa-download'></i> Unduh" render={true} onclick={downloadModel}/>
-                    </div>
+                    <a 
+                        href={`user?id=${data.modelData.author.id}`}
+                        class="
+                        cursor-pointer 
+                        bg-gray-200
+                        rounded-md shadow-md 
+                        p-2 
+                        w-auto
+                        flex gap-5 items-center 
+                        select-none">
+                        <div class="w-[96px] h-[96px] overflow-clip rounded-full">
+                            <ProfilePhoto photoUrl={data.modelData.author.photoURL} />
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <p class="font-medium text-lg">{data.modelData.author.name}</p>
+                            <p class="text-sm">Bio: <br>{data.modelData.author.bio}</p>
+                        </div>
+                    </a>
                 </div>
-
-                <p class="mb-4">Kategori: <a href="/search?c={data.modelData.category}">{categories.find(a => a.id === data.modelData.category).title}</a></p>
-
-                <p>{data.modelData.description}</p>
-
-                <a 
-                    href={`user?id=${data.modelData.author.id}`}
-                    class="
-                    cursor-pointer 
-                    bg-gray-100 
-                    rounded-md shadow-md 
-                    p-2 
-                    flex gap-5 items-center 
-                    select-none">
-                    <div class="w-[96px] h-[96px] overflow-clip rounded-full">
-                        <ProfilePhoto photoUrl={data.modelData.author.photoURL} />
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <p class="font-medium text-lg">{data.modelData.author.name}</p>
-                        <p class="text-sm">Bio: <br>{data.modelData.author.bio}</p>
-                    </div>
-                </a>
+                <div class="mb-15">
+                    <p class="pl-5 pb-5 text-xl font-semibold">Deskripsi</p>
+                    <p class="pl-10 pr-10">{data.modelData.description}</p>
+                </div>
             </div>
+
         </div>
         <div class="flex-none flex flex-col gap-4">
             <p class="font-semibold text-lg w-[256px]">Model Terkait</p>

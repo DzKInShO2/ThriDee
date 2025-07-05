@@ -20,6 +20,7 @@ export const load: PageServerLoad = async ({url}) => {
                 id: author.id,
                 ...author.data()!,
                 joined: author.data()!.joined.toDate().toLocaleString(),
+                purchased: null
             }
 
             const price = (docSnap.data()!.price! === 0) ? "Gratis" : currencyFormatter.format(docSnap.data()!.price!);

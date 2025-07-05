@@ -41,7 +41,7 @@ let search = $state("");
 <nav
     class="flex flex-row justify-between items-center h-15 p-4 shadow-xs gap-5 sticky z-40">
     <div>
-        <a href="/" aria-label="TriDee Home">
+        <a href="/" aria-label="TriDee Beranda">
             <img src="/logo.png" class="w-24 h-24 hidden md:block" alt="TriDee Logo" />
         </a>
         <button
@@ -70,7 +70,7 @@ let search = $state("");
                 type="text"
                 name="s"
                 id="searchbar"
-                placeholder="Search your 3D assets..."
+                placeholder="Cari 3D model..."
             />
             <button
                 class="
@@ -92,7 +92,7 @@ let search = $state("");
         <div class="auth-links">
             <div class="flex gap-3 items-center">
                 <a href="/model/new" class="btn-upload hidden lg:block">
-                    <i class="fa-solid fa-upload"></i> Upload
+                    <i class="fa-solid fa-upload"></i> Unggah
                 </a>
                 <!-- svelte-ignore a11y_consider_explicit_label -->
                 <button 
@@ -106,7 +106,7 @@ let search = $state("");
             {#if menuShown}
                 <div class="profile-dropdown">
                     <a href="/model/new" class="mobile">
-                        <i class="fa-solid fa-upload"></i> Upload
+                        <i class="fa-solid fa-upload"></i> Unggah
                     </a>
                     <a href={`/user?id=${$user!.uid}`} rel="external" class="block"><i class="fa-solid fa-user"></i> Profil Saya</a>
                     <a class="block" href="/" rel="external" onclick={() => signOut(auth)}><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
@@ -130,9 +130,9 @@ let search = $state("");
 </nav>
 
 <nav style="background: var(--color-primary); padding: 1rem; color: white">
-    <a href="/" style="margin-right: 1rem; color: white;">Home</a>
-    <a href="/marketplace" style="margin-right: 1rem; color: white;">Marketplace</a>
-    <a href="/search" style="margin-right: 1rem; color: white;">Search</a>
+    <a href="/" style="margin-right: 1rem; color: white;">Beranda</a>
+    <a href="/marketplace" style="margin-right: 1rem; color: white;">Produk</a>
+    <a href="/search?s=&c=&p=" style="margin-right: 1rem; color: white;">Cari</a>
 </nav>
 
 <div class="h-full">
@@ -145,21 +145,19 @@ let search = $state("");
 
     <div class="footer-content">
         <div class="footer-section">
+            <h5>
+                <a href="/about">Tentang Kami</a>
+            </h5>
             <h5>TriDee</h5>
             <p>Temukan aset 3D berkualitas tinggi untuk proyek kreatif Anda.</p>
-            <h5>
-                <a href="/about">About Us</a>
-            </h5>
         </div>
 
         <div class="footer-section">
-            <h5>Links</h5>
+            <h5>Tautan</h5>
             <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/marketplace">Marketplace</a></li>
-                <li><a href="/user">Profile</a></li>
-                <li><a href="/user/login">Login</a></li>
-                <li><a href="/user/register">Register</a></li>
+                <li><a href="/">Beranda</a></li>
+                <li><a href="/search?s=&c=&p=">Cari</a></li>
+                <li><a href="/marketplace">Produk</a></li>
             </ul>
         </div>
 
@@ -167,7 +165,7 @@ let search = $state("");
             <h5>Kategori Populer</h5>
             <ul>
                 {#each categories.slice(0, 4) as asset}
-                    <li><a href="/search?c={asset.id}" rel="external">{asset.title}</a></li>
+                    <li><a href="/search?s=&c={asset.id}&p=" rel="external">{asset.title}</a></li>
                 {/each}
             </ul>
         </div>

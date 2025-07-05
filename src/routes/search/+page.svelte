@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { slide } from "svelte/transition";
+
     import { page } from "$app/state";
     import { goto } from "$app/navigation";
 
@@ -12,7 +14,7 @@
 
     const { data } = $props();
 
-    const categoriesDisplay = [
+    const categoriesFilter = [
         {
             title: "Semua",
             id: "",
@@ -31,12 +33,7 @@
     };
 
     let search = page.url.searchParams.get("s") ?? "";
-    let category = $state(
-        (page.url.searchParams.get("c") ?? "").replace(
-            "",
-            categoriesDisplay[0],
-        ),
-    );
+    let category = $state(categoriesFilter.find(a => a.id === (page.url.searchParams.get("c") ?? "")));
 
     let priceURL = page.url.searchParams.get("p") ?? "";
 
@@ -126,7 +123,7 @@
                 ring-0
                 font-light text-sm"
             >
-                {#each categoriesDisplay as c}
+                {#each categoriesFilter as c}
                     <option value={c}>
                         {c.title}
                     </option>
@@ -152,28 +149,23 @@
                     {/each}
                 </select>
             </div>
-            {#if price === prices[2] || price === prices[3]}
+            {#if price !== prices[0] && price !== prices[1]}
                 <input
+                    transition:slide
                     onchange={priceChange}
                     class="w-full rounded-md text-sm ring-0 border-gray-100 font-light"
                     min="0"
                     bind:value={priceFirstDisplay}
                 />
-            {:else if price === prices[4]}
-                <div class="flex flex-col gap-2 lg:flex-row">
-                    <input
-                        onchange={priceChange}
-                        class="w-full rounded-md text-sm ring-0 border-gray-100 font-light"
-                        min="0"
-                        bind:value={priceFirstDisplay}
-                    />
-                    <input
-                        onchange={priceChange}
-                        class="w-full rounded-md text-sm ring-0 border-gray-100 font-light"
-                        min="0"
-                        bind:value={priceSecondDisplay}
-                    />
-                </div>
+            {/if}
+            {#if price === prices[4]}
+                <input
+                    transition:slide
+                    onchange={priceChange}
+                    class="w-full rounded-md text-sm ring-0 border-gray-100 font-light"
+                    min="0"
+                    bind:value={priceSecondDisplay}
+                />
             {/if}
         </div>
     </div>
