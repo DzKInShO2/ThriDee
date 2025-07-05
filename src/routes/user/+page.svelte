@@ -56,7 +56,7 @@ if (data.user !== "") {
 
 </script>
 
-<div class="h-screen p-5 flex flex-col items-center gap-5">
+<div class="p-5 flex flex-col items-center gap-5">
     {#if (currentUser)}
         <div class="flex flex-col items-center gap-5 w-8/10 p-5 shadow-2xl bg-gray-100 rounded-xl mb-10">
             <div class="

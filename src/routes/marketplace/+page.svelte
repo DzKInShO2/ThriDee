@@ -87,9 +87,9 @@
     {#await newestModelsPromise}
         <LoadingOverlayLocal />
     {:then models}
-        <div class="flex gap-5 flex-wrap">
+        <div class="flex gap-5 flex-wrap justify-between">
             {#each models as model}
-                <ModelCard id={model} />
+            <ModelCard id={model} />
             {/each}
         </div>
     {/await}
@@ -100,7 +100,7 @@
     {#await cheapestModelsPromise}
         <LoadingOverlayLocal />
     {:then models}
-        <div class="flex gap-5 flex-wrap">
+        <div class="flex gap-5 flex-wrap justify-between">
             {#each models as model}
                 <ModelCard id={model} />
             {/each}
@@ -113,7 +113,7 @@
     {#await expensiveModelsPromise}
         <LoadingOverlayLocal />
     {:then models}
-        <div class="flex gap-5 flex-wrap">
+        <div class="flex gap-5 flex-wrap justify-between">
             {#each models as model}
                 <ModelCard id={model} />
             {/each}

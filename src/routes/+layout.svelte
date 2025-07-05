@@ -149,7 +149,7 @@ let search = $state("");
             <h5>
                 <a href="/about">Tentang Kami</a>
             </h5>
-            <h5>TriDee</h5>
+            <h5>ThriDee</h5>
             <p>Temukan aset 3D berkualitas tinggi untuk proyek kreatif Anda.</p>
         </div>
 
