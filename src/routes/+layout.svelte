@@ -114,9 +114,8 @@ let search = $state("");
                     <a href={`/user/penghasilan?id=${$user!.uid}`} rel="external" class="block"><i class="fa-solid fa-money-bill"></i> Penghasilan</a>
 
                     <!-- admin -->
-                    <a href={`/user/penghasilan?id=${$user!.uid}`} rel="external" class="block"><i class="fa-solid fa-users"></i> Detail user</a>
-                    <a href={`/user/penghasilan?id=${$user!.uid}`} rel="external" class="block"><i class="fa-solid fa-print"></i> Antrian Cetak</a>
-
+                    <a href="/admin/users" rel="external" class="block"><i class="fa-solid fa-users"></i> Detail user</a>
+                    <a href="/admin/antrian" rel="external" class="block"><i class="fa-solid fa-print"></i> Antrian Cetak</a>
 
                     <a class="block" href="/" rel="external" onclick={() => signOut(auth)}><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
                 </div>
