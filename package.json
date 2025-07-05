@@ -29,6 +29,8 @@
 		"@babylonjs/loaders": "^8.14.2",
 		"babylonjs": "^8.14.2",
 		"firebase": "^11.8.1",
-		"firebase-admin": "^13.4.0"
+		"firebase-admin": "^13.4.0",
+		"nodejs-nicepay": "^1.1.0",
+		"qrcode": "^1.5.4"
 	}
 }

@@ -2,7 +2,7 @@
     import { goto } from '$app/navigation';
     import { user } from '$lib/stores/authStore.js';
     import { onMount } from 'svelte';
-    import { ModelCard } from '../../../components/design';
+    import { ModelCard, PaymentDialog } from '../../../components/design';
     import { doc, getDoc } from 'firebase/firestore';
     import { currencyFormatter, db } from '$lib/firebase';
     import type { DocumentReference } from 'firebase-admin/firestore';
@@ -46,14 +46,18 @@
             });
         }
     });
+
+    let paymentVisible = $state(false);
 </script>
 
-<section class="h-screen">
-    <div class="flex p-5 gap-5">
+<PaymentDialog bind:visible={paymentVisible} />
+
+<section class="h-screen flex flex-col gap-5">
+    <div class="flex flex-col md:flex-row p-5 gap-5">
         <div class="flex flex-col gap-5 w-full overflow-clip rounded-xl shadow-2xl h-128">
             <p class="font-semibold text-xl shadow-md
                 text-center bg-[#FFA808] p-3
-                text-white"><i class="fa-solid fa-shopping-cart"></i> Model Dipesan</p>
+                text-white"><i class="fa-solid fa-shopping-cart"></i> Dalam Keranjang</p>
             {#if (modelsOrdered.length > 0)}
                 <div class="flex overflow-x-scroll gap-5 p-5" transition:fade>
                     {#each modelsOrdered as model}
@@ -64,7 +68,9 @@
                     <p class="text-lg">
                         Total Biaya: <span class="font-semibold">{currencyFormatter.format(priceOrdered)}</span>
                     </p>
-                    <button class="cursor-pointer border rounded-xl p-2 hover:bg-gray-200 active:bg-gray-400">
+                    <button 
+                        onclick={() => paymentVisible = true }
+                        class="cursor-pointer border rounded-xl p-2 hover:bg-gray-200 active:bg-gray-400">
                         <i class="fa-solid fa-cash-register"></i>
                         Bayar
                     </button>
@@ -77,7 +83,7 @@
         <div class="flex flex-col gap-5 w-full overflow-clip rounded-xl shadow-2xl h-128">
             <p class="font-semibold text-xl shadow-md
                 text-center bg-[#FFA808] p-3
-                text-white"><i class="fa-solid fa-money-bill-wave"></i> Model Dibeli</p>
+                text-white"><i class="fa-solid fa-cube"></i> Model</p>
             {#if (modelsPurchased.length > 0)}
                 <div class="flex overflow-x-scroll gap-5 p-5">
                     {#each modelsPurchased as model}
