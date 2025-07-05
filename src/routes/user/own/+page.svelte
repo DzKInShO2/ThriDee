@@ -22,25 +22,29 @@
         }
     });
 
-    let modelsOrdered = $state(Array<String>());
-    let priceOrdered = $state(0);
+    let orderList = $state(Array<{
+        title: String,
+        price: number
+    }>());
 
     let modelsPurchased = $state(Array<String>());
-
     getDoc(doc(db, "user", data.user)).then((docSnap) => {
         const ordered = docSnap.data()!.ordered as Array<DocumentReference>;
         const purchased = docSnap.data()!.purchased as Array<DocumentReference>;
 
-        if (ordered !== undefined) {
+        if (ordered !== undefined && ordered !== null) {
             ordered.forEach((oRef) => {
                 getDoc(oRef).then((oSnap) => {
-                    priceOrdered += oSnap.data()!.price;
-                    modelsOrdered.push(oRef.id);
+                    orderList.push({
+                        id: oSnap.id,
+                        title: oSnap.data().title,
+                        price: oSnap.data().price
+                    });
                 });
             });
         }
 
-        if (purchased !== undefined) {
+        if (purchased !== undefined && purchased !== null) {
             purchased.forEach((pRef) => {
                 modelsPurchased.push(pRef.id);
             });
@@ -50,7 +54,7 @@
     let paymentVisible = $state(false);
 </script>
 
-<PaymentDialog bind:visible={paymentVisible} />
+<PaymentDialog bind:visible={paymentVisible} bind:values={orderList} bind:transfers={modelsPurchased} />
 
 <section class="h-screen flex flex-col gap-5">
     <div class="flex flex-col md:flex-row p-5 gap-5">
@@ -58,15 +62,17 @@
             <p class="font-semibold text-xl shadow-md
                 text-center bg-[#FFA808] p-3
                 text-white"><i class="fa-solid fa-shopping-cart"></i> Dalam Keranjang</p>
-            {#if (modelsOrdered.length > 0)}
+            {#if (orderList.length > 0)}
                 <div class="flex overflow-x-scroll gap-5 p-5" transition:fade>
-                    {#each modelsOrdered as model}
-                        <ModelCard id={model} />
+                    {#each orderList as model}
+                        <ModelCard id={model.id} />
                     {/each}
                 </div>
                 <div class="p-5 flex flex-col gap-3">
                     <p class="text-lg">
-                        Total Biaya: <span class="font-semibold">{currencyFormatter.format(priceOrdered)}</span>
+                        Total Biaya: <span class="font-semibold">
+                            {currencyFormatter.format(orderList.map(i => i.price).reduce((a, c) => a + c, 0))}
+                        </span>
                     </p>
                     <button 
                         onclick={() => paymentVisible = true }

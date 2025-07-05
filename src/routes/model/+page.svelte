@@ -100,7 +100,7 @@ async function orderModel() {
     const modelRef = doc(db, "model", data.modelId);
     getDoc(userRef).then((docSnap) => {
         const ordered = docSnap.data()!.ordered as Array<DocumentReference>;
-        if (ordered !== undefined) {
+        if (ordered !== undefined && ordered !== null) {
             if (ordered.find((o) => o.path === modelRef.path) === undefined) {
                 setDoc(userRef, {
                     ordered: [
