@@ -230,7 +230,10 @@ async function orderModel() {
             {#await modelsPromise}
                 <p out:fade>Memuat model<span>...</span></p>
             {:then models}
-                <div in:fade class="flex flex-col gap-2">
+                <div in:fade class="flex flex-col gap-2 items-center justify-center">
+                    {#if models.length === 0}
+                        <p class="text-gray-500">Tidak ada model terkait</p>
+                    {/if}
                     {#each models as model}
                         <ModelCard id={model} />
                     {/each}

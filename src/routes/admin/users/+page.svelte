@@ -45,7 +45,7 @@
 	<h2 class="text-3xl font-bold text-[#FFA808] mb-8 text-center">Manajemen Pengguna</h2>
 
 	<div class="overflow-x-auto bg-white rounded-xl shadow-md p-10">
-		<table class="min-w-full text-sm text-left text-gray-700">
+		<table class="min-w-full text-sm text-left text-gray-700 rounded-lg overflow-hidden">
 			<thead class="bg-[#FFA808] text-white">
 				<tr>
 					<th class="p-4">Detail</th>
@@ -60,35 +60,35 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each users as user}
-                    <tr class="border-b hover:bg-gray-50 items-center">
-                        <td class="p-4">
-                            <button on:click={() => viewUserDetail(user.id)} 
-                                class="text-sm text-blue-600 hover:underline ">
-                                <i class="fas fa-info-circle"></i>
-                                Detail
-                            </button>
-                        </td>
-                        <td class="p-4 font-medium flex items-center gap-3">
-                            {#if user.photoURL}
-                                <img src={user.photoURL} alt={user.name} class="w-8 h-8 rounded-full" />
-                            {/if}
-                            {user.name}
-                        </td>
-                        <td class="p-4 text-center">-</td>
-                        <td class="p-4 text-center">{user.phone}</td>
-                        <td class="p-4 text-center">{user.joinedAt}</td>
-                        <td class="p-4 text-center">{user.totalPurchase}</td>
-                        <td class="p-4 text-center">{user.totalPrintOrders}</td>
-                        <td class="p-4 text-center">{user.totalAssetsUploaded}</td>
-                        <td class="p-4 flex gap-3 justify-center">
-                            <button on:click={() => deleteUser(user.id)} 
-                                class="text-sm text-red-600 hover:underline">
-                                <i class="fas fa-trash"></i>
-                                Hapus
-                            </button>
-                        </td>
-                    </tr>
+				{#each users as user, i}
+					<tr class="border-b hover:bg-gray-50 items-center {i === 0 ? 'first:rounded-t-lg' : ''} {i === users.length - 1 ? 'last:rounded-b-lg' : ''}">
+						<td class="p-4">
+							<button on:click={() => viewUserDetail(user.id)} 
+								class="text-sm text-blue-600 hover:underline ">
+								<i class="fas fa-info-circle"></i>
+								Detail
+							</button>
+						</td>
+						<td class="p-4 font-medium flex items-center gap-3">
+							{#if user.photoURL}
+								<img src={user.photoURL} alt={user.name} class="w-8 h-8 rounded-full" />
+							{/if}
+							{user.name}
+						</td>
+						<td class="p-4 text-center">-</td>
+						<td class="p-4 text-center">{user.phone}</td>
+						<td class="p-4 text-center">{user.joinedAt}</td>
+						<td class="p-4 text-center">{user.totalPurchase}</td>
+						<td class="p-4 text-center">{user.totalPrintOrders}</td>
+						<td class="p-4 text-center">{user.totalAssetsUploaded}</td>
+						<td class="p-4 flex gap-3 justify-center">
+							<button on:click={() => deleteUser(user.id)} 
+								class="text-sm text-red-600 hover:underline">
+								<i class="fas fa-trash"></i>
+								Hapus
+							</button>
+						</td>
+					</tr>
 				{/each}
 			</tbody>
 		</table>

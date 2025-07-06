@@ -150,52 +150,54 @@ function goToOrderDetail(id: number) {
         <h2 class="text-xl font-semibold mb-4 mt-8">
             <a href="../admin/users">Pengguna Aktif</a>
         </h2>
-		<table class="min-w-full text-sm text-left text-gray-700">
-			<thead class="bg-[#FFA808] text-white">
-				<tr>
-					<th class="p-4">Detail</th>
-					<th class="p-4">Nama</th>
-					<th class="p-4 text-center">Email</th>
-					<th class="p-4 text-center">Phone</th>
-					<th class="p-4 text-center">Bergabung</th>
-					<th class="p-4 text-center">Total Pembelian</th>
-					<th class="p-4 text-center">Pesanan Cetak</th>
-					<th class="p-4 text-center">Asset Diupload</th>
-					<th class="p-4 text-center">Aksi</th>
-				</tr>
-			</thead>
-			<tbody>
-				{#each users as user}
-                    <tr class="border-b hover:bg-gray-50 items-center">
-                        <td class="p-4">
-                            <button on:click={() => viewUserDetail(user.id)} 
-                                class="text-sm text-blue-600 hover:underline ">
-                                <i class="fas fa-info-circle"></i>
-                                Detail
-                            </button>
-                        </td>
-                        <td class="p-4 font-medium flex items-center gap-3">
-                            {#if user.photoURL}
-                                <img src={user.photoURL} alt={user.name} class="w-8 h-8 rounded-full" />
-                            {/if}
-                            {user.name}
-                        </td>
-                        <td class="p-4 text-center">-</td>
-                        <td class="p-4 text-center">{user.phone}</td>
-                        <td class="p-4 text-center">{user.joinedAt}</td>
-                        <td class="p-4 text-center">{user.totalPurchase}</td>
-                        <td class="p-4 text-center">{user.totalPrintOrders}</td>
-                        <td class="p-4 text-center">{user.totalAssetsUploaded}</td>
-                        <td class="p-4 flex gap-3 justify-center">
-                            <button on:click={() => deleteUser(user.id)} 
-                                class="text-sm text-red-600 hover:underline">
-                                <i class="fas fa-trash"></i>
-                                Hapus
-                            </button>
-                        </td>
+        <div class="overflow-x-auto">
+            <table class="min-w-full text-sm text-left text-gray-700 rounded-lg overflow-hidden">
+                <thead class="bg-[#FFA808] text-white">
+                    <tr>
+                        <th class="p-4">Detail</th>
+                        <th class="p-4">Nama</th>
+                        <th class="p-4 text-center">Email</th>
+                        <th class="p-4 text-center">Phone</th>
+                        <th class="p-4 text-center">Bergabung</th>
+                        <th class="p-4 text-center">Total Pembelian</th>
+                        <th class="p-4 text-center">Pesanan Cetak</th>
+                        <th class="p-4 text-center">Asset Diupload</th>
+                        <th class="p-4 text-center">Aksi</th>
                     </tr>
-				{/each}
-			</tbody>
-		</table>
+                </thead>
+                <tbody>
+                    {#each users as user}
+                        <tr class="border-b hover:bg-gray-50 items-center">
+                            <td class="p-4">
+                                <button on:click={() => viewUserDetail(user.id)} 
+                                    class="text-sm text-blue-600 hover:underline ">
+                                    <i class="fas fa-info-circle"></i>
+                                    Detail
+                                </button>
+                            </td>
+                            <td class="p-4 font-medium flex items-center gap-3">
+                                {#if user.photoURL}
+                                    <img src={user.photoURL} alt={user.name} class="w-8 h-8 rounded-full" />
+                                {/if}
+                                {user.name}
+                            </td>
+                            <td class="p-4 text-center">-</td>
+                            <td class="p-4 text-center">{user.phone}</td>
+                            <td class="p-4 text-center">{user.joinedAt}</td>
+                            <td class="p-4 text-center">{user.totalPurchase}</td>
+                            <td class="p-4 text-center">{user.totalPrintOrders}</td>
+                            <td class="p-4 text-center">{user.totalAssetsUploaded}</td>
+                            <td class="p-4 flex gap-3 justify-center">
+                                <button on:click={() => deleteUser(user.id)} 
+                                    class="text-sm text-red-600 hover:underline">
+                                    <i class="fas fa-trash"></i>
+                                    Hapus
+                                </button>
+                            </td>
+                        </tr>
+                    {/each}
+                </tbody>
+            </table>
+        </div>
     </div>
 </section>
