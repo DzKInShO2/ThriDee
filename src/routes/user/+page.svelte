@@ -88,7 +88,7 @@ if (data.user !== "") {
                     {/each}
                 </div>
             {:else}
-                <p class="text-center">Pengguna belum pernah mengunggah model</p>
+                <p class="text-center p-5">Pengguna belum pernah mengunggah model</p>
             {/if}
         </div>
     {/if}
