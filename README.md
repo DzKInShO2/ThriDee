@@ -9,14 +9,27 @@
 
   <em>Platform untuk menemukan dan berbagi aset 3D berkualitas tinggi</em>
 </div>
+---
+
+## Anggota Kelompok
+1. Safa Cinta Adilah
+2. Baiq Nopi Kartika
+3. Dini Ayuastina
+4. Baiq Alifa Kanaya Putri
+5. Rakasya Yoga Surya Pratama
+6. Dzakanov Inshoofi
 
 ---
 
 ## 🌟 Tentang ThriDee
 
-**ThriDee** adalah platform marketplace 3D modern yang dirancang untuk menjadi jembatan antara kreator dan pengguna aset digital. Situs ini memungkinkan pengguna untuk *menjelajahi, mengunggah, membeli*, dan *berinteraksi* dengan aset 3D berkualitas tinggi yang dikurasi secara tematik.
+**ThriDee** Studio adalah sebuah platform digital dan studio kreatif yang berfokus pada layanan desain serta jual beli aset 3D printing. Kami menghubungkan para kreator, hobiis, dan pelaku usaha dengan pasar desain 3D melalui website yang interaktif dan mudah digunakan.
 
 ---
+
+## Lampiran
+- Link Video: [klik disini](https://youtu.be/HTLTDLb8ax0)
+- Link Web: [klik disini](https://thridee-1d812.web.app/)
 
 ## ✨ Fitur Utama
 
