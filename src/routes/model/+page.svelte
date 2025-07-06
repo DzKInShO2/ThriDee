@@ -166,7 +166,7 @@ async function orderModel() {
                                 {#key isOwned}
                                     {#if isOwned === true}
                                         <button 
-                                            onclick={() => goto('../user/pesanan')}
+                                            onclick={() => goto(`../user/pesanan?id=${data.modelId}`)}
                                             class="transition-all m-0 pr-3 pl-3 cursor-pointer border-b-2 pb-2
                                                     group-hover:text-gray-400
                                                     hover:scale-[1.1]
