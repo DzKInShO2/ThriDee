@@ -181,7 +181,7 @@ async function orderModel() {
                                                     hover:text-orange-400 hover:border-orange-400 hover:border-b-3">
                                             <i class='fa-solid fa-download'></i> Unduh
                                         </button>
-                                    {:else}
+                                    {:else if $user}
                                         <button 
                                             onclick={orderModel}
                                             class="transition-all m-0 pr-3 pl-3 cursor-pointer border-b-2 pb-2
