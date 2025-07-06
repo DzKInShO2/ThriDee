@@ -82,7 +82,7 @@ if (data.user !== "") {
                 text-center bg-[#FFA808] p-3
                 text-white">Model Yang Telah Diunggah</p>
             {#if (modelsCreated.length > 0)}
-                <div class="flex flex-wrap gap-5 p-5">
+                <div class="grid gap-x-8 gap-y-8 ml-5 mr-5 grid-cols-1 md:grid-cols-3 xl:grid-cols-5">
                     {#each modelsCreated as model}
                         <ModelCard id={model} />
                     {/each}
