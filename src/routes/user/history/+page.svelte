@@ -16,12 +16,6 @@
     let { data } = $props();
     let historyOrders = $state(Array<OrderHistory>());
 
-    $effect(() => {
-        if ($user) {
-            goto("/");
-        }
-    })
-
     onMount(() => {
         getDocs(query(collection(db, "transaction"), 
             where("customer", "==", data.user),
