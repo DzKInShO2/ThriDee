@@ -7,14 +7,9 @@
     import { categories, db } from "$lib/firebase";
     import { collection, getDocs, limit, orderBy, query} from "firebase/firestore";
 
-    const katagori = Array.from({ length: 6 }, (_, i) => ({
-        category: ['Accessory', 'Building', 'Character', 'Environment', 'Vehicle', 'Weapon'][i%6],
-        img     : ['/accessory.jpg', '/building.png', '/char.jpg', '/environment.png', '/vehicle.jpg', '/weapon.jpg'][i%6]
-    }));
-
     async function loadNewestModels() {
         return new Promise((fulfil, _) => {
-            const q = query(collection(db, "model"), orderBy("published", "desc"), limit(12));
+            const q = query(collection(db, "model"), orderBy("published", "desc"), limit(15));
             getDocs(q).then((qSnap) => {
                 let ids = Array<String>();
                 qSnap.forEach((dSnap) => {
@@ -28,7 +23,7 @@
 
     async function loadCheapestModels() {
         return new Promise((fulfil, _) => {
-            const q = query(collection(db, "model"), orderBy("price"), limit(12));
+            const q = query(collection(db, "model"), orderBy("price"), limit(15));
             getDocs(q).then((qSnap) => {
                 let ids = Array<String>();
                 qSnap.forEach((dSnap) => {
@@ -42,7 +37,7 @@
 
     async function loadExpensiveModels() {
         return new Promise((fulfil, _) => {
-            const q = query(collection(db, "model"), orderBy("price", "desc"), limit(12));
+            const q = query(collection(db, "model"), orderBy("price", "desc"), limit(15));
             getDocs(q).then((qSnap) => {
                 let ids = Array<String>();
                 qSnap.forEach((dSnap) => {
@@ -87,7 +82,7 @@
     {#await newestModelsPromise}
         <LoadingOverlayLocal />
     {:then models}
-        <div class="flex flex-wrap gap-5 justify-between">
+        <div class="grid gap-x-8 gap-y-8 mr-5 grid-cols-1 md:grid-cols-3 xl:grid-cols-5">
             {#each models as model}
             <ModelCard id={model} />
             {/each}
@@ -100,7 +95,7 @@
     {#await cheapestModelsPromise}
         <LoadingOverlayLocal />
     {:then models}
-        <div class="flex gap-5 flex-wrap justify-between">
+        <div class="grid gap-x-8 gap-y-8 mr-5 grid-cols-1 md:grid-cols-3 xl:grid-cols-5">
             {#each models as model}
                 <ModelCard id={model} />
             {/each}
@@ -113,7 +108,7 @@
     {#await expensiveModelsPromise}
         <LoadingOverlayLocal />
     {:then models}
-        <div class="flex gap-5 flex-wrap justify-between">
+        <div class="grid gap-x-8 gap-y-8 mr-5 grid-cols-1 md:grid-cols-3 xl:grid-cols-5">
             {#each models as model}
                 <ModelCard id={model} />
             {/each}

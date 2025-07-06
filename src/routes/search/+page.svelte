@@ -89,7 +89,7 @@
     }
 </script>
 
-<section class="p-5 h-screen flex flex-col gap-10">
+<section class="p-5 flex flex-col gap-10 min-h-screen">
     <div
         class="
         flex
@@ -179,11 +179,11 @@
     {/if}
 
     {#if data.ids.length > 0}
-        <div class="flex flex-wrap gap-5">
+        <div class="grid gap-x-8 gap-y-8 mr-5 grid-cols-1 md:grid-cols-3 xl:grid-cols-5">
             {#key data.ids}
-                {#each data.ids as id}
-                    <ModelCard {id} />
-                {/each}
+            {#each data.ids as id}
+                <ModelCard {id} />
+            {/each}
             {/key}
         </div>
     {:else}

@@ -14,7 +14,7 @@
           </div>
     </div>
 </section>
-
+ 
 <div class="flex flex-col items-center justify-between py-8">
     <div class="w-full md:w-4/5 px-4">
         <h1 class="text-3xl font-bold mb-4">ABOUT US</h1>
