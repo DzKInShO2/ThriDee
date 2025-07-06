@@ -56,7 +56,7 @@
         <h1>Start Exploring NOW</h1>
         <div class="grid-assets">
             {#each categories as asset}
-                <a href="/search?c={asset.id}" class="card-hover">
+                <a href="/search?c={asset.id}" class="card-hover justify-center">
                     <img src={asset.img} alt={asset.title} class="object-cover w-full h-full" />
                     <div class="absolute bg-[#FFFFFF10] text-white w-full bottom-0 p-2">
                         <p style="font-weight: bold; text-align: center;">{asset.title}</p>

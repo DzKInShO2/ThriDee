@@ -56,14 +56,14 @@
 
 <PaymentDialog bind:visible={paymentVisible} bind:values={orderList} bind:transfers={modelsPurchased} />
 
-<section class="h-screen flex flex-col gap-5">
+<section class="min-h-screen flex flex-col gap-5">
     <div class="flex flex-col md:flex-row p-5 gap-5">
         <div class="flex flex-col gap-5 w-full overflow-clip rounded-xl shadow-2xl h-128">
             <p class="font-semibold text-xl shadow-md
                 text-center bg-[#FFA808] p-3
                 text-white"><i class="fa-solid fa-shopping-cart"></i> Dalam Keranjang</p>
             {#if (orderList.length > 0)}
-                <div class="flex overflow-x-scroll gap-5 p-5" transition:fade>
+                <div class="flex flex-wrap overflow-y-scroll gap-5 p-5 justify-center" transition:fade>
                     {#each orderList as model}
                         <ModelCard id={model.id} />
                     {/each}
@@ -86,12 +86,12 @@
             {/if}
         </div>
 
-        <div class="flex flex-col gap-5 w-full overflow-clip rounded-xl shadow-2xl h-128">
+        <div class="flex flex-col gap-5 w-full overflow-clip rounded-xl shadow-2xl max-h-200">
             <p class="font-semibold text-xl shadow-md
                 text-center bg-[#FFA808] p-3
                 text-white"><i class="fa-solid fa-cube"></i> Model</p>
             {#if (modelsPurchased.length > 0)}
-                <div class="flex overflow-x-scroll gap-5 p-5">
+                <div class="flex flex-wrap overflow-y-scroll gap-5 p-5 justify-center">
                     {#each modelsPurchased as model}
                         <ModelCard id={model} />
                     {/each}

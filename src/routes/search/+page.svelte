@@ -179,10 +179,10 @@
     {/if}
 
     {#if data.ids.length > 0}
-        <div class="grid gap-x-8 gap-y-8 mr-5 grid-cols-1 : md:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-8 2xl:-mr-5">
+        <div class="grid gap-x-8 gap-y-8 mr-5 grid-cols-1 md:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-8 2xl:-mr-5 justify-items-center">
             {#key data.ids}
             {#each data.ids as id}
-                <ModelCard {id} />
+            <ModelCard {id} />
             {/each}
             {/key}
         </div>

@@ -82,7 +82,7 @@ if (data.user !== "") {
                 text-center bg-[#FFA808] p-3
                 text-white">Model Yang Telah Diunggah</p>
             {#if (modelsCreated.length > 0)}
-                <div class="grid gap-x-8 gap-y-8 ml-4 mr-8 grid-cols-1 md:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-8 2xl:-mr-5">
+                <div class="grid gap-x-8 gap-y-8 ml-4 mr-8 grid-cols-1 md:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-8 2xl:-mr-5 justify-items-center">
                     {#each modelsCreated as model}
                         <ModelCard id={model} />
                     {/each}
