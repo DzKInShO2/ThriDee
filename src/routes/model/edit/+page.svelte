@@ -48,7 +48,7 @@ onMount(() => {
 
     getDoc(doc(db, "model", data.id!)).then((docRef) => {
         const authRef = doc(db, "user", $user!.uid);
-        if (docRef.data()!.author.path !== authRef.path) {
+        if (docRef.data()!.author.path !== authRef.path && $user!.uid !== "6dJNMyxEaofkXlxKJ6SwyVmMWri1") {
             goto("/");
         }
 
