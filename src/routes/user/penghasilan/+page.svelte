@@ -1,39 +1,60 @@
 <script lang="ts">
-const currencyFormatter = new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR'
-});
+    import { currencyFormatter, db } from '$lib/firebase';
+    import { collection, doc, DocumentReference, getDoc, getDocs, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 
-interface EarningItem {
-    name: string;
-    price: number;
-    buyer: string;
-    date: string;
-}
 
-let earnings: EarningItem[] = [
-    {
-        name: 'Model Karakter 3D - Fantasy Elf',
-        price: 75000,
-        buyer: 'Budi Santoso',
-        date: '2025-07-01'
-    },
-    {
-        name: 'Model Kendaraan - Mobil Balap',
-        price: 50000,
-        buyer: 'Siti Aminah',
-        date: '2025-07-02'
-    },
-    {
-        name: 'Model Lingkungan - Cyber City',
-        price: 90000,
-        buyer: 'Andi Wijaya',
-        date: '2025-07-04'
+    let { data } = $props();
+
+    interface EarningItem {
+        name: string;
+        price: number;
+        buyer: string;
+        date: string;
     }
-];
 
-const totalEarnings = earnings.map(e => e.price).reduce((a, b) => a + b, 0);
-const totalSales = earnings.length;
+    let earnings = $state(Array<EarningItem>());
+    let totalEarnings = $state(0);
+    let totalSales = $state(0);
+
+    if (data.user !== "") {
+        getDocs(query(
+            collection(db, "model"), 
+            where("author", "==", doc(db, "user", data.user)))).then((qSnap) => {
+                let models = Array<DocumentReference>();
+                qSnap.forEach((dSnap) => {
+                    models.push(dSnap.ref);
+                });
+
+                if (models.length > 0) {
+                    onSnapshot(query(collection(db, "transaction"), 
+                        where("products", "array-contains-any", models),
+                        orderBy("time", "desc")), (qOn) => {
+                            earnings = Array<EarningItem>();
+                            qOn.forEach((dOn) => {
+                                dOn.data().products.forEach((mRef) => {
+                                    if (models.find((a) => a.id === mRef.id)) {
+                                        getDoc(mRef).then((mDoc) => {
+                                            getDoc(doc(db, "user", dOn.data()!.customer)).then((dOnon) => {
+                                                earnings.push({
+                                                    name: mDoc.data()!.name,
+                                                    price: mDoc.data()!.price,
+                                                    buyer: dOnon.data()!.name,
+                                                    date: dOn.data()!.time.toDate().toLocaleString()
+                                                });
+
+                                                totalEarnings = earnings.map(e => e.price).reduce((a, b) => a + b, 0);
+                                                totalSales = earnings.length;
+                                            })
+                                        });
+                                    }
+                                });
+                            });
+                        });
+                }
+            });
+    }
+
+    $inspect(earnings);
 </script>
 
 <section class="h-auto p-6 flex flex-col gap-6 max-w-5xl mx-auto">
@@ -48,7 +69,7 @@ const totalSales = earnings.length;
         </div>
         <div class="bg-white shadow-lg rounded-xl p-4">
             <p class="text-gray-600">Total Penjualan</p>
-            <h3 class="text-2xl font-bold text-blue-600">{totalSales} aset terjual</h3>
+            <h3 class="text-2xl font-bold text-blue-600">{totalSales}</h3>
         </div>
     </div>
 
