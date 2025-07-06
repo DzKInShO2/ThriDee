@@ -77,12 +77,12 @@ if (data.user !== "") {
             {/if}
         </div>
 
-        <div class="flex flex-col gap-5 w-full overflow-clip rounded-xl shadow-2xl h-full">
+        <div class="flex flex-col gap-5 pb-8 w-full overflow-clip rounded-xl shadow-2xl">
             <p class="font-semibold text-xl shadow-md
                 text-center bg-[#FFA808] p-3
                 text-white">Model Yang Telah Diunggah</p>
             {#if (modelsCreated.length > 0)}
-                <div class="grid gap-x-8 gap-y-8 ml-5 mr-5 grid-cols-1 md:grid-cols-3 xl:grid-cols-5">
+                <div class="grid gap-x-8 gap-y-8 ml-4 mr-8 grid-cols-1 md:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-8 2xl:-mr-5">
                     {#each modelsCreated as model}
                         <ModelCard id={model} />
                     {/each}
