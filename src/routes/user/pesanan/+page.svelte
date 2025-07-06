@@ -1,16 +1,14 @@
-<svelte:head>
-    <script
-      type="module"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjMZkTgSVoO2n1wGnizqnb0kZ4Xpt3q0Q&libraries=places&v=beta&modules=placeautocomplete">
-    </script>
-</svelte:head>
-
 <script lang="ts">
     import { goto } from "$app/navigation";
 
-    import { currencyFormatter } from "$lib/firebase";
+    import { ActionConfirmDialog } from "../../../components/design";
+
+    import { currencyFormatter, db } from "$lib/firebase";
     import { user } from "$lib/stores/authStore";
+    import { isLoading } from "$lib/stores/stateStore";
+    import { addDoc, collection, doc, Timestamp } from "firebase/firestore";
     import { onMount } from "svelte";
+    import { slide } from "svelte/transition";
 
     let { data } = $props();
 
@@ -20,16 +18,12 @@
 
     let estimatedTime = "3-5 hari kerja";
     let shippingCost = 20000;
-    let items = [
-        { name: "Model Karakter A", price: 75000 },
-        { name: "Model Kendaraan B", price: 50000 }
-    ];
 
+    let isOrdered = $state(false);
     function googleMap(lat, lng) {
         return `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=15&size=720x720&markers=color:red%7C${lat},${lng}&key=AIzaSyAjMZkTgSVoO2n1wGnizqnb0kZ4Xpt3q0Q`;
     }
 
-    let nextLocation = $state("/");
     onMount(() => {
         if (data.model === null && !$user) {
             goto("/");
@@ -49,10 +43,42 @@
         });
         completeParent.appendChild(placeAutocomplete);
     });
+
+    let error = $state("");
+    let confirmVisible = $state(false);
+    let nextLocation = $state("/user/history");
+    async function sendOrder() {
+        $isLoading = true;
+        addDoc(collection(db, "transaction"), {
+            customer: $user!.uid,
+            products: [
+                doc(db, "model", data.model.id)
+            ], 
+            time: Timestamp.now(),
+            totalPrice: data.model!.price + shippingCost,
+            type: 1,
+            location: locationName,
+            status: 0
+        }).then(() => {
+            isOrdered = true;
+            confirmVisible = false;
+            $isLoading = false;
+        })
+    }
+
     $effect(() => {
-        nextLocation = `/user/history?id=${$user!.uid!}`;
-    });
+        if (!$user) {
+            nextLocation = `/user/history?id=${$user!.uid}`;
+        }
+    })
 </script>
+
+<ActionConfirmDialog 
+    bind:visibility={confirmVisible} 
+    label="Apakah anda yakin?" 
+    text="Apakah anda ingin memesan cetakan model"
+    onaccept={sendOrder}
+/>
 
 <section class="h-screen flex flex-col gap-5 p-6">
     <div class="bg-white rounded-xl shadow-2xl p-6 flex flex-col gap-5 w-full max-w-4xl mx-auto">
@@ -75,7 +101,7 @@
             <p><strong>Ongkos Kirim:</strong> {currencyFormatter.format(shippingCost)}</p>
             <p>
                 <strong>Total Harga:</strong>
-                {currencyFormatter.format(data.model!.price)}
+                {currencyFormatter.format(data.model!.price + shippingCost)}
             </p>
             <p>
                 <strong>Lokasi Pengiriman:</strong>
@@ -94,13 +120,26 @@
             {/if}
         {/key}
 
-        <button 
-            class="cursor-pointer bg-blue-100 text-blue-700 font-semibold rounded-xl p-4 text-center mt-4">
-            <i class="fa-solid fa-receipt"></i> Pesan
-        </button>
+        {#if error !== ""}
+            <p transition:slide class="text-center text-red-500">{error}</p>
+        {/if}
 
-        <!-- <div class="bg-green-100 text-green-700 font-semibold rounded-xl p-4 text-center mt-4"> -->
-        <!--     <i class="fa-solid fa-circle-check"></i> Pesanan Anda sedang diproses -->
-        <!-- </div> -->
+        {#if !isOrdered}
+            <button 
+                onclick={() => {
+                    if (locationName === "") {
+                        error = "Mohon isi semua field sebelum lanjut.";
+                        return;
+                    }
+                    confirmVisible = true;
+                }}
+                class="cursor-pointer bg-blue-100 text-blue-700 font-semibold rounded-xl p-4 text-center mt-4">
+                <i class="fa-solid fa-receipt"></i> Pesan
+            </button>
+        {:else}
+            <div class="bg-green-100 text-green-700 font-semibold rounded-xl p-4 text-center mt-4">
+                <i class="fa-solid fa-circle-check"></i> Pesanan Anda sedang diproses
+            </div>
+        {/if}
     </div>
 </section>

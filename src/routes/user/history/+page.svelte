@@ -1,40 +1,37 @@
 <script lang="ts">
-const currencyFormatter = new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR'
-});
+    import { currencyFormatter, db, status } from "$lib/firebase";
+    import { user } from "$lib/stores/authStore";
+    import { collection, getDocs, query, where } from "firebase/firestore";
+    import { onMount } from "svelte";
 
-interface OrderHistory {
-    name: string;
-    status: 'Diproses' | 'Selesai' | 'Dibatalkan';
-    price: number;
-    orderDate: string;
-    estimate: string;
-}
-
-let historyOrders: OrderHistory[] = [
-    {
-        name: 'Model Karakter 3D - Fantasy Elf',
-        status: 'Selesai',
-        price: 75000,
-        orderDate: '2025-07-01',
-        estimate: '3 hari'
-    },
-    {
-        name: 'Model Kendaraan - Mobil Balap',
-        status: 'Diproses',
-        price: 50000,
-        orderDate: '2025-07-03',
-        estimate: '4-5 hari'
-    },
-    {
-        name: 'Model Bangunan - Rumah Jepang',
-        status: 'Dibatalkan',
-        price: 65000,
-        orderDate: '2025-06-29',
-        estimate: '-'
+    interface OrderHistory {
+        name: string;
+        status: 'Diproses' | 'Selesai' | 'Dibatalkan';
+        price: number;
+        orderDate: string;
+        estimate: string;
     }
-];
+
+    let { data } = $props();
+    let historyOrders = $state(Array<OrderHistory>());
+
+    onMount(() => {
+        getDocs(query(collection(db, "transaction"), 
+            where("customer", "==", data.user),
+            where("type", "==", 1)
+        )).then((qSnap) => {
+            qSnap.forEach((dSnap) => {
+                console.log("Hello", qSnap.size);
+                historyOrders.push({
+                    name: dSnap.data()!.title,
+                    status: status[dSnap.data()!.status],
+                    price: dSnap.data()!.totalPrice,
+                    orderDate: dSnap.data()!.time.toDate().toLocaleString(),
+                    estimate: "3 ~ 5 Hari"
+                });
+            });
+        })
+    });
 </script>
 
 <section class="h-auto p-6 flex flex-col gap-6 max-w-5xl mx-auto">
@@ -45,7 +42,7 @@ let historyOrders: OrderHistory[] = [
     {#if historyOrders.length > 0}
         <div class="flex flex-col gap-4">
             {#each historyOrders as order}
-                <a href="../user/pesanan" class="bg-white shadow-md rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 border-l-4
+                <div class="bg-white shadow-md rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 border-l-4
                     {order.status === 'Selesai' ? 'border-green-500' : ''}
                     {order.status === 'Diproses' ? 'border-yellow-400' : ''}
                     {order.status === 'Dibatalkan' ? 'border-red-500' : ''}">
@@ -70,7 +67,7 @@ let historyOrders: OrderHistory[] = [
                             {order.status}
                         </span>
                     </div>
-                </a>
+                </div>
             {/each}
         </div>
     {:else}
