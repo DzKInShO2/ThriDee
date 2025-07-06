@@ -47,6 +47,8 @@
     let error = $state("");
     let confirmVisible = $state(false);
     let nextLocation = $state("/user/history");
+
+    const printPrice = 2000;
     async function sendOrder() {
         $isLoading = true;
         addDoc(collection(db, "transaction"), {
@@ -55,7 +57,7 @@
                 doc(db, "model", data.model.id)
             ], 
             time: Timestamp.now(),
-            totalPrice: data.model!.price + shippingCost,
+            totalPrice: printPrice + (data.model!.price * 0.1) + shippingCost,
             type: 1,
             location: locationName,
             status: 0
@@ -92,7 +94,7 @@
         <div class="flex flex-col gap-3">
             <p class="text-lg font-semibold text-gray-700">Daftar Pesanan:</p>
             <ul class="list-disc list-inside pl-2 text-gray-800">
-                <li>{data.model!.title} — {currencyFormatter.format(data.model!.price)}</li>
+                <li>{data.model!.title} — {currencyFormatter.format(printPrice + (data.model!.price * 0.1))}</li>
             </ul>
         </div>
 
@@ -101,7 +103,7 @@
             <p><strong>Ongkos Kirim:</strong> {currencyFormatter.format(shippingCost)}</p>
             <p>
                 <strong>Total Harga:</strong>
-                {currencyFormatter.format(data.model!.price + shippingCost)}
+                {currencyFormatter.format(printPrice + (data.model!.price * 0.1) + shippingCost)}
             </p>
             <p>
                 <strong>Lokasi Pengiriman:</strong>

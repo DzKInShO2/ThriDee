@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
     import { currencyFormatter, db, status } from "$lib/firebase";
     import { user } from "$lib/stores/authStore";
     import { collection, getDocs, query, where } from "firebase/firestore";
@@ -14,6 +15,12 @@
 
     let { data } = $props();
     let historyOrders = $state(Array<OrderHistory>());
+
+    $effect(() => {
+        if ($user) {
+            goto("/");
+        }
+    })
 
     onMount(() => {
         getDocs(query(collection(db, "transaction"), 

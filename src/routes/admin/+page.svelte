@@ -1,92 +1,112 @@
 <script lang="ts">
+    import { 
+        ActionConfirmDialog,
+        ProfilePhoto 
+    } from '../../components/design';
 	import { goto } from '$app/navigation';
-    import { db } from "$lib/firebase";
-  	import { user } from '$lib/stores/authStore';
-    import { collection, doc, getDocs, limit, orderBy, query, where } from "firebase/firestore";
+    import { currencyFormatter, db, status } from "$lib/firebase";
+    import { collection, deleteDoc, doc, getDoc, getDocs, limit, onSnapshot, orderBy, query, where } from "firebase/firestore";
+    import { onMount } from 'svelte';
+    import { isLoading } from '$lib/stores/stateStore';
 
-    let users: Array<any> = [];
+    let users: Array<any> = $state(Array<any>());
+    let printOrders = $state(Array<any>());
+    let totalUsers = $state(0);
+    let totalOrders = $state(0);
+    let processingOrders = $state(0);
+    let totalSoldAssets = $state(0);
+    onMount(() => {
+        onSnapshot(query(collection(db, "user"), limit(5)), (qSnap) => {
+            users = Array<any>();
+            qSnap.forEach((dSnap) => {
+                getDocs(query(collection(db, "model"), where("author", "==", dSnap.ref))).then((mSnap) => {
+                    getDocs(query(collection(db, "transaction"), where("customer", "==", dSnap.id), where("type", "==", 1))).then((tSnap) => {
+                        users.push({
+                            id: dSnap.id,
+                            name: dSnap.data()!.name === "" ? "Tanpa Nama" : dSnap.data()!.name,
+                            phone: dSnap.data()!.phone !== undefined ? dSnap.data()!.phone : "Tidak Ada",
+                            photo: dSnap.data()!.photoURL,
+                            joined: dSnap.data()!.joined.toDate().toLocaleString(),
+                            totalPurchase: dSnap.data()!.purchased !== undefined ? dSnap.data()!.purchased.length : 0,
+                            totalPrint: tSnap.size,
+                            totalUploaded: mSnap.size
+                        });
+                    });
+                });
+            });
+        });
 
-    async function loadNewestModels() {
-        // Mengambil user dengan urutan total pembelian terbanyak
-        const userSnap = await getDocs(
-            query(
-            collection(db, "user"),
-            orderBy("purchased", "desc"),
-            limit(5)
-            )
-        );
+        onSnapshot(collection(db, "user"), (qSnap) => {
+            totalUsers = qSnap.size;
+        });
 
-        users = await Promise.all(userSnap.docs.map(async (doc) => {
-            const data = doc.data();
+        onSnapshot(query(collection(db, "transaction"), where("type", "==", 1), limit(5), orderBy("time", "desc")), (onSnap) => {
+            printOrders = Array<any>();
+            onSnap.forEach((dSnap) => {
+                getDoc(dSnap.data()!.products[0]).then((pSnap) => {
+                    getDoc(doc(db, "user", dSnap.data()!.customer)).then((uSnap) => {
+                        printOrders.push({
+                            id: dSnap!.id,
+                            assetName: pSnap.data()!.title,
+                            buyer: uSnap.data()!.user,
+                            date: dSnap.data()!.time.toDate().toLocaleString(),
+                            price: dSnap.data()!.totalPrice - 20000,
+                            shippingCost: 20000,
+                            location: dSnap.data()!.location,
+                            status: status[dSnap.data()!.status]
+                        });
+                    });
+                });
+            });
+        });
 
-            // Ambil jumlah aset yang diupload oleh user
-            const modelSnap = await getDocs(query(collection(db, "model"), where("author", "==", doc.id)));
-            const totalAssets = modelSnap.size;
+        onSnapshot(collection(db, "transaction"), (qSnap) => {
+            totalOrders = qSnap.size;
+        });
 
-            return {
-                id: doc.id,
-                name: data.name || '-',
-                photoURL: data.photoURL || '',
-                phone: data.phone || '-',
-                joinedAt: new Date(data.joined?.seconds * 1000).toLocaleDateString(),
-                totalPurchase: Array.isArray(data.purchased) ? data.purchased.length : 0,
-                totalPrintOrders: data.ordered || 0,
-                totalAssetsUploaded: totalAssets
-            };
-        }));
-    }
+        onSnapshot(query(collection(db, "transaction"), where("status", "==", 0)), (qSnap) => {
+            processingOrders = qSnap.size;
+        });
 
-    loadNewestModels();
+        onSnapshot(query(collection(db, "transaction"), where("status", "==", 2)), (qSnap) => {
+            totalSoldAssets = qSnap.size;
+        });
+    });
 
     function viewUserDetail(userId: string) {
         goto(`../user?id=${userId}`);
     }
 
-    function deleteUser(userId: string) {
-        // implementasi penghapusan di sini
-        alert(`Hapus user dengan ID: ${userId}`);
+    let confirmVisible = $state(false);
+    let userToDelete = $state("");
+    function deleteUser() {
+        if (userToDelete !== "") {
+            $isLoading = true;
+            getDocs(query(collection(db, "transaction"), where("consumer", "==", userToDelete))).then((qSnap) => {
+                qSnap.forEach((dSnap) => {
+                    deleteDoc(dSnap.ref);
+                })
+
+                getDocs(query(collection(db, "model"), where("author", "==", doc(db, "user", userToDelete)))).then((qqSnap) => {
+                    qqSnap.forEach((ddSnap) => {
+                        deleteDoc(ddSnap.ref);
+                    });
+
+                    deleteDoc(doc(db, "user", userToDelete)).then(() => {
+                        $isLoading = false;
+                        confirmVisible = false;
+                    });
+                })
+            })
+        }
     }
 
-// DUMMY DATA
-// Untuk menggantikan data dari database
-const currencyFormatter = new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR'
-});
-
-interface PrintOrder {
-    id: number;
-    assetName: string;
-    buyer: string;
-    date: string;
-    price: number;
-    shippingCost: number;
-    status: 'Diproses' | 'Selesai' | 'Dibatalkan';
-}
-
-interface UserSummary {
-    name: string;
-    email: string;
-    totalPurchase: number;
-}
-
-let printOrders: PrintOrder[] = [
-    { id: 1, assetName: 'Robot Samurai', buyer: 'Budi', date: '2025-07-01', price: 85000, shippingCost: 20000, status: 'Diproses' },
-    { id: 2, assetName: 'Rumah Jepang', buyer: 'Siti', date: '2025-07-03', price: 70000, shippingCost: 20000, status: 'Selesai' },
-    { id: 3, assetName: 'Mobil Offroad', buyer: 'Andi', date: '2025-07-05', price: 90000, shippingCost: 25000, status: 'Diproses' }
-];
-
-// Statistik
-const totalIncome = printOrders.map(p => p.price).reduce((a, b) => a + b, 0);
-const totalOrders = printOrders.length;
-const processingOrders = printOrders.filter(p => p.status === 'Diproses').length;
-const totalUsers = users.length;
-const totalSoldAssets = printOrders.length; // bisa beda jika multiple quantity
-
-function goToOrderDetail(id: number) {
-    goto(`/admin/pesanan`);
-}
+    function goToOrderDetail(id: String) {
+        goto(`/admin/pesanan?id=${id}`);
+    }
 </script>
+
+<ActionConfirmDialog bind:visibility={confirmVisible} label="Hapus Pengguna" text="Apakah anda ingin menghapus pengguna?" onaccept={deleteUser()} />
 
 <section class="p-6 max-w-7xl mx-auto flex flex-col gap-8">
     <h1 class="text-3xl font-bold text-[#FFA808]">Dashboard Admin</h1>
@@ -95,7 +115,7 @@ function goToOrderDetail(id: number) {
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <div class="bg-white p-4 rounded-xl shadow text-center">
             <p class="text-sm text-gray-500">Total Penghasilan</p>
-            <h2 class="text-2xl text-green-600 font-bold">{currencyFormatter.format(totalIncome)}</h2>
+            <h2 class="text-2xl text-green-600 font-bold">{currencyFormatter.format(printOrders.map(p => p.price + p.shippingCost).reduce((a, b) => a + b, 0))}</h2>
         </div>
         <div class="bg-white p-4 rounded-xl shadow text-center">
             <p class="text-sm text-gray-500">Total Pesanan</p>
@@ -119,11 +139,11 @@ function goToOrderDetail(id: number) {
     <div>
         <h2 class="text-xl font-semibold mb-4">Antrian Pesanan</h2>
         <div class="flex flex-col gap-4">
-            {#each printOrders.slice(0, 3) as order}
+            {#each printOrders as order}
                 
                 <!-- svelte-ignore a11y_click_events_have_key_events -->
                 <!-- svelte-ignore a11y_no_static_element_interactions -->
-                <div on:click={() => goToOrderDetail(order.id)}
+                <div onclick={() => goToOrderDetail(order.id)}
                     class="cursor-pointer bg-white rounded-xl p-4 shadow-md flex justify-between items-center hover:bg-gray-50 border-l-4
                         {order.status === 'Diproses' ? 'border-yellow-400' : ''}
                         {order.status === 'Selesai' ? 'border-green-500' : ''}
@@ -156,7 +176,6 @@ function goToOrderDetail(id: number) {
                     <tr>
                         <th class="p-4">Detail</th>
                         <th class="p-4">Nama</th>
-                        <th class="p-4 text-center">Email</th>
                         <th class="p-4 text-center">Phone</th>
                         <th class="p-4 text-center">Bergabung</th>
                         <th class="p-4 text-center">Total Pembelian</th>
@@ -166,29 +185,32 @@ function goToOrderDetail(id: number) {
                     </tr>
                 </thead>
                 <tbody>
+                {#key users}
                     {#each users as user}
                         <tr class="border-b hover:bg-gray-50 items-center">
                             <td class="p-4">
-                                <button on:click={() => viewUserDetail(user.id)} 
+                                <button onclick={() => viewUserDetail(user.id)} 
                                     class="text-sm text-blue-600 hover:underline ">
                                     <i class="fas fa-info-circle"></i>
                                     Detail
                                 </button>
                             </td>
                             <td class="p-4 font-medium flex items-center gap-3">
-                                {#if user.photoURL}
-                                    <img src={user.photoURL} alt={user.name} class="w-8 h-8 rounded-full" />
-                                {/if}
+                                <div class="w-[46px] h-[46px] rounded-full overflow-clip">
+                                    <ProfilePhoto photoUrl={user.photo} />
+                                </div>
                                 {user.name}
                             </td>
-                            <td class="p-4 text-center">-</td>
                             <td class="p-4 text-center">{user.phone}</td>
-                            <td class="p-4 text-center">{user.joinedAt}</td>
+                            <td class="p-4 text-center">{user.joined}</td>
                             <td class="p-4 text-center">{user.totalPurchase}</td>
-                            <td class="p-4 text-center">{user.totalPrintOrders}</td>
-                            <td class="p-4 text-center">{user.totalAssetsUploaded}</td>
+                            <td class="p-4 text-center">{user.totalPrint}</td>
+                            <td class="p-4 text-center">{user.totalUploaded}</td>
                             <td class="p-4 flex gap-3 justify-center">
-                                <button on:click={() => deleteUser(user.id)} 
+                                <button onclick={() => { 
+                                        userToDelete = user.id;
+                                        confirmVisible = true;
+                                    }}
                                     class="text-sm text-red-600 hover:underline">
                                     <i class="fas fa-trash"></i>
                                     Hapus
@@ -196,6 +218,7 @@ function goToOrderDetail(id: number) {
                             </td>
                         </tr>
                     {/each}
+                {/key}
                 </tbody>
             </table>
         </div>
