@@ -150,7 +150,7 @@
 
 <PasswordChangeDialog label="Ganti Password" hint="Your new password..." bind:visibility={passwordVisibility}  onaccept={changePassword} />
 
-<div class="flex flex-col gap-5 items-center p-10 w-180 md:w-250 m-auto h-screen">
+<div class="flex flex-col gap-5 items-center p-10 w-180 md:w-250 m-auto">
     <p class="text-4xl mt-10 mb-32">Edit Profil</p>
     {#if userData}
         <div class="flex flex-col border border-gray-100 bg-gray-50 shadow-2xl w-full rounded-xl overflow-clip">

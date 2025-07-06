@@ -1,40 +1,44 @@
 <script lang="ts">
-import { goto } from '$app/navigation';
+	import { goto } from '$app/navigation';
+    import { db } from "$lib/firebase";
+  	import { user } from '$lib/stores/authStore';
+    import { collection, doc, getDocs, limit, orderBy, query, where } from "firebase/firestore";
 
-interface User {
-	id: number;
-	name: string;
-	email: string;
-	joinedAt: string;
-	totalPurchase: number;
-	totalPrintOrders: number;
-	totalAssetsUploaded: number;
-}
+    let users: Array<any> = [];
 
-let users: User[] = [
-	{ id: 1, name: 'Budi Santoso', email: 'budi@mail.com', joinedAt: '2024-12-01', totalPurchase: 5, totalPrintOrders: 3, totalAssetsUploaded: 8 },
-	{ id: 2, name: 'Siti Aminah', email: 'siti@mail.com', joinedAt: '2025-01-10', totalPurchase: 3, totalPrintOrders: 2, totalAssetsUploaded: 4 },
-	{ id: 3, name: 'Andi Wijaya', email: 'andi@mail.com', joinedAt: '2025-02-05', totalPurchase: 6, totalPrintOrders: 4, totalAssetsUploaded: 10 },
-	{ id: 4, name: 'Rina Maharani', email: 'rina@mail.com', joinedAt: '2025-02-20', totalPurchase: 2, totalPrintOrders: 1, totalAssetsUploaded: 1 },
-	{ id: 5, name: 'Dedi Supriyadi', email: 'dedi@mail.com', joinedAt: '2025-03-11', totalPurchase: 4, totalPrintOrders: 3, totalAssetsUploaded: 6 },
-	{ id: 6, name: 'Putri Ramadhani', email: 'putri@mail.com', joinedAt: '2025-03-25', totalPurchase: 1, totalPrintOrders: 1, totalAssetsUploaded: 2 },
-	{ id: 7, name: 'Yoga Pratama', email: 'yoga@mail.com', joinedAt: '2025-04-08', totalPurchase: 7, totalPrintOrders: 5, totalAssetsUploaded: 12 },
-	{ id: 8, name: 'Lia Apriani', email: 'lia@mail.com', joinedAt: '2025-04-30', totalPurchase: 2, totalPrintOrders: 1, totalAssetsUploaded: 3 },
-	{ id: 9, name: 'Riko Saputra', email: 'riko@mail.com', joinedAt: '2025-05-15', totalPurchase: 3, totalPrintOrders: 2, totalAssetsUploaded: 5 },
-	{ id: 10, name: 'Maya Lestari', email: 'maya@mail.com', joinedAt: '2025-06-01', totalPurchase: 5, totalPrintOrders: 4, totalAssetsUploaded: 9 }
-];
+    async function loadNewestModels() {
+        const userSnap = await getDocs(query(collection(db, "user"), orderBy("joined", "desc"), limit(15)));
 
-function viewUserDetail(id: number) {
-	goto(`../user?id=${id}`);
-}
+        users = await Promise.all(userSnap.docs.map(async (doc) => {
+            const data = doc.data();
 
-function deleteUser(id: number) {
-	const confirmDelete = confirm('Apakah Anda yakin ingin menghapus pengguna ini?');
-	if (confirmDelete) {
-		users = users.filter(user => user.id !== id);
-		alert('Pengguna telah dihapus.');
-	}
-}
+            // Ambil jumlah aset yang diupload oleh user
+            const modelSnap = await getDocs(query(collection(db, "model"), where("author", "==", doc.id)));
+            const totalAssets = modelSnap.size;
+
+            return {
+                id: doc.id,
+                name: data.name || '-',
+                photoURL: data.photoURL || '',
+                phone: data.phone || '-',
+                joinedAt: new Date(data.joined?.seconds * 1000).toLocaleDateString(),
+                totalPurchase: Array.isArray(data.purchased) ? data.purchased.length : 0,
+                totalPrintOrders: data.ordered || 0,
+                totalAssetsUploaded: totalAssets
+            };
+        }));
+    }
+
+    loadNewestModels();
+
+    function viewUserDetail(userId: string) {
+        goto(`/admin/user/${userId}`);
+    }
+
+    function deleteUser(userId: string) {
+        // implementasi penghapusan di sini
+        alert(`Hapus user dengan ID: ${userId}`);
+    }
 </script>
 
 <section class="p-6 max-w-6xl mx-auto">
@@ -46,11 +50,12 @@ function deleteUser(id: number) {
 				<tr>
 					<th class="p-4">Detail</th>
 					<th class="p-4">Nama</th>
-					<th class="p-4">Email</th>
-					<th class="p-4">Bergabung</th>
-					<th class="p-4">Total Pembelian</th>
-					<th class="p-4">Pesanan Cetak</th>
-					<th class="p-4">Asset Diupload</th>
+					<th class="p-4 text-center">Email</th>
+					<th class="p-4 text-center">Phone</th>
+					<th class="p-4 text-center">Bergabung</th>
+					<th class="p-4 text-center">Total Pembelian</th>
+					<th class="p-4 text-center">Pesanan Cetak</th>
+					<th class="p-4 text-center">Asset Diupload</th>
 					<th class="p-4 text-center">Aksi</th>
 				</tr>
 			</thead>
@@ -64,8 +69,14 @@ function deleteUser(id: number) {
                                 Detail
                             </button>
                         </td>
-                        <td class="p-4 font-medium ">{user.name}</td>
-                        <td class="p-4 ">{user.email}</td>
+                        <td class="p-4 font-medium flex items-center gap-3">
+                            {#if user.photoURL}
+                                <img src={user.photoURL} alt={user.name} class="w-8 h-8 rounded-full" />
+                            {/if}
+                            {user.name}
+                        </td>
+                        <td class="p-4 text-center">-</td>
+                        <td class="p-4 text-center">{user.phone}</td>
                         <td class="p-4 text-center">{user.joinedAt}</td>
                         <td class="p-4 text-center">{user.totalPurchase}</td>
                         <td class="p-4 text-center">{user.totalPrintOrders}</td>
