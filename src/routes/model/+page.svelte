@@ -127,13 +127,12 @@ async function orderModel() {
         }
     });
 }
-
 </script>
 
 <a class="hidden" href="/" bind:this={anchor}>A</a>
 <ActionConfirmDialog bind:visibility={confirmVisibility} label="Hapus Model" text="Menghapus model, apakah anda yakin?" onaccept={deleteModel} />
 
-<section class="h-120vh w-full">
+<section class="h-120vh w-full min-h-screen">
     <div class="flex flex-col md:flex-row gap-5 p-5">
         <div class="flex flex-1 flex-col gap-5">
             <div class="w-full h-full md:h-auto">
@@ -223,7 +222,6 @@ async function orderModel() {
                     <p class="pl-10 pr-10">{data.modelData.description}</p>
                 </div>
             </div>
-
         </div>
         <div class="flex-none flex flex-col gap-4">
             <p class="font-semibold text-lg w-[256px]">Model Terkait</p>
