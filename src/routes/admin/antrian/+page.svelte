@@ -39,7 +39,7 @@
     });
 </script>
 
-<section class="h-auto p-6 flex flex-col gap-6 max-w-6xl mx-auto">
+<section class="h-screen p-6 flex flex-col gap-6 max-w-6xl mx-auto">
     <h2 class="text-2xl font-bold text-[#FFA808] flex items-center gap-2">
         <i class="fa-solid fa-box"></i> Daftar Pesanan Cetak (Admin)
     </h2>
