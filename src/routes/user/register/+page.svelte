@@ -5,7 +5,7 @@
     import { user } from "$lib/stores/authStore";
     import { isLoading } from "$lib/stores/stateStore";
 
-    import { doc, setDoc } from "firebase/firestore";
+    import { addDoc, doc, setDoc } from "firebase/firestore";
     import {
         GoogleAuthProvider,
         signInWithPopup,
@@ -21,8 +21,9 @@
         PasswordField
     } from "../../../components/design";
     import { Timestamp } from "firebase/firestore";
+    import { onMount } from "svelte";
 
-    $effect(() => {
+    onMount(() => {
         if ($user) {
             location.href=`/user?id=${$user!.uid}`;
         }
@@ -57,10 +58,14 @@
                     bio: "",
                     photoURL: "",
                     joined: Timestamp.fromDate(new Date(cred.user.metadata.creationTime!))
-                }).then(() => $isLoading = false);
+                }).then(() => { 
+                        $isLoading = false;
+                        location.href=`/user?id=${$user!.uid}`;
+                });
             })
             .catch((error) => {
                 authError = getFirebaseAuthMessage(error.code);
+                console.log(error.code);
                 $isLoading = false;
             });
     }
@@ -124,7 +129,7 @@
             <p class="block m-auto text-red-500">{authError}</p>
         {/if}
 
-        <InputField title="Username" hint="Your username..." bind:value={username} />
+        <InputField title="Username" hint="Your username..." bind:value={username} isEmail={false} />
         <InputField title="Email" bind:value={email} />
         <PasswordField title="New Password" bind:value={passwordNew} />
         <PasswordField title="Verify Password" bind:value={passwordVerify} />
