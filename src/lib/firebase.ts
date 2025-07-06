@@ -81,3 +81,9 @@ export const categories = [
         id: "towe"
     },
 ].sort((a, b) => a.title.localeCompare(b.title));
+
+export const status = [
+    "Diproses",
+    "Dibatalkan",
+    "Selesai"
+];
