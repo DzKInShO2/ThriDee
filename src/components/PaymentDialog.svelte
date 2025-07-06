@@ -24,7 +24,8 @@
             customer: $user!.uid,
             products: products,
             totalPrice: values.map(i => i.price).reduce((a, c) => a + c, 0),
-            time: Timestamp.now()
+            time: Timestamp.now(),
+            type: 0
         }).then((docRef) => {
             setDoc(userRef, {
                 ordered: null

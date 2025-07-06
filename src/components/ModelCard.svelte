@@ -40,6 +40,7 @@ let data: any = $state(loadModel());
 <a
     transition:fly={{ y: 200, duration: 1400 }}
     href={`/model?id=${id}`}
+    rel="external"
     class="
     group
     basis-[256px]
