@@ -1,3 +1,10 @@
+<svelte:head>
+    <script
+      type="module"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjMZkTgSVoO2n1wGnizqnb0kZ4Xpt3q0Q&libraries=places&v=beta&modules=placeautocomplete">
+    </script>
+</svelte:head>
+
 <script lang="ts">
     import { goto } from "$app/navigation";
 
@@ -7,11 +14,10 @@
 
     let { data } = $props();
 
-    let inputElement: HTMLInputElement;
-    let staticMapURL = $state("");
-    let autocomplete: google.maps.places.Autocomplete | null = null;
+    let completeParent: HTMLDivElement;
+    let staticMapUrl = $state<String>("https://maps.googleapis.com/maps/api/staticmap?center=Z%C3%BCrich&zoom=12&size=720x720&key=AIzaSyAjMZkTgSVoO2n1wGnizqnb0kZ4Xpt3q0Q&libraries=places");
+    let locationName = $state("");
 
-    let userLocation = "Jl. Merdeka No. 123, Jakarta";
     let estimatedTime = "3-5 hari kerja";
     let shippingCost = 20000;
     let items = [
@@ -19,37 +25,30 @@
         { name: "Model Kendaraan B", price: 50000 }
     ];
 
+    function googleMap(lat, lng) {
+        return `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=15&size=720x720&markers=color:red%7C${lat},${lng}&key=AIzaSyAjMZkTgSVoO2n1wGnizqnb0kZ4Xpt3q0Q`;
+    }
+
     let nextLocation = $state("/");
-    onMount(async () => {
+    onMount(() => {
         if (data.model === null && !$user) {
             goto("/");
         }
 
-        const { Loader } = await import('@googlemaps/js-api-loader');
-
-        const loader = new Loader({
-            apiKey: 'AIzaSyAjMZkTgSVoO2n1wGnizqnb0kZ4Xpt3q0Q',
-            libraries: ['places'],
+        //@ts-ignore
+        const placeAutocomplete = new google.maps.places.PlaceAutocompleteElement();
+        //@ts-ignore
+        placeAutocomplete.id = 'place-autocomplete-input';
+        placeAutocomplete.className = "border-gray-300 ring-0 shadow-xl rounded-xl";
+        placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {
+            const place = placePrediction.toPlace();
+            await place.fetchFields({ fields: ['displayName', 'formattedAddress', 'location'] });
+            const userLocation = place.toJSON();
+            staticMapUrl = googleMap(userLocation.location.lat, userLocation.location.lng);
+            locationName = userLocation.formattedAddress;
         });
-
-        const google = await loader.load();
-
-        const waitForInput = () =>
-            new Promise<void>((resolve) => {
-            const check = () => {
-                if (inputElement) resolve();
-                else requestAnimationFrame(check);
-            };
-            check();
-        });
-
-        await waitForInput();
-
-        if (inputElement) {
-            autocomplete = new google.maps.places.Autocomplete(inputELement);
-        }
+        completeParent.appendChild(placeAutocomplete);
     });
-
     $effect(() => {
         nextLocation = `/user/history?id=${$user!.uid!}`;
     });
@@ -80,9 +79,20 @@
             </p>
             <p>
                 <strong>Lokasi Pengiriman:</strong>
+                {locationName}
             </p>
-            <input bind:this={inputElement} />
         </div>
+
+        <div bind:this={completeParent}>
+        </div>
+
+        {#key staticMapUrl}
+            {#if staticMapUrl}
+                <div class="w-full h-100 rounded-xl overflow-clip">
+                    <img class="object-contain" src={staticMapUrl} alt="Static Map" />
+                </div>
+            {/if}
+        {/key}
 
         <button 
             class="cursor-pointer bg-blue-100 text-blue-700 font-semibold rounded-xl p-4 text-center mt-4">
