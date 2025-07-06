@@ -144,7 +144,7 @@ async function orderModel() {
                     <div class="flex gap-8 justify-between">
                         <h1>{data.modelData.title}</h1>
                         <div>
-                            <div class="group flex">
+                            <div class="group flex flex-col md:flex-row">
                                 {#if ($user && ($user!.uid === data.modelData.author.id || $user!.uid === "6dJNMyxEaofkXlxKJ6SwyVmMWri1")) }
                                     <button 
                                         onclick={() => confirmVisibility = true}

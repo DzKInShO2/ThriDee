@@ -80,7 +80,7 @@
     onaccept={sendOrder}
 />
 
-<section class="h-screen flex flex-col gap-5 p-6">
+<section class="min-h-screen flex flex-col gap-5 p-6">
     <div class="bg-white rounded-xl shadow-2xl p-6 flex flex-col gap-5 w-full max-w-4xl mx-auto">
         <div class="flex items-center justify-between">
             <h2 class="text-2xl font-bold text-[#FFA808] flex items-center gap-2">
@@ -114,7 +114,7 @@
 
         {#key staticMapUrl}
             {#if staticMapUrl}
-                <div class="w-full h-100 rounded-xl overflow-clip">
+                <div class="w-full h-100 rounded-xl justify-items-center overflow-clip">
                     <img class="object-contain" src={staticMapUrl} alt="Static Map" />
                 </div>
             {/if}
