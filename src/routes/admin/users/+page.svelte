@@ -32,7 +32,7 @@
     loadNewestModels();
 
     function viewUserDetail(userId: string) {
-        goto(`/admin/user/${userId}`);
+        goto(`../user?id=${userId}`);
     }
 
     function deleteUser(userId: string) {
