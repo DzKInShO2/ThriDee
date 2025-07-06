@@ -5,6 +5,8 @@
     import { isLoading } from "$lib/stores/stateStore";
     import { auth, db, getFirebaseAuthMessage } from "$lib/firebase";
 
+    import { onMount } from "svelte";
+
     import { 
         ClickableButton,
         GoogleAuthButton, 
@@ -20,7 +22,7 @@
     } from "firebase/auth";
     import { doc, setDoc, Timestamp } from "firebase/firestore";
 
-    $effect(() => {
+    onMount(() => {
         if ($user) {
             location.href=`/user?id=${$user!.uid}`;
         }
@@ -34,6 +36,7 @@
         signInWithEmailAndPassword(auth, email, password)
             .then(() => {
                 $isLoading = false;
+                location.href=`/user?id=${$user!.uid}`;
             })
             .catch((error) => {
                 authError = getFirebaseAuthMessage(error.code);
@@ -57,6 +60,11 @@
                         joined: Timestamp.fromDate(new Date(cred.user.metadata.creationTime!))
                     });
                 }
+                onMount(() => {
+                    if ($user) {
+                        location.href=`/user?id=${$user!.uid}`;
+                    }
+                });
                 $isLoading = false;
             })
             .catch((error) => {
